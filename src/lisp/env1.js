@@ -1,4 +1,4 @@
-var append, areEqual, assoc, atom, atom_question_, boolean_question_, car, cdr, circumpendQuotes, concat, cons, coreFn_question_, count, createErlAtom, createErlBoolean, createErlCorePureFunction, createErlIndex, createErlList, createErlNumber, createErlString, createErlSymbol, createPredicate, deref, drop, empty_question_, equal_question_, erlAtom_question_, erlBoolean_question_, erlCorePureFunction_question_, erlFalse, erlFalse_question_, erlIgnore, erlIndex_question_, erlList_question_, erlMacro_question_, erlNil, erlNil_question_, erlNumber_question_, erlString_question_, erlSymbol_question_, erlTrue, erlTrue_question_, erlUserPureFunction_question_, extractJsValue, false_question_, first, fromArray, function_question_, functionsOnErlValues, getEnvironment, hasProcess, hasProcessWebpackShim, ignoreIfTrue, ignoreUnlessTrue, ignore_bang_, interpret, isNode, last, list, list_question_, macro_question_, meta, next, nil_question_, nth, number_question_, prepend, prettyString, read, recurse, reduce, reset, rest, reverse, serialize, set, setCoreFnsOnErlValues_bang_, slurp, string, string_question_, stripQuotes, symbol, symbol_question_, take, time_hyphen_ms, toArray, toPartialArray, true_question_, typeOf, userFn_question_, withMeta, write, _car, _cdr, _concat, _drop, _empty_question_, _interpret, _last, _not, _prStr, _quit_, _ref, _reverse, _take, _throw,
+var append, areEqual, assoc, atom, atom_question_, boolean_question_, car, cdr, circumpendQuotes, concat, cons, coreFn_question_, count, createErlAtom, createErlBoolean, createErlCorePureFunction, createErlIndex, createErlList, createErlNumber, createErlString, createErlSymbol, createPredicate, deref, drop, empty_question_, equal_question_, erlAtom_question_, erlBoolean_question_, erlCorePureFunction_question_, erlFalse, erlFalse_question_, erlIgnore, erlIndex_question_, erlList_question_, erlMacro_question_, erlNil, erlNil_question_, erlNumber_question_, erlString_question_, erlSymbol_question_, erlTrue, erlTrue_question_, erlUserPureFunction_question_, extractJsValue, false_question_, first, fromArray, function_question_, functionsOnErlValues, getEnvironment, ignoreIfTrue, ignoreUnlessTrue, ignore_bang_, interpret, last, list, list_question_, macro_question_, meta, next, nil_question_, nth, number_question_, prepend, prettyString, read, recurse, reduce, reset, rest, reverse, serialize, set, setCoreFnsOnErlValues_bang_, slurp, string, string_question_, stripQuotes, symbol, symbol_question_, take, time_hyphen_ms, toArray, toPartialArray, true_question_, typeOf, userFn_question_, withMeta, write, _car, _cdr, _concat, _drop, _empty_question_, _interpret, _last, _not, _prStr, _ref, _reverse, _take, _throw,
   __slice = [].slice,
   __hasProp = {}.hasOwnProperty;
 
@@ -226,14 +226,6 @@ getEnvironment = function(config) {
   return environment;
 };
 
-hasProcess = function() {
-  return typeof process !== 'undefined';
-}
-
-hasProcessWebpackShim = function() {
-  return(process.title === 'browser' && process.browser);
-}
-
 ignore_bang_ = function(erlArgs) {
   return erlIgnore;
 };
@@ -261,10 +253,6 @@ ignoreUnlessTrue = function(erlArgs) {
 _interpret = function(erlArgs) {
   return interpret(stripQuotes(extractJsValue(car(erlArgs))));
 };
-
-isNode = function() {
-  return hasProcess() && !hasProcessWebpackShim();
-}
 
 _last = function(erlArgs) {
   var arg;
@@ -326,14 +314,6 @@ _prStr = function(erlArgs, printReadably_question_) {
 
 prettyString = function(erlArgs) {
   return createErlString(circumpendQuotes(_prStr(erlArgs, true)));
-};
-
-_quit_ = function() {
-  if (isNode()) {
-    return process.exit(0);
-  } else {
-  alert("The 'Erlkönig Lisp Console' program is not permitted to close this window.");
-  }
 };
 
 read = function(jsList) {
@@ -508,7 +488,6 @@ functionsOnErlValues = {
   'true?': true_question_,
   'typeof': typeOf,
   'user-fn?': userFn_question_,
-  '-quit-': _quit_,
   'read': read,
   'reset!': reset,
   'set!': set,

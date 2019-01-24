@@ -1,4 +1,4 @@
-var createErlCoreEffectfulFunction, createErlList, createErlString, displayEffectsOnErlValues, getEnvironment, serialize, setCoreEffectfulFnsOnErlValues_bang_, toArray, _prStr,
+var createErlCoreEffectfulFunction, createErlList, createErlString, displayEffectsOnErlValues, getEnvironment, isNode, hasProcess, hasProcessWebpackShim, serialize, setCoreEffectfulFnsOnErlValues_bang_, toArray, _prStr, _quit_,
   __hasProp = {}.hasOwnProperty;
 
 createErlCoreEffectfulFunction = require('./type-utilities').createErlCoreEffectfulFunction;
@@ -18,10 +18,30 @@ getEnvironment = function(config) {
   return environment;
 };
 
+hasProcess = function() {
+  return typeof process !== 'undefined';
+}
+
+hasProcessWebpackShim = function() {
+  return(process.title === 'browser' && process.browser);
+}
+
+isNode = function() {
+  return hasProcess() && !hasProcessWebpackShim();
+}
+
 _prStr = function(erlArgs, printReadably_question_) {
   return ((toArray(erlArgs)).map(function(erlArg) {
     return serialize(erlArg, printReadably_question_);
   })).join('');
+};
+
+_quit_ = function() {
+  if (isNode()) {
+    return process.exit(0);
+  } else {
+    return _prStr(createErlList(createErlString("\"'Erlkönig Lisp Console' is not permitted to close this window.\"")), false);
+  }
 };
 
 setCoreEffectfulFnsOnErlValues_bang_ = function(represent) {
@@ -46,9 +66,7 @@ displayEffectsOnErlValues = {
   'pretty-print': function(erlArgs) {
     return _prStr(erlArgs, true);
   },
-  '--quit--': function() {
-    return _prStr(createErlList(createErlString("\"'Erlkönig Lisp Console' is not permitted to close this window.\"")), false);
-  }
+  '-quit-': _quit_,
 };
 
 module.exports = getEnvironment;

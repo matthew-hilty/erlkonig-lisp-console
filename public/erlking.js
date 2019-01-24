@@ -54,7 +54,7 @@
 
 	var initialize    = __webpack_require__(2);
 	var interpretLisp = __webpack_require__(28);
-	var keyTokens     = __webpack_require__(39).keyTokens;
+	var keyTokens     = __webpack_require__(38).keyTokens;
 
 	var _keyTokens =  keyTokens.map(function (keyToken) {
 	  return ':' + keyToken;
@@ -2118,7 +2118,7 @@
 
 	_process = __webpack_require__(44);
 
-	_serialize = __webpack_require__(37);
+	_serialize = __webpack_require__(36);
 
 	standardFnsAndMacros = __webpack_require__(50);
 
@@ -2658,7 +2658,7 @@
 
 	setEnv1_bang_ = __webpack_require__(35);
 
-	setEnv2_bang_ = __webpack_require__(41);
+	setEnv2_bang_ = __webpack_require__(40);
 
 	setEnv3_bang_ = __webpack_require__(42);
 
@@ -2937,7 +2937,7 @@
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {var append, areEqual, assoc, atom, atom_question_, boolean_question_, car, cdr, circumpendQuotes, concat, cons, coreFn_question_, count, createErlAtom, createErlBoolean, createErlCorePureFunction, createErlIndex, createErlList, createErlNumber, createErlString, createErlSymbol, createPredicate, deref, drop, empty_question_, equal_question_, erlAtom_question_, erlBoolean_question_, erlCorePureFunction_question_, erlFalse, erlFalse_question_, erlIgnore, erlIndex_question_, erlList_question_, erlMacro_question_, erlNil, erlNil_question_, erlNumber_question_, erlString_question_, erlSymbol_question_, erlTrue, erlTrue_question_, erlUserPureFunction_question_, extractJsValue, false_question_, first, fromArray, function_question_, functionsOnErlValues, getEnvironment, hasProcess, hasProcessWebpackShim, ignoreIfTrue, ignoreUnlessTrue, ignore_bang_, interpret, isNode, last, list, list_question_, macro_question_, meta, next, nil_question_, nth, number_question_, prepend, prettyString, read, recurse, reduce, reset, rest, reverse, serialize, set, setCoreFnsOnErlValues_bang_, slurp, string, string_question_, stripQuotes, symbol, symbol_question_, take, time_hyphen_ms, toArray, toPartialArray, true_question_, typeOf, userFn_question_, withMeta, write, _car, _cdr, _concat, _drop, _empty_question_, _interpret, _last, _not, _prStr, _quit_, _ref, _reverse, _take, _throw,
+	var append, areEqual, assoc, atom, atom_question_, boolean_question_, car, cdr, circumpendQuotes, concat, cons, coreFn_question_, count, createErlAtom, createErlBoolean, createErlCorePureFunction, createErlIndex, createErlList, createErlNumber, createErlString, createErlSymbol, createPredicate, deref, drop, empty_question_, equal_question_, erlAtom_question_, erlBoolean_question_, erlCorePureFunction_question_, erlFalse, erlFalse_question_, erlIgnore, erlIndex_question_, erlList_question_, erlMacro_question_, erlNil, erlNil_question_, erlNumber_question_, erlString_question_, erlSymbol_question_, erlTrue, erlTrue_question_, erlUserPureFunction_question_, extractJsValue, false_question_, first, fromArray, function_question_, functionsOnErlValues, getEnvironment, ignoreIfTrue, ignoreUnlessTrue, ignore_bang_, interpret, last, list, list_question_, macro_question_, meta, next, nil_question_, nth, number_question_, prepend, prettyString, read, recurse, reduce, reset, rest, reverse, serialize, set, setCoreFnsOnErlValues_bang_, slurp, string, string_question_, stripQuotes, symbol, symbol_question_, take, time_hyphen_ms, toArray, toPartialArray, true_question_, typeOf, userFn_question_, withMeta, write, _car, _cdr, _concat, _drop, _empty_question_, _interpret, _last, _not, _prStr, _ref, _reverse, _take, _throw,
 	  __slice = [].slice,
 	  __hasProp = {}.hasOwnProperty;
 
@@ -3021,7 +3021,7 @@
 
 	reverse = __webpack_require__(31).reverse;
 
-	serialize = __webpack_require__(37);
+	serialize = __webpack_require__(36);
 
 	take = __webpack_require__(31).take;
 
@@ -3165,14 +3165,6 @@
 	  return environment;
 	};
 
-	hasProcess = function() {
-	  return typeof process !== 'undefined';
-	}
-
-	hasProcessWebpackShim = function() {
-	  return(process.title === 'browser' && process.browser);
-	}
-
 	ignore_bang_ = function(erlArgs) {
 	  return erlIgnore;
 	};
@@ -3200,10 +3192,6 @@
 	_interpret = function(erlArgs) {
 	  return interpret(stripQuotes(extractJsValue(car(erlArgs))));
 	};
-
-	isNode = function() {
-	  return hasProcess() && !hasProcessWebpackShim();
-	}
 
 	_last = function(erlArgs) {
 	  var arg;
@@ -3267,20 +3255,12 @@
 	  return createErlString(circumpendQuotes(_prStr(erlArgs, true)));
 	};
 
-	_quit_ = function() {
-	  if (isNode()) {
-	    return process.exit(0);
-	  } else {
-	  alert("The 'Erlkönig Lisp Console' program is not permitted to close this window.");
-	  }
-	};
-
 	read = function(jsList) {
 	  var _read;
 	  _read = function(erlArgs) {
 	    var jsFileName;
 	    jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-	    return __webpack_require__(40).readFileSync(jsFileName).toString();
+	    return __webpack_require__(39).readFileSync(jsFileName).toString();
 	  };
 	  return createErlString(_read(jsList));
 	};
@@ -3333,7 +3313,7 @@
 	slurp = function(erlArgs) {
 	  var jsFileName;
 	  jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-	  var _fs_ = __webpack_require__(40);
+	  var _fs_ = __webpack_require__(39);
 	  return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
 	};
 
@@ -3447,7 +3427,6 @@
 	  'true?': true_question_,
 	  'typeof': typeOf,
 	  'user-fn?': userFn_question_,
-	  '-quit-': _quit_,
 	  'read': read,
 	  'reset!': reset,
 	  'set!': set,
@@ -3459,10 +3438,345 @@
 
 	module.exports = getEnvironment;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
 
 /***/ }),
 /* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var adjoinErlValue, commentSignal, coreEffectfulFunctionLabel, corePureFunctionLabel, erlAtom_question_, erlCoreEffectfulFunction_question_, erlCorePureFunction_question_, erlIdentifier_question_, erlIgnore_question_, erlIndex_question_, erlKeyword_question_, erlList_question_, erlMacro_question_, erlNil_question_, erlString_question_, erlUserPureFunction_question_, extractJsValue, ignoreLabel, indexEnd, indexStart, keywordLabel, listEnd, listStart, macroLabel, nilLabel, reduce, serialize, serializeAtom, serializeIdentifier, serializeIndex, serializeList, serializeString, stripQuotes, userPureFunctionLabel,
+	  __hasProp = {}.hasOwnProperty;
+
+	commentSignal = __webpack_require__(37);
+
+	extractJsValue = __webpack_require__(30).extractJsValue;
+
+	indexEnd = __webpack_require__(38).indexEnd;
+
+	indexStart = __webpack_require__(38).indexStart;
+
+	listEnd = __webpack_require__(38).listEnd;
+
+	listStart = __webpack_require__(38).listStart;
+
+	erlAtom_question_ = __webpack_require__(30).erlAtom_question_;
+
+	erlCoreEffectfulFunction_question_ = __webpack_require__(30).erlCoreEffectfulFunction_question_;
+
+	erlCorePureFunction_question_ = __webpack_require__(30).erlCorePureFunction_question_;
+
+	erlIdentifier_question_ = __webpack_require__(30).erlIdentifier_question_;
+
+	erlIgnore_question_ = __webpack_require__(30).erlIgnore_question_;
+
+	erlIndex_question_ = __webpack_require__(30).erlIndex_question_;
+
+	erlKeyword_question_ = __webpack_require__(30).erlKeyword_question_;
+
+	erlList_question_ = __webpack_require__(30).erlList_question_;
+
+	erlMacro_question_ = __webpack_require__(30).erlMacro_question_;
+
+	erlNil_question_ = __webpack_require__(30).erlNil_question_;
+
+	erlString_question_ = __webpack_require__(30).erlString_question_;
+
+	erlUserPureFunction_question_ = __webpack_require__(30).erlUserPureFunction_question_;
+
+	reduce = __webpack_require__(31).reduce;
+
+	adjoinErlValue = function(printReadably_question_) {
+	  return function(memo, erlValue) {
+	    var serialized;
+	    serialized = serialize(erlValue, printReadably_question_);
+	    if (memo.length === 0) {
+	      return serialized;
+	    } else {
+	      return "" + memo + " " + serialized;
+	    }
+	  };
+	};
+
+	serialize = function(erlExpr, printReadably_question_) {
+	  var _serialize;
+	  if (erlExpr === commentSignal) {
+	    return commentSignal;
+	  }
+	  _serialize = (function() {
+	    switch (false) {
+	      case !erlList_question_(erlExpr):
+	        return serializeList;
+	      case !erlIgnore_question_(erlExpr):
+	        return function(x) {
+	          return ignoreLabel;
+	        };
+	      case !erlIndex_question_(erlExpr):
+	        return serializeIndex;
+	      case !erlKeyword_question_(erlExpr):
+	        return function(x) {
+	          return keywordLabel;
+	        };
+	      case !erlCoreEffectfulFunction_question_(erlExpr):
+	        return function(x) {
+	          return coreEffectfulFunctionLabel;
+	        };
+	      case !erlCorePureFunction_question_(erlExpr):
+	        return function(x) {
+	          return corePureFunctionLabel;
+	        };
+	      case !erlUserPureFunction_question_(erlExpr):
+	        return function(x) {
+	          return userPureFunctionLabel;
+	        };
+	      case !erlMacro_question_(erlExpr):
+	        return function(x) {
+	          return macroLabel;
+	        };
+	      case !erlNil_question_(erlExpr):
+	        return function(x) {
+	          return nilLabel;
+	        };
+	      case !erlIdentifier_question_(erlExpr):
+	        return serializeIdentifier;
+	      case !erlString_question_(erlExpr):
+	        return serializeString;
+	      case !erlAtom_question_(erlExpr):
+	        return serializeAtom;
+	      case erlExpr.jsValue == null:
+	        return extractJsValue;
+	      default:
+	        return function(x) {
+	          return x;
+	        };
+	    }
+	  })();
+	  return _serialize(erlExpr, printReadably_question_);
+	};
+
+	serializeAtom = function(erlAtom, printReadably_question_) {
+	  return "(atom " + (serialize(erlAtom.erlValue, printReadably_question_)) + ")";
+	};
+
+	serializeIdentifier = function(erlString, printReadably_question_) {
+	  return extractJsValue(erlString);
+	};
+
+	serializeIndex = function(erlIndex, printReadably_question_) {
+	  var erlValue, jsIndex, key, memo;
+	  jsIndex = erlIndex.jsValue;
+	  memo = '';
+	  for (key in jsIndex) {
+	    if (!__hasProp.call(jsIndex, key)) continue;
+	    erlValue = jsIndex[key];
+	    memo = memo === '' ? "" + key + " " + (serialize(erlValue, printReadably_question_)) : "" + memo + ", " + key + " " + (serialize(erlValue, printReadably_question_));
+	  }
+	  return indexStart + memo + indexEnd;
+	};
+
+	serializeList = function(erlList, printReadably_question_) {
+	  var serializedList;
+	  serializedList = reduce("", adjoinErlValue(printReadably_question_), erlList);
+	  return listStart + serializedList + listEnd;
+	};
+
+	serializeString = function(erlString, printReadably_question_) {
+	  var jsString;
+	  jsString = stripQuotes(extractJsValue(erlString));
+	  if (!printReadably_question_) {
+	    return jsString;
+	  }
+	  return jsString.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+	};
+
+	stripQuotes = function(jsString) {
+	  return jsString.slice(1, -1);
+	};
+
+	coreEffectfulFunctionLabel = '<effectful core function>';
+
+	corePureFunctionLabel = '<core function>';
+
+	ignoreLabel = '<ignore>';
+
+	keywordLabel = '<keyword>';
+
+	macroLabel = '<macro>';
+
+	nilLabel = 'nil';
+
+	userPureFunctionLabel = '<function>';
+
+	module.exports = serialize;
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+	var comment;
+
+	comment = {};
+
+	module.exports = comment;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+	var binaryGlyphTokens, catch_asterisk_, def_bang_, deref, derefGlyph, expand_hyphen_macro, fn_asterisk_, glyphTokens, ignore, ignoreIfTrue, ignoreIfTrueGlyph, ignoreUnlessTrue, ignoreUnlessTrueGlyph, ignore_bang_, ignore_bang_Glyph, indexEnd, indexStart, keyTokens, keyword_question_, keywords, let_asterisk_, letrec_asterisk_, listEnd, listStart, macroTokens, macro_asterisk_, nil, quasiquote, quasiquoteGlyph, quote, quoteGlyph, splat, spliceUnquote, spliceUnquoteGlyph, try_asterisk_, undef_bang_, unquote, unquoteGlyph, _do, _eval, _evalWithEnv, _false, _getCurrentEnv, _getDefaultEnv, _if, _process, _true,
+	  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+	keyword_question_ = function(jsString) {
+	  return __indexOf.call(keywords, jsString) >= 0;
+	};
+
+	keyTokens = [deref = 'deref', derefGlyph = '@', catch_asterisk_ = 'catch*', def_bang_ = 'def!', _do = 'do', _eval = 'eval', _evalWithEnv = 'eval-with-env', expand_hyphen_macro = 'expand-macro', _false = 'false', fn_asterisk_ = 'fn*', _getCurrentEnv = '-get-current-env-', _getDefaultEnv = '-get-default-env-', _if = 'if', ignore_bang_ = 'ignore!', ignore_bang_Glyph = '#!', ignoreIfTrue = 'ignoreIfTrue', ignoreIfTrueGlyph = '#-', ignoreUnlessTrue = 'ignoreUnlessTrue', ignoreUnlessTrueGlyph = '#+', ignore = 'ignore', indexEnd = '}', indexStart = '{', let_asterisk_ = 'let*', letrec_asterisk_ = 'letrec*', listEnd = ')', listStart = '(', macro_asterisk_ = 'macro*', nil = 'nil', _process = '-process-', quasiquote = 'quasiquote', quasiquoteGlyph = '`', quote = 'quote', quoteGlyph = '\'', splat = '&', spliceUnquote = 'splice-unquote', spliceUnquoteGlyph = '~@', _true = 'true', try_asterisk_ = 'try*', undef_bang_ = 'undef!', unquote = 'unquote', unquoteGlyph = '~'];
+
+	keywords = [catch_asterisk_, def_bang_, _do, _eval, _evalWithEnv, expand_hyphen_macro, _false, fn_asterisk_, _getCurrentEnv, _getDefaultEnv, _if, ignore, let_asterisk_, letrec_asterisk_, macro_asterisk_, nil, _process, quasiquote, quote, spliceUnquote, _true, try_asterisk_, undef_bang_, unquote];
+
+	macroTokens = [quasiquote, quote, spliceUnquote, unquote];
+
+	glyphTokens = [derefGlyph, ignore_bang_Glyph, quasiquoteGlyph, quoteGlyph, spliceUnquoteGlyph, unquoteGlyph];
+
+	binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
+
+	module.exports = {
+	  binaryGlyphTokens: binaryGlyphTokens,
+	  deref: deref,
+	  derefGlyph: derefGlyph,
+	  catch_asterisk_: catch_asterisk_,
+	  def_bang_: def_bang_,
+	  _do: _do,
+	  _eval: _eval,
+	  _evalWithEnv: _evalWithEnv,
+	  expand_hyphen_macro: expand_hyphen_macro,
+	  _false: _false,
+	  fn_asterisk_: fn_asterisk_,
+	  _getCurrentEnv: _getCurrentEnv,
+	  _getDefaultEnv: _getDefaultEnv,
+	  glyphTokens: glyphTokens,
+	  _if: _if,
+	  ignoreIfTrue: ignoreIfTrue,
+	  ignoreIfTrueGlyph: ignoreIfTrueGlyph,
+	  ignoreUnlessTrue: ignoreUnlessTrue,
+	  ignoreUnlessTrueGlyph: ignoreUnlessTrueGlyph,
+	  ignore: ignore,
+	  ignore_bang_: ignore_bang_,
+	  ignore_bang_Glyph: ignore_bang_Glyph,
+	  indexEnd: indexEnd,
+	  indexStart: indexStart,
+	  keyTokens: keyTokens,
+	  keyword_question_: keyword_question_,
+	  let_asterisk_: let_asterisk_,
+	  letrec_asterisk_: letrec_asterisk_,
+	  listEnd: listEnd,
+	  listStart: listStart,
+	  macro_asterisk_: macro_asterisk_,
+	  macroTokens: macroTokens,
+	  nil: nil,
+	  _process: _process,
+	  quasiquote: quasiquote,
+	  quasiquoteGlyph: quasiquoteGlyph,
+	  quote: quote,
+	  quoteGlyph: quoteGlyph,
+	  splat: splat,
+	  spliceUnquote: spliceUnquote,
+	  spliceUnquoteGlyph: spliceUnquoteGlyph,
+	  _true: _true,
+	  try_asterisk_: try_asterisk_,
+	  undef_bang_: undef_bang_,
+	  unquote: unquote,
+	  unquoteGlyph: unquoteGlyph
+	};
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+	
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {var createErlCoreEffectfulFunction, createErlList, createErlString, displayEffectsOnErlValues, getEnvironment, isNode, hasProcess, hasProcessWebpackShim, serialize, setCoreEffectfulFnsOnErlValues_bang_, toArray, _prStr, _quit_,
+	  __hasProp = {}.hasOwnProperty;
+
+	createErlCoreEffectfulFunction = __webpack_require__(30).createErlCoreEffectfulFunction;
+
+	createErlList = __webpack_require__(30).createErlList;
+
+	createErlString = __webpack_require__(30).createErlString;
+
+	serialize = __webpack_require__(36);
+
+	toArray = __webpack_require__(31).toArray;
+
+	getEnvironment = function(config) {
+	  var display, environment;
+	  display = config.display, environment = config.environment;
+	  setCoreEffectfulFnsOnErlValues_bang_(display)(environment, displayEffectsOnErlValues);
+	  return environment;
+	};
+
+	hasProcess = function() {
+	  return typeof process !== 'undefined';
+	}
+
+	hasProcessWebpackShim = function() {
+	  return(process.title === 'browser' && process.browser);
+	}
+
+	isNode = function() {
+	  return hasProcess() && !hasProcessWebpackShim();
+	}
+
+	_prStr = function(erlArgs, printReadably_question_) {
+	  return ((toArray(erlArgs)).map(function(erlArg) {
+	    return serialize(erlArg, printReadably_question_);
+	  })).join('');
+	};
+
+	_quit_ = function() {
+	  if (isNode()) {
+	    return process.exit(0);
+	  } else {
+	    return _prStr(createErlList(createErlString("\"'Erlkönig Lisp Console' is not permitted to close this window.\"")), false);
+	  }
+	};
+
+	setCoreEffectfulFnsOnErlValues_bang_ = function(represent) {
+	  return function(env, fns) {
+	    var fn, fnName, _results;
+	    _results = [];
+	    for (fnName in fns) {
+	      if (!__hasProp.call(fns, fnName)) continue;
+	      fn = fns[fnName];
+	      _results.push(env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
+	        return represent(fn(erlArgs));
+	      }));
+	    }
+	    return _results;
+	  };
+	};
+
+	displayEffectsOnErlValues = {
+	  'print': function(erlArgs) {
+	    return _prStr(erlArgs, false);
+	  },
+	  'pretty-print': function(erlArgs) {
+	    return _prStr(erlArgs, true);
+	  },
+	  '-quit-': _quit_,
+	};
+
+	module.exports = getEnvironment;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
+
+/***/ }),
+/* 41 */
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -3652,323 +3966,6 @@
 
 
 /***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var adjoinErlValue, commentSignal, coreEffectfulFunctionLabel, corePureFunctionLabel, erlAtom_question_, erlCoreEffectfulFunction_question_, erlCorePureFunction_question_, erlIdentifier_question_, erlIgnore_question_, erlIndex_question_, erlKeyword_question_, erlList_question_, erlMacro_question_, erlNil_question_, erlString_question_, erlUserPureFunction_question_, extractJsValue, ignoreLabel, indexEnd, indexStart, keywordLabel, listEnd, listStart, macroLabel, nilLabel, reduce, serialize, serializeAtom, serializeIdentifier, serializeIndex, serializeList, serializeString, stripQuotes, userPureFunctionLabel,
-	  __hasProp = {}.hasOwnProperty;
-
-	commentSignal = __webpack_require__(38);
-
-	extractJsValue = __webpack_require__(30).extractJsValue;
-
-	indexEnd = __webpack_require__(39).indexEnd;
-
-	indexStart = __webpack_require__(39).indexStart;
-
-	listEnd = __webpack_require__(39).listEnd;
-
-	listStart = __webpack_require__(39).listStart;
-
-	erlAtom_question_ = __webpack_require__(30).erlAtom_question_;
-
-	erlCoreEffectfulFunction_question_ = __webpack_require__(30).erlCoreEffectfulFunction_question_;
-
-	erlCorePureFunction_question_ = __webpack_require__(30).erlCorePureFunction_question_;
-
-	erlIdentifier_question_ = __webpack_require__(30).erlIdentifier_question_;
-
-	erlIgnore_question_ = __webpack_require__(30).erlIgnore_question_;
-
-	erlIndex_question_ = __webpack_require__(30).erlIndex_question_;
-
-	erlKeyword_question_ = __webpack_require__(30).erlKeyword_question_;
-
-	erlList_question_ = __webpack_require__(30).erlList_question_;
-
-	erlMacro_question_ = __webpack_require__(30).erlMacro_question_;
-
-	erlNil_question_ = __webpack_require__(30).erlNil_question_;
-
-	erlString_question_ = __webpack_require__(30).erlString_question_;
-
-	erlUserPureFunction_question_ = __webpack_require__(30).erlUserPureFunction_question_;
-
-	reduce = __webpack_require__(31).reduce;
-
-	adjoinErlValue = function(printReadably_question_) {
-	  return function(memo, erlValue) {
-	    var serialized;
-	    serialized = serialize(erlValue, printReadably_question_);
-	    if (memo.length === 0) {
-	      return serialized;
-	    } else {
-	      return "" + memo + " " + serialized;
-	    }
-	  };
-	};
-
-	serialize = function(erlExpr, printReadably_question_) {
-	  var _serialize;
-	  if (erlExpr === commentSignal) {
-	    return commentSignal;
-	  }
-	  _serialize = (function() {
-	    switch (false) {
-	      case !erlList_question_(erlExpr):
-	        return serializeList;
-	      case !erlIgnore_question_(erlExpr):
-	        return function(x) {
-	          return ignoreLabel;
-	        };
-	      case !erlIndex_question_(erlExpr):
-	        return serializeIndex;
-	      case !erlKeyword_question_(erlExpr):
-	        return function(x) {
-	          return keywordLabel;
-	        };
-	      case !erlCoreEffectfulFunction_question_(erlExpr):
-	        return function(x) {
-	          return coreEffectfulFunctionLabel;
-	        };
-	      case !erlCorePureFunction_question_(erlExpr):
-	        return function(x) {
-	          return corePureFunctionLabel;
-	        };
-	      case !erlUserPureFunction_question_(erlExpr):
-	        return function(x) {
-	          return userPureFunctionLabel;
-	        };
-	      case !erlMacro_question_(erlExpr):
-	        return function(x) {
-	          return macroLabel;
-	        };
-	      case !erlNil_question_(erlExpr):
-	        return function(x) {
-	          return nilLabel;
-	        };
-	      case !erlIdentifier_question_(erlExpr):
-	        return serializeIdentifier;
-	      case !erlString_question_(erlExpr):
-	        return serializeString;
-	      case !erlAtom_question_(erlExpr):
-	        return serializeAtom;
-	      case erlExpr.jsValue == null:
-	        return extractJsValue;
-	      default:
-	        return function(x) {
-	          return x;
-	        };
-	    }
-	  })();
-	  return _serialize(erlExpr, printReadably_question_);
-	};
-
-	serializeAtom = function(erlAtom, printReadably_question_) {
-	  return "(atom " + (serialize(erlAtom.erlValue, printReadably_question_)) + ")";
-	};
-
-	serializeIdentifier = function(erlString, printReadably_question_) {
-	  return extractJsValue(erlString);
-	};
-
-	serializeIndex = function(erlIndex, printReadably_question_) {
-	  var erlValue, jsIndex, key, memo;
-	  jsIndex = erlIndex.jsValue;
-	  memo = '';
-	  for (key in jsIndex) {
-	    if (!__hasProp.call(jsIndex, key)) continue;
-	    erlValue = jsIndex[key];
-	    memo = memo === '' ? "" + key + " " + (serialize(erlValue, printReadably_question_)) : "" + memo + ", " + key + " " + (serialize(erlValue, printReadably_question_));
-	  }
-	  return indexStart + memo + indexEnd;
-	};
-
-	serializeList = function(erlList, printReadably_question_) {
-	  var serializedList;
-	  serializedList = reduce("", adjoinErlValue(printReadably_question_), erlList);
-	  return listStart + serializedList + listEnd;
-	};
-
-	serializeString = function(erlString, printReadably_question_) {
-	  var jsString;
-	  jsString = stripQuotes(extractJsValue(erlString));
-	  if (!printReadably_question_) {
-	    return jsString;
-	  }
-	  return jsString.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
-	};
-
-	stripQuotes = function(jsString) {
-	  return jsString.slice(1, -1);
-	};
-
-	coreEffectfulFunctionLabel = '<effectful core function>';
-
-	corePureFunctionLabel = '<core function>';
-
-	ignoreLabel = '<ignore>';
-
-	keywordLabel = '<keyword>';
-
-	macroLabel = '<macro>';
-
-	nilLabel = 'nil';
-
-	userPureFunctionLabel = '<function>';
-
-	module.exports = serialize;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-	var comment;
-
-	comment = {};
-
-	module.exports = comment;
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-	var binaryGlyphTokens, catch_asterisk_, def_bang_, deref, derefGlyph, expand_hyphen_macro, fn_asterisk_, glyphTokens, ignore, ignoreIfTrue, ignoreIfTrueGlyph, ignoreUnlessTrue, ignoreUnlessTrueGlyph, ignore_bang_, ignore_bang_Glyph, indexEnd, indexStart, keyTokens, keyword_question_, keywords, let_asterisk_, letrec_asterisk_, listEnd, listStart, macroTokens, macro_asterisk_, nil, quasiquote, quasiquoteGlyph, quote, quoteGlyph, splat, spliceUnquote, spliceUnquoteGlyph, try_asterisk_, undef_bang_, unquote, unquoteGlyph, _do, _eval, _evalWithEnv, _false, _getCurrentEnv, _getDefaultEnv, _if, _process, _true,
-	  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-	keyword_question_ = function(jsString) {
-	  return __indexOf.call(keywords, jsString) >= 0;
-	};
-
-	keyTokens = [deref = 'deref', derefGlyph = '@', catch_asterisk_ = 'catch*', def_bang_ = 'def!', _do = 'do', _eval = 'eval', _evalWithEnv = 'eval-with-env', expand_hyphen_macro = 'expand-macro', _false = 'false', fn_asterisk_ = 'fn*', _getCurrentEnv = '-get-current-env-', _getDefaultEnv = '-get-default-env-', _if = 'if', ignore_bang_ = 'ignore!', ignore_bang_Glyph = '#!', ignoreIfTrue = 'ignoreIfTrue', ignoreIfTrueGlyph = '#-', ignoreUnlessTrue = 'ignoreUnlessTrue', ignoreUnlessTrueGlyph = '#+', ignore = 'ignore', indexEnd = '}', indexStart = '{', let_asterisk_ = 'let*', letrec_asterisk_ = 'letrec*', listEnd = ')', listStart = '(', macro_asterisk_ = 'macro*', nil = 'nil', _process = '-process-', quasiquote = 'quasiquote', quasiquoteGlyph = '`', quote = 'quote', quoteGlyph = '\'', splat = '&', spliceUnquote = 'splice-unquote', spliceUnquoteGlyph = '~@', _true = 'true', try_asterisk_ = 'try*', undef_bang_ = 'undef!', unquote = 'unquote', unquoteGlyph = '~'];
-
-	keywords = [catch_asterisk_, def_bang_, _do, _eval, _evalWithEnv, expand_hyphen_macro, _false, fn_asterisk_, _getCurrentEnv, _getDefaultEnv, _if, ignore, let_asterisk_, letrec_asterisk_, macro_asterisk_, nil, _process, quasiquote, quote, spliceUnquote, _true, try_asterisk_, undef_bang_, unquote];
-
-	macroTokens = [quasiquote, quote, spliceUnquote, unquote];
-
-	glyphTokens = [derefGlyph, ignore_bang_Glyph, quasiquoteGlyph, quoteGlyph, spliceUnquoteGlyph, unquoteGlyph];
-
-	binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
-
-	module.exports = {
-	  binaryGlyphTokens: binaryGlyphTokens,
-	  deref: deref,
-	  derefGlyph: derefGlyph,
-	  catch_asterisk_: catch_asterisk_,
-	  def_bang_: def_bang_,
-	  _do: _do,
-	  _eval: _eval,
-	  _evalWithEnv: _evalWithEnv,
-	  expand_hyphen_macro: expand_hyphen_macro,
-	  _false: _false,
-	  fn_asterisk_: fn_asterisk_,
-	  _getCurrentEnv: _getCurrentEnv,
-	  _getDefaultEnv: _getDefaultEnv,
-	  glyphTokens: glyphTokens,
-	  _if: _if,
-	  ignoreIfTrue: ignoreIfTrue,
-	  ignoreIfTrueGlyph: ignoreIfTrueGlyph,
-	  ignoreUnlessTrue: ignoreUnlessTrue,
-	  ignoreUnlessTrueGlyph: ignoreUnlessTrueGlyph,
-	  ignore: ignore,
-	  ignore_bang_: ignore_bang_,
-	  ignore_bang_Glyph: ignore_bang_Glyph,
-	  indexEnd: indexEnd,
-	  indexStart: indexStart,
-	  keyTokens: keyTokens,
-	  keyword_question_: keyword_question_,
-	  let_asterisk_: let_asterisk_,
-	  letrec_asterisk_: letrec_asterisk_,
-	  listEnd: listEnd,
-	  listStart: listStart,
-	  macro_asterisk_: macro_asterisk_,
-	  macroTokens: macroTokens,
-	  nil: nil,
-	  _process: _process,
-	  quasiquote: quasiquote,
-	  quasiquoteGlyph: quasiquoteGlyph,
-	  quote: quote,
-	  quoteGlyph: quoteGlyph,
-	  splat: splat,
-	  spliceUnquote: spliceUnquote,
-	  spliceUnquoteGlyph: spliceUnquoteGlyph,
-	  _true: _true,
-	  try_asterisk_: try_asterisk_,
-	  undef_bang_: undef_bang_,
-	  unquote: unquote,
-	  unquoteGlyph: unquoteGlyph
-	};
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-	
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var createErlCoreEffectfulFunction, createErlList, createErlString, displayEffectsOnErlValues, getEnvironment, serialize, setCoreEffectfulFnsOnErlValues_bang_, toArray, _prStr,
-	  __hasProp = {}.hasOwnProperty;
-
-	createErlCoreEffectfulFunction = __webpack_require__(30).createErlCoreEffectfulFunction;
-
-	createErlList = __webpack_require__(30).createErlList;
-
-	createErlString = __webpack_require__(30).createErlString;
-
-	serialize = __webpack_require__(37);
-
-	toArray = __webpack_require__(31).toArray;
-
-	getEnvironment = function(config) {
-	  var display, environment;
-	  display = config.display, environment = config.environment;
-	  setCoreEffectfulFnsOnErlValues_bang_(display)(environment, displayEffectsOnErlValues);
-	  return environment;
-	};
-
-	_prStr = function(erlArgs, printReadably_question_) {
-	  return ((toArray(erlArgs)).map(function(erlArg) {
-	    return serialize(erlArg, printReadably_question_);
-	  })).join('');
-	};
-
-	setCoreEffectfulFnsOnErlValues_bang_ = function(represent) {
-	  return function(env, fns) {
-	    var fn, fnName, _results;
-	    _results = [];
-	    for (fnName in fns) {
-	      if (!__hasProp.call(fns, fnName)) continue;
-	      fn = fns[fnName];
-	      _results.push(env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
-	        return represent(fn(erlArgs));
-	      }));
-	    }
-	    return _results;
-	  };
-	};
-
-	displayEffectsOnErlValues = {
-	  'print': function(erlArgs) {
-	    return _prStr(erlArgs, false);
-	  },
-	  'pretty-print': function(erlArgs) {
-	    return _prStr(erlArgs, true);
-	  },
-	  '--quit--': function() {
-	    return _prStr(createErlList(createErlString("\"'Erlkönig Lisp Console' is not permitted to close this window.\"")), false);
-	  }
-	};
-
-	module.exports = getEnvironment;
-
-
-/***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4132,7 +4129,7 @@
 
 	var commentSignal, evaluate, _process;
 
-	commentSignal = __webpack_require__(38);
+	commentSignal = __webpack_require__(37);
 
 	evaluate = __webpack_require__(45);
 
@@ -4173,13 +4170,13 @@
 
 	car = __webpack_require__(31).car;
 
-	catch_asterisk_ = __webpack_require__(39).catch_asterisk_;
+	catch_asterisk_ = __webpack_require__(38).catch_asterisk_;
 
 	cdr = __webpack_require__(31).cdr;
 
 	circumpendQuotes = __webpack_require__(29).circumpendQuotes;
 
-	commentSignal = __webpack_require__(38);
+	commentSignal = __webpack_require__(37);
 
 	createErlIndex = __webpack_require__(30).createErlIndex;
 
@@ -4197,23 +4194,23 @@
 
 	createErlUserPureFunction = __webpack_require__(30).createErlUserPureFunction;
 
-	def_bang_ = __webpack_require__(39).def_bang_;
+	def_bang_ = __webpack_require__(38).def_bang_;
 
-	_do = __webpack_require__(39)._do;
+	_do = __webpack_require__(38)._do;
 
 	empty_question_ = __webpack_require__(31).empty_question_;
 
-	_eval = __webpack_require__(39)._eval;
+	_eval = __webpack_require__(38)._eval;
 
-	_evalWithEnv = __webpack_require__(39)._evalWithEnv;
+	_evalWithEnv = __webpack_require__(38)._evalWithEnv;
 
-	expand_hyphen_macro = __webpack_require__(39).expand_hyphen_macro;
+	expand_hyphen_macro = __webpack_require__(38).expand_hyphen_macro;
 
 	extractJsValue = __webpack_require__(30).extractJsValue;
 
 	filter = __webpack_require__(31).filter;
 
-	fn_asterisk_ = __webpack_require__(39).fn_asterisk_;
+	fn_asterisk_ = __webpack_require__(38).fn_asterisk_;
 
 	forEach = __webpack_require__(31).forEach;
 
@@ -4223,23 +4220,23 @@
 
 	fromErlIndex = __webpack_require__(43).fromErlIndex;
 
-	_getCurrentEnv = __webpack_require__(39)._getCurrentEnv;
+	_getCurrentEnv = __webpack_require__(38)._getCurrentEnv;
 
-	_getDefaultEnv = __webpack_require__(39)._getDefaultEnv;
+	_getDefaultEnv = __webpack_require__(38)._getDefaultEnv;
 
-	_if = __webpack_require__(39)._if;
+	_if = __webpack_require__(38)._if;
 
 	jsString_question_ = __webpack_require__(29).jsString_question_;
 
-	keyword_question_ = __webpack_require__(39).keyword_question_;
+	keyword_question_ = __webpack_require__(38).keyword_question_;
 
-	let_asterisk_ = __webpack_require__(39).let_asterisk_;
+	let_asterisk_ = __webpack_require__(38).let_asterisk_;
 
-	letrec_asterisk_ = __webpack_require__(39).letrec_asterisk_;
+	letrec_asterisk_ = __webpack_require__(38).letrec_asterisk_;
 
 	lookup = __webpack_require__(46).lookup;
 
-	macro_asterisk_ = __webpack_require__(39).macro_asterisk_;
+	macro_asterisk_ = __webpack_require__(38).macro_asterisk_;
 
 	erlCoreEffectfulFunction_question_ = __webpack_require__(30).erlCoreEffectfulFunction_question_;
 
@@ -4265,13 +4262,13 @@
 
 	next = __webpack_require__(31).next;
 
-	quasiquote = __webpack_require__(39).quasiquote;
+	quasiquote = __webpack_require__(38).quasiquote;
 
-	quote = __webpack_require__(39).quote;
+	quote = __webpack_require__(38).quote;
 
-	spliceUnquote = __webpack_require__(39).spliceUnquote;
+	spliceUnquote = __webpack_require__(38).spliceUnquote;
 
-	unquote = __webpack_require__(39).unquote;
+	unquote = __webpack_require__(38).unquote;
 
 	recurse = __webpack_require__(31).recurse;
 
@@ -4283,13 +4280,13 @@
 
 	setMainEnv = __webpack_require__(46).setMainEnv;
 
-	splat = __webpack_require__(39).splat;
+	splat = __webpack_require__(38).splat;
 
 	toPartialArray = __webpack_require__(31).toPartialArray;
 
-	try_asterisk_ = __webpack_require__(39).try_asterisk_;
+	try_asterisk_ = __webpack_require__(38).try_asterisk_;
 
-	undef_bang_ = __webpack_require__(39).undef_bang_;
+	undef_bang_ = __webpack_require__(38).undef_bang_;
 
 	unsetMainEnv = __webpack_require__(46).unsetMainEnv;
 
@@ -4639,9 +4636,9 @@
 	var atomize, binaryGlyphIndex, binaryGlyphTokens, binaryGlyph_question_, boolean_question_, comment, createErlBoolean, createErlIdentifier, createErlIgnore, createErlIndex, createErlList, createErlNil, createErlNumber, createErlString, createErlSymbol, deref, derefGlyph, extractJsValue, float_question_, glyphIndex, glyphTokens, glyph_question_, identifer_question_, ignore, ignoreIfTrue, ignoreIfTrueGlyph, ignoreUnlessTrue, ignoreUnlessTrueGlyph, ignore_bang_, ignore_bang_Glyph, ignore_question_, indexEnd, indexStart, indexStart_question_, integer_question_, keyTokens, listEnd, listStart, listStart_question_, nil, nil_question_, parse, parseBinaryGlyph, parseBoolean, parseFloat10, parseGlyph, parseIndex, parseInt10, parseList, quasiquote, quasiquoteGlyph, quote, quoteGlyph, reverse, spliceUnquote, spliceUnquoteGlyph, startsWith_question_, string_question_, stripUnderscores, unquote, unquoteGlyph, _false, _parse, _true,
 	  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-	binaryGlyphTokens = __webpack_require__(39).binaryGlyphTokens;
+	binaryGlyphTokens = __webpack_require__(38).binaryGlyphTokens;
 
-	comment = __webpack_require__(38);
+	comment = __webpack_require__(37);
 
 	createErlBoolean = __webpack_require__(30).createErlBoolean;
 
@@ -4661,61 +4658,61 @@
 
 	createErlSymbol = __webpack_require__(30).createErlSymbol;
 
-	deref = __webpack_require__(39).deref;
+	deref = __webpack_require__(38).deref;
 
-	derefGlyph = __webpack_require__(39).derefGlyph;
+	derefGlyph = __webpack_require__(38).derefGlyph;
 
 	extractJsValue = __webpack_require__(30).extractJsValue;
 
-	_false = __webpack_require__(39)._false;
+	_false = __webpack_require__(38)._false;
 
-	glyphTokens = __webpack_require__(39).glyphTokens;
+	glyphTokens = __webpack_require__(38).glyphTokens;
 
-	ignore = __webpack_require__(39).ignore;
+	ignore = __webpack_require__(38).ignore;
 
-	ignore_bang_ = __webpack_require__(39).ignore_bang_;
+	ignore_bang_ = __webpack_require__(38).ignore_bang_;
 
-	ignore_bang_Glyph = __webpack_require__(39).ignore_bang_Glyph;
+	ignore_bang_Glyph = __webpack_require__(38).ignore_bang_Glyph;
 
-	ignoreIfTrue = __webpack_require__(39).ignoreIfTrue;
+	ignoreIfTrue = __webpack_require__(38).ignoreIfTrue;
 
-	ignoreIfTrueGlyph = __webpack_require__(39).ignoreIfTrueGlyph;
+	ignoreIfTrueGlyph = __webpack_require__(38).ignoreIfTrueGlyph;
 
-	ignoreUnlessTrue = __webpack_require__(39).ignoreUnlessTrue;
+	ignoreUnlessTrue = __webpack_require__(38).ignoreUnlessTrue;
 
-	ignoreUnlessTrueGlyph = __webpack_require__(39).ignoreUnlessTrueGlyph;
+	ignoreUnlessTrueGlyph = __webpack_require__(38).ignoreUnlessTrueGlyph;
 
-	indexEnd = __webpack_require__(39).indexEnd;
+	indexEnd = __webpack_require__(38).indexEnd;
 
-	indexStart = __webpack_require__(39).indexStart;
+	indexStart = __webpack_require__(38).indexStart;
 
-	keyTokens = __webpack_require__(39).keyTokens;
+	keyTokens = __webpack_require__(38).keyTokens;
 
-	listEnd = __webpack_require__(39).listEnd;
+	listEnd = __webpack_require__(38).listEnd;
 
-	listStart = __webpack_require__(39).listStart;
+	listStart = __webpack_require__(38).listStart;
 
-	nil = __webpack_require__(39).nil;
+	nil = __webpack_require__(38).nil;
 
-	quasiquote = __webpack_require__(39).quasiquote;
+	quasiquote = __webpack_require__(38).quasiquote;
 
-	quote = __webpack_require__(39).quote;
+	quote = __webpack_require__(38).quote;
 
-	spliceUnquote = __webpack_require__(39).spliceUnquote;
+	spliceUnquote = __webpack_require__(38).spliceUnquote;
 
-	unquote = __webpack_require__(39).unquote;
+	unquote = __webpack_require__(38).unquote;
 
-	quasiquoteGlyph = __webpack_require__(39).quasiquoteGlyph;
+	quasiquoteGlyph = __webpack_require__(38).quasiquoteGlyph;
 
-	quoteGlyph = __webpack_require__(39).quoteGlyph;
+	quoteGlyph = __webpack_require__(38).quoteGlyph;
 
-	spliceUnquoteGlyph = __webpack_require__(39).spliceUnquoteGlyph;
+	spliceUnquoteGlyph = __webpack_require__(38).spliceUnquoteGlyph;
 
-	unquoteGlyph = __webpack_require__(39).unquoteGlyph;
+	unquoteGlyph = __webpack_require__(38).unquoteGlyph;
 
 	reverse = __webpack_require__(31).reverse;
 
-	_true = __webpack_require__(39)._true;
+	_true = __webpack_require__(38)._true;
 
 	atomize = function(token) {
 	  var createErlValue;
@@ -4895,7 +4892,7 @@
 
 	var commentSignal, comment_question_, createTokenRegex, meaningful_question_, tokenize;
 
-	commentSignal = __webpack_require__(38);
+	commentSignal = __webpack_require__(37);
 
 	comment_question_ = function(match) {
 	  return match[0] === ';';
