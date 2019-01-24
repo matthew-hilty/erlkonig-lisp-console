@@ -10,7 +10,7 @@
         connect-src  'self';
         font-src     'self';
         img-src      'self';
-        script-src   'self';
+        script-src   'self' https://erlkonig-lisp-console.herokuapp.com;
         style-src    'self' 'nonce-$NONCE$';
       "
     >
