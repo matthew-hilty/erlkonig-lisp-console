@@ -1,0 +1,173 @@
+@font-face {
+  font-family: 'Architects Daughter';
+  font-style: normal;
+  font-weight: 400;
+  src: url('ArchitectsDaughter.woff') format('woff');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+}
+
+html {
+  height: 100%;
+  padding: 0px;
+  width: 100%;
+}
+
+body {
+  background: radial-gradient(circle at -200% 25%, rgba(0, 255, 0, 0.65), black 73%);
+}
+
+.background {
+  background-image: url('erlking.jpg');
+  background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1.0) 0%, rgba(0, 0, 0, 0.85) 100%), url('erlking.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: fixed;
+  width: 66%;
+  height: 80%;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.console-section {
+  z-index: 3;
+  margin: 0;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  bottom: 10%;
+  right: 10%;
+  background-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none; 
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.head {
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  position: fixed;
+  padding: 5px;
+  top: 0;
+  left: 10%;
+}
+
+.head h1 {
+  color: rgb(0, 190, 0);
+  font-size: 1.5em;
+}
+
+.head h4 {
+  color: rgb(0, 150, 0);
+}
+
+.head h1, .head h4 {
+  margin: 1px;
+  font-weight: normal;
+}
+
+.terminal {
+  transition: linear box-shadow .2s;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(217, 215, 255, 0.85) inset, 2px 2px 16px green;
+  padding: 0;
+  text-shadow: 0 0 6px rgba(255, 255, 255, .8);
+  border: none;
+  background-color: transparent;
+  color: #F6F6FF;
+  font-family: monospace;
+  font-size: 12px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 69px;
+}
+
+.erl-viewport {
+  height: 94%;
+  margin: 15px 20px;
+  overflow: auto;
+  padding: 0;
+}
+
+.erl-viewport::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+.erl-viewport::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+
+.erl-viewport::-webkit-scrollbar-thumb {
+  background-color: rgba(55, 53, 50, 0.5);
+  border-radius: 10px;
+}
+
+.erl-viewport::-webkit-scrollbar-corner {
+  visibility: hidden;
+}
+
+.erl-line {
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.erl-cursor {
+  visibility: visible;
+}
+
+.erl-cursor-hidden {
+  visibility: hidden;
+}
+
+.erl-scroll-track {
+  visibility: hidden;
+  position: absolute;
+  border-radius: 20px;
+}
+
+.erl-x-scroll-track {
+  height: 5px;
+  left: 5%;
+  bottom: 17px;
+  right: 5%;
+}
+
+.erl-y-scroll-track {
+  width: 5px;
+  top: 5%;
+  right: 17px;
+  bottom: 5%;
+}
+
+.erl-scroll-thumb {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgba(55, 53, 50, 0.5);
+  border-radius: 20px;
+  z-index: 4;
+}
+
+.erl-scroll-thumb:hover {
+  visibility: hidden;
+  position: absolute;
+  background-color: rgb(0, 80, 0);
+  border-radius: 20px;
+  z-index: 4;
+}
+
+.erl-x-scroll-thumb {
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.erl-y-scroll-thumb {
+  top: 0;
+  width: 100%;
+  height: 100%;
+}

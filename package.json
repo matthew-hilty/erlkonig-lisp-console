@@ -1,0 +1,38 @@
+{
+  "name": "erlking-lisp",
+  "version": "0.1.0",
+  "description": "Terminal emulator and lisp interpreter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soraismus/erlking-lisp.git"
+  },
+  "keywords": [
+    "terminal",
+    "emulator",
+    "erlking",
+    "lisp",
+    "interpreter"
+  ],
+  "author": "Matthew Hilty",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/soraismus/erlking-lisp/issues"
+  },
+  "homepage": "https://github.com/soraismus/erlking-lisp",
+  "devDependencies": {
+    "browserify": "^13.1.0",
+    "bundle-collapser": "^1.2.1",
+    "cough-syrup": "0.0.1",
+    "coughify": "0.0.0",
+    "derequire": "^2.0.3",
+    "uglify-js": "^2.7.0",
+    "webpack": "^1.15.0"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
