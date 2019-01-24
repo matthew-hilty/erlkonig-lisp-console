@@ -54,16 +54,20 @@
 
 	var initialize    = __webpack_require__(2);
 	var interpretLisp = __webpack_require__(28);
+	var keyTokens     = __webpack_require__(39).keyTokens;
+
+	var _keyTokens =  keyTokens.map(function (keyToken) {
+	  return ':' + keyToken;
+	});
 
 	var promptLabel = 'Lisp> ';
 
 	function getCandidates(prefix) {
-	  return getMatches(
-	    prefix,
-	    interpretLisp("(keys (-get-current-env-))")[0]
+	  var envKeys = interpretLisp("(keys (-get-current-env-))")[0]
 	      .value
 	      .slice(1, -1)
-	      .split(' '));
+	      .split(' ');
+	  return getMatches(prefix, _keyTokens.concat(envKeys));
 	}
 
 	function getMatches(prefix, words) {

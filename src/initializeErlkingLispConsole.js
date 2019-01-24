@@ -1,15 +1,19 @@
 var initialize    = require('./console/initialize');
 var interpretLisp = require('./lisp/interpret');
+var keyTokens     = require('./lisp/keyTokens').keyTokens;
+
+var _keyTokens =  keyTokens.map(function (keyToken) {
+  return ':' + keyToken;
+});
 
 var promptLabel = 'Lisp> ';
 
 function getCandidates(prefix) {
-  return getMatches(
-    prefix,
-    interpretLisp("(keys (-get-current-env-))")[0]
+  var envKeys = interpretLisp("(keys (-get-current-env-))")[0]
       .value
       .slice(1, -1)
-      .split(' '));
+      .split(' ');
+  return getMatches(prefix, _keyTokens.concat(envKeys));
 }
 
 function getMatches(prefix, words) {
