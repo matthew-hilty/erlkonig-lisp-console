@@ -1,27 +1,8 @@
-var createErlIndex     = require('./type-utilities').createErlIndex;
-var jsString_question_ = require('./js-utilities').jsString_question_;
+var createErlIndex = require('./type-utilities').createErlIndex;
+var isJsString     = require('./js-utilities').isJsString;
 
-var  __slice = [].slice;
+var __slice   = [].slice;
 var __hasProp = {}.hasOwnProperty;
-
-var fromJsObjects = function() {
-  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var copy = {};
-  var len = jsObjects.length;
-  for (var i = 0;  i < len; i++) {
-    var jsObject = jsObjects[i];
-    for (var key in jsObject) {
-      if (!__hasProp.call(jsObject, key)) continue;
-      var val = jsObject[key];
-      if (jsString_question_(key)) {
-        copy[':' + key] = val;
-      } else {
-        copy[key] = val;
-      }
-    }
-  }
-  return createErlIndex(copy);
-};
 
 var fromErlIndex = function(erlIndex) {
   var result = {};
@@ -29,7 +10,7 @@ var fromErlIndex = function(erlIndex) {
   for (var key in jsValue) {
     if (!__hasProp.call(jsValue, key)) continue;
     var value = jsValue[key];
-    if (jsString_question_(key)) {
+    if (isJsString(key)) {
       var newKey = (function() {
         switch (key[0]) {
           case ':':
@@ -46,6 +27,25 @@ var fromErlIndex = function(erlIndex) {
     }
   }
   return result;
+};
+
+var fromJsObjects = function() {
+  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  var copy = {};
+  var len = jsObjects.length;
+  for (var i = 0;  i < len; i++) {
+    var jsObject = jsObjects[i];
+    for (var key in jsObject) {
+      if (!__hasProp.call(jsObject, key)) continue;
+      var val = jsObject[key];
+      if (isJsString(key)) {
+        copy[':' + key] = val;
+      } else {
+        copy[key] = val;
+      }
+    }
+  }
+  return createErlIndex(copy);
 };
 
 module.exports = {

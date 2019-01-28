@@ -15,8 +15,8 @@ var extractJsValue        = require('./type-utilities').extractJsValue;
 var _false                = require('./keyTokens')._false;
 var glyphTokens           = require('./keyTokens').glyphTokens;
 var ignore                = require('./keyTokens').ignore;
-var ignore_bang_          = require('./keyTokens').ignore_bang_;
-var ignore_bang_Glyph     = require('./keyTokens').ignore_bang_Glyph;
+var ignoreBang            = require('./keyTokens').ignoreBang;
+var ignoreBangGlyph       = require('./keyTokens').ignoreBangGlyph;
 var ignoreIfTrue          = require('./keyTokens').ignoreIfTrue;
 var ignoreIfTrueGlyph     = require('./keyTokens').ignoreIfTrueGlyph;
 var ignoreUnlessTrue      = require('./keyTokens').ignoreUnlessTrue;
@@ -46,23 +46,23 @@ var  __indexOf = [].indexOf || function(item) {
 
 var atomize = function(token) {
   var createErlValue = (function() {
-    if (nil_question_(token)) {
+    if (isNil(token)) {
       return createErlNil;
-    } else if (ignore_question_(token)) {
+    } else if (isIgnore(token)) {
       return createErlIgnore;
-    } else if (boolean_question_(token)) {
+    } else if (isBoolean(token)) {
       return function(token) {
         return createErlBoolean(parseBoolean(token));
       };
-    } else if (string_question_(token)) {
+    } else if (isString(token)) {
       return createErlString;
-    } else if (identifer_question_(token)) {
+    } else if (isIdentifier(token)) {
       return createErlIdentifier;
-    } else if (integer_question_(token)) {
+    } else if (isInteger(token)) {
       return function(token) {
         return createErlNumber(parseInt10(token));
       };
-    } else if (float_question_(token)) {
+    } else if (isFloat(token)) {
       return function(token) {
         return createErlNumber(parseFloat10(token));
       };
@@ -73,50 +73,50 @@ var atomize = function(token) {
   return createErlValue(token);
 };
 
-var boolean_question_ = function(token) {
+var isBoolean = function(token) {
   return token === _false || token === _true;
 };
 
-var float_question_ = function(token) {
+var isFloat = function(token) {
   return /^(-|\+)?[0-9](_|\d)*\.(\d|(\d(_|\d)*\d))$/.test(token);
 };
 
-var binaryGlyph_question_ = function(token) {
+var isBinaryGlyph = function(token) {
   return __indexOf.call(binaryGlyphTokens, token) >= 0;
 };
 
-var glyph_question_ = function(token) {
+var isGlyph = function(token) {
   return __indexOf.call(glyphTokens, token) >= 0;
 };
 
-var ignore_question_ = function(token) {
+var isIgnore = function(token) {
   return token === ignore;
 };
 
-var indexStart_question_ = function(token) {
+var isIndexStart = function(token) {
   return token === indexStart;
 };
 
-var integer_question_ = function(token) {
+var isInteger = function(token) {
   return /^(0(?!\.)|((-|\+)?[1-9](_|\d)*$))/.test(token);
 };
 
-var listStart_question_ = function(token) {
+var isListStart = function(token) {
   return token === listStart;
 };
 
-var nil_question_ = function(token) {
+var isNil = function(token) {
   return token === nil;
 };
 
 var _parse = function(token, tokens) {
-  if (listStart_question_(token)) {
+  if (isListStart(token)) {
     return parseList(tokens);
-  } else if (indexStart_question_(token)) {
+  } else if (isIndexStart(token)) {
     return parseIndex(tokens);
-  } else if (glyph_question_(token)) {
+  } else if (isGlyph(token)) {
     return parseGlyph(glyphIndex[token], tokens);
-  } else if (binaryGlyph_question_(token)) {
+  } else if (isBinaryGlyph(token)) {
     return parseBinaryGlyph(binaryGlyphIndex[token], tokens);
   } else {
     return atomize(token);
@@ -156,14 +156,14 @@ var parseIndex = function(tokens) {
   var token;
   var jsIndex = {};
   var key = null;
-  var keyStep_question_ = true;
+  var isKeyStep = true;
   while ((token = tokens.shift()) !== indexEnd) {
-    if (keyStep_question_) {
+    if (isKeyStep) {
       key = _parse(token, tokens);
-      keyStep_question_ = false;
+      isKeyStep = false;
     } else {
       jsIndex[extractJsValue(key)] = _parse(token, tokens);
-      keyStep_question_ = true;
+      isKeyStep = true;
     }
   }
   return createErlIndex(jsIndex);
@@ -182,7 +182,7 @@ var parseList = function(tokens) {
   return reverse(erlList);
 };
 
-var startsWith_question_ = function(char) {
+var startsWith = function(char) {
   return function(token) {
     return token[0] === char;
   };
@@ -195,7 +195,7 @@ var stripUnderscores = function(token) {
 var glyphIndex = {};
 
 glyphIndex[derefGlyph]         = deref;
-glyphIndex[ignore_bang_Glyph]  = ignore_bang_;
+glyphIndex[ignoreBangGlyph]    = ignoreBang;
 glyphIndex[quasiquoteGlyph]    = quasiquote;
 glyphIndex[quoteGlyph]         = quote;
 glyphIndex[spliceUnquoteGlyph] = spliceUnquote;
@@ -206,8 +206,8 @@ var binaryGlyphIndex = {};
 binaryGlyphIndex[ignoreIfTrueGlyph]     = ignoreIfTrue;
 binaryGlyphIndex[ignoreUnlessTrueGlyph] = ignoreUnlessTrue;
 
-var string_question_ = startsWith_question_('"');
+var isString = startsWith('"');
 
-var identifer_question_ = startsWith_question_(':');
+var isIdentifier = startsWith(':');
 
 module.exports = parse;

@@ -1,3 +1,8 @@
 node_modules/
+notes/
+*.note
+*.notes
+*.secret
+*.swo
 *.swp
 *.un~

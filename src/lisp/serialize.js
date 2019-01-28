@@ -1,28 +1,28 @@
-var commentSignal                      = require('./commentSignal');
-var extractJsValue                     = require('./type-utilities').extractJsValue;
-var indexEnd                           = require('./keyTokens').indexEnd;
-var indexStart                         = require('./keyTokens').indexStart;
-var listEnd                            = require('./keyTokens').listEnd;
-var listStart                          = require('./keyTokens').listStart;
-var erlAtom_question_                  = require('./type-utilities').erlAtom_question_;
-var erlCoreEffectfulFunction_question_ = require('./type-utilities').erlCoreEffectfulFunction_question_;
-var erlCorePureFunction_question_      = require('./type-utilities').erlCorePureFunction_question_;
-var erlIdentifier_question_            = require('./type-utilities').erlIdentifier_question_;
-var erlIgnore_question_                = require('./type-utilities').erlIgnore_question_;
-var erlIndex_question_                 = require('./type-utilities').erlIndex_question_;
-var erlKeyword_question_               = require('./type-utilities').erlKeyword_question_;
-var erlList_question_                  = require('./type-utilities').erlList_question_;
-var erlMacro_question_                 = require('./type-utilities').erlMacro_question_;
-var erlNil_question_                   = require('./type-utilities').erlNil_question_;
-var erlString_question_                = require('./type-utilities').erlString_question_;
-var erlUserPureFunction_question_      = require('./type-utilities').erlUserPureFunction_question_;
-var reduce                             = require('./linked-list').reduce;
+var commentSignal              = require('./commentSignal');
+var extractJsValue             = require('./type-utilities').extractJsValue;
+var indexEnd                   = require('./keyTokens').indexEnd;
+var indexStart                 = require('./keyTokens').indexStart;
+var isErlAtom                  = require('./type-utilities').isErlAtom;
+var isErlCoreEffectfulFunction = require('./type-utilities').isErlCoreEffectfulFunction;
+var isErlCorePureFunction      = require('./type-utilities').isErlCorePureFunction;
+var isErlIdentifier            = require('./type-utilities').isErlIdentifier;
+var isErlIgnore                = require('./type-utilities').isErlIgnore;
+var isErlIndex                 = require('./type-utilities').isErlIndex;
+var isErlKeyword               = require('./type-utilities').isErlKeyword;
+var isErlList                  = require('./type-utilities').isErlList;
+var isErlMacro                 = require('./type-utilities').isErlMacro;
+var isErlNil                   = require('./type-utilities').isErlNil;
+var isErlString                = require('./type-utilities').isErlString;
+var isErlUserPureFunction      = require('./type-utilities').isErlUserPureFunction;
+var listEnd                    = require('./keyTokens').listEnd;
+var listStart                  = require('./keyTokens').listStart;
+var reduce                     = require('./linked-list').reduce;
 
-var  __hasProp = {}.hasOwnProperty;
+var __hasProp = {}.hasOwnProperty;
 
-var adjoinErlValue = function(printReadably_question_) {
+var adjoinErlValue = function(shouldBeReadable) {
   return function(memo, erlValue) {
-    var serialized = serialize(erlValue, printReadably_question_);
+    var serialized = serialize(erlValue, shouldBeReadable);
     if (memo.length === 0) {
       return serialized;
     } else {
@@ -31,48 +31,48 @@ var adjoinErlValue = function(printReadably_question_) {
   };
 };
 
-var serialize = function(erlExpr, printReadably_question_) {
+var serialize = function(erlExpr, shouldBeReadable) {
   if (erlExpr === commentSignal) {
     return commentSignal;
   }
   var _serialize = (function() {
-    if (erlList_question_(erlExpr)) {
+    if (isErlList(erlExpr)) {
       return serializeList;
-    } else if (erlIgnore_question_(erlExpr)) {
+    } else if (isErlIgnore(erlExpr)) {
       return function(erlValue) {
         return ignoreLabel;
       };
-    } else if (erlIndex_question_(erlExpr)) {
+    } else if (isErlIndex(erlExpr)) {
       return serializeIndex;
-    } else if (erlKeyword_question_(erlExpr)) {
+    } else if (isErlKeyword(erlExpr)) {
       return function(erlValue) {
         return keywordLabel;
       };
-    } else if (erlCoreEffectfulFunction_question_(erlExpr)) {
+    } else if (isErlCoreEffectfulFunction(erlExpr)) {
       return function(erlValue) {
         return coreEffectfulFunctionLabel;
       };
-    } else if (erlCorePureFunction_question_(erlExpr)) {
+    } else if (isErlCorePureFunction(erlExpr)) {
       return function(erlValue) {
         return corePureFunctionLabel;
       };
-    } else if (erlUserPureFunction_question_(erlExpr)) {
+    } else if (isErlUserPureFunction(erlExpr)) {
       return function(erlValue) {
         return userPureFunctionLabel;
       };
-    } else if (erlMacro_question_(erlExpr)) {
+    } else if (isErlMacro(erlExpr)) {
       return function(erlValue) {
         return macroLabel;
       };
-    } else if (erlNil_question_(erlExpr)) {
+    } else if (isErlNil(erlExpr)) {
       return function(erlValue) {
         return nilLabel;
       };
-    } else if (erlIdentifier_question_(erlExpr)) {
+    } else if (isErlIdentifier(erlExpr)) {
       return serializeIdentifier;
-    } else if (erlString_question_(erlExpr)) {
+    } else if (isErlString(erlExpr)) {
       return serializeString;
-    } else if (erlAtom_question_(erlExpr)) {
+    } else if (isErlAtom(erlExpr)) {
       return serializeAtom;
     } else if (erlExpr.jsValue != null) {
       return extractJsValue;
@@ -82,18 +82,18 @@ var serialize = function(erlExpr, printReadably_question_) {
       };
     }
   })();
-  return _serialize(erlExpr, printReadably_question_);
+  return _serialize(erlExpr, shouldBeReadable);
 };
 
-var serializeAtom = function(erlAtom, printReadably_question_) {
-  return "(atom " + (serialize(erlAtom.erlValue, printReadably_question_)) + ")";
+var serializeAtom = function(erlAtom, shouldBeReadable) {
+  return "(atom " + (serialize(erlAtom.erlValue, shouldBeReadable)) + ")";
 };
 
-var serializeIdentifier = function(erlString, printReadably_question_) {
+var serializeIdentifier = function(erlString, shouldBeReadable) {
   return extractJsValue(erlString);
 };
 
-var serializeIndex = function(erlIndex, printReadably_question_) {
+var serializeIndex = function(erlIndex, shouldBeReadable) {
   var jsIndex = erlIndex.jsValue;
   var memo = '';
   for (var key in jsIndex) {
@@ -103,30 +103,30 @@ var serializeIndex = function(erlIndex, printReadably_question_) {
       memo = ""
         + key
         + " "
-        + (serialize(erlValue, printReadably_question_));
+        + (serialize(erlValue, shouldBeReadable));
     } else {
       memo = ""
         + memo
         + ", "
         + key
         + " "
-        + (serialize(erlValue, printReadably_question_));
+        + (serialize(erlValue, shouldBeReadable));
     }
   }
   return indexStart + memo + indexEnd;
 };
 
-var serializeList = function(erlList, printReadably_question_) {
+var serializeList = function(erlList, shouldBeReadable) {
   var serializedList = reduce(
     "",
-    adjoinErlValue(printReadably_question_),
+    adjoinErlValue(shouldBeReadable),
     erlList);
   return listStart + serializedList + listEnd;
 };
 
-var serializeString = function(erlString, printReadably_question_) {
+var serializeString = function(erlString, shouldBeReadable) {
   var jsString = stripQuotes(extractJsValue(erlString));
-  if (!printReadably_question_) {
+  if (!shouldBeReadable) {
     return jsString;
   }
   return jsString

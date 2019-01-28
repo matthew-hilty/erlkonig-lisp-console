@@ -7,7 +7,7 @@ var _serialize           = require('./serialize');
 var standardFnsAndMacros = require('./standard-fns-and-macros');
 var tokenizeAndParse     = require('./tokenizeAndParse');
 
-var  __hasProp = {}.hasOwnProperty;
+var __hasProp = {}.hasOwnProperty;
 
 var _createErlString = function(jsString) {
   return createErlString(circumpendQuotes(jsString));

@@ -1,18 +1,18 @@
 var deref                 = 'deref';
 var derefGlyph            = '@';
-var catch_asterisk_       = 'catch*';
-var def_bang_             = 'def!';
+var catchStar             = 'catch*';
+var defBang               = 'def!';
 var _do                   = 'do';
 var _eval                 = 'eval';
 var _evalWithEnv          = 'eval-with-env';
-var expand_hyphen_macro   = 'expand-macro';
+var expandMacro           = 'expand-macro';
 var _false                = 'false';
-var fn_asterisk_          = 'fn*';
+var fnStar                = 'fn*';
 var _getCurrentEnv        = '-get-current-env-';
 var _getDefaultEnv        = '-get-default-env-';
 var _if                   = 'if';
-var ignore_bang_          = 'ignore!';
-var ignore_bang_Glyph     = '#!';
+var ignoreBang            = 'ignore!';
+var ignoreBangGlyph       = '#!';
 var ignoreIfTrue          = 'ignoreIfTrue';
 var ignoreIfTrueGlyph     = '#-';
 var ignoreUnlessTrue      = 'ignoreUnlessTrue';
@@ -20,11 +20,11 @@ var ignoreUnlessTrueGlyph = '#+';
 var ignore                = 'ignore';
 var indexEnd              = '}';
 var indexStart            = '{';
-var let_asterisk_         = 'let*';
-var letrec_asterisk_      = 'letrec*';
+var letStar               = 'let*';
+var letrecStar            = 'letrec*';
 var listEnd               = ')';
 var listStart             = '(';
-var macro_asterisk_       = 'macro*';
+var macroStar             = 'macro*';
 var nil                   = 'nil';
 var _process              = '-process-';
 var quasiquote            = 'quasiquote';
@@ -35,27 +35,27 @@ var splat                 = '&';
 var spliceUnquote         = 'splice-unquote';
 var spliceUnquoteGlyph    = '~@';
 var _true                 = 'true';
-var try_asterisk_         = 'try*';
-var undef_bang_           = 'undef!';
+var tryStar               = 'try*';
+var undefBang             = 'undef!';
 var unquote               = 'unquote';
 var unquoteGlyph          = '~'
 
 var keyTokens = [
   deref,
   derefGlyph,
-  catch_asterisk_,
-  def_bang_,
+  catchStar,
+  defBang,
   _do,
   _eval,
   _evalWithEnv,
-  expand_hyphen_macro,
+  expandMacro,
   _false,
-  fn_asterisk_,
+  fnStar,
   _getCurrentEnv,
   _getDefaultEnv,
   _if,
-  ignore_bang_,
-  ignore_bang_Glyph,
+  ignoreBang,
+  ignoreBangGlyph,
   ignoreIfTrue,
   ignoreIfTrueGlyph,
   ignoreUnlessTrue,
@@ -63,11 +63,11 @@ var keyTokens = [
   ignore,
   indexEnd,
   indexStart,
-  let_asterisk_,
-  letrec_asterisk_,
+  letStar,
+  letrecStar,
   listEnd,
   listStart,
-  macro_asterisk_,
+  macroStar,
   nil,
   _process,
   quasiquote,
@@ -78,36 +78,36 @@ var keyTokens = [
   spliceUnquote,
   spliceUnquoteGlyph,
   _true,
-  try_asterisk_,
-  undef_bang_,
+  tryStar,
+  undefBang,
   unquote,
   unquoteGlyph
 ];
 
 var keywords = [
-  catch_asterisk_,
-  def_bang_,
+  catchStar,
+  defBang,
   _do,
   _eval,
   _evalWithEnv,
-  expand_hyphen_macro,
+  expandMacro,
   _false,
-  fn_asterisk_,
+  fnStar,
   _getCurrentEnv,
   _getDefaultEnv,
   _if,
   ignore,
-  let_asterisk_,
-  letrec_asterisk_,
-  macro_asterisk_,
+  letStar,
+  letrecStar,
+  macroStar,
   nil,
   _process,
   quasiquote,
   quote,
   spliceUnquote,
   _true,
-  try_asterisk_,
-  undef_bang_,
+  tryStar,
+  undefBang,
   unquote
 ];
 
@@ -115,7 +115,7 @@ var macroTokens = [quasiquote, quote, spliceUnquote, unquote];
 
 var glyphTokens = [
   derefGlyph,
-  ignore_bang_Glyph,
+  ignoreBangGlyph,
   quasiquoteGlyph,
   quoteGlyph,
   spliceUnquoteGlyph,
@@ -130,7 +130,7 @@ var __indexOf = [].indexOf || function(item) {
   } return -1;
 };
 
-var keyword_question_ = function(jsString) {
+var isKeyword = function(jsString) {
   return __indexOf.call(keywords, jsString) >= 0;
 };
 
@@ -138,14 +138,14 @@ module.exports = {
   binaryGlyphTokens: binaryGlyphTokens,
   deref: deref,
   derefGlyph: derefGlyph,
-  catch_asterisk_: catch_asterisk_,
-  def_bang_: def_bang_,
+  catchStar: catchStar,
+  defBang: defBang,
   _do: _do,
   _eval: _eval,
   _evalWithEnv: _evalWithEnv,
-  expand_hyphen_macro: expand_hyphen_macro,
+  expandMacro: expandMacro,
   _false: _false,
-  fn_asterisk_: fn_asterisk_,
+  fnStar: fnStar,
   _getCurrentEnv: _getCurrentEnv,
   _getDefaultEnv: _getDefaultEnv,
   glyphTokens: glyphTokens,
@@ -155,17 +155,17 @@ module.exports = {
   ignoreUnlessTrue: ignoreUnlessTrue,
   ignoreUnlessTrueGlyph: ignoreUnlessTrueGlyph,
   ignore: ignore,
-  ignore_bang_: ignore_bang_,
-  ignore_bang_Glyph: ignore_bang_Glyph,
+  ignoreBang: ignoreBang,
+  ignoreBangGlyph: ignoreBangGlyph,
   indexEnd: indexEnd,
   indexStart: indexStart,
   keyTokens: keyTokens,
-  keyword_question_: keyword_question_,
-  let_asterisk_: let_asterisk_,
-  letrec_asterisk_: letrec_asterisk_,
+  isKeyword: isKeyword,
+  letStar: letStar,
+  letrecStar: letrecStar,
   listEnd: listEnd,
   listStart: listStart,
-  macro_asterisk_: macro_asterisk_,
+  macroStar: macroStar,
   macroTokens: macroTokens,
   nil: nil,
   _process: _process,
@@ -177,8 +177,8 @@ module.exports = {
   spliceUnquote: spliceUnquote,
   spliceUnquoteGlyph: spliceUnquoteGlyph,
   _true: _true,
-  try_asterisk_: try_asterisk_,
-  undef_bang_: undef_bang_,
+  tryStar: tryStar,
+  undefBang: undefBang,
   unquote: unquote,
   unquoteGlyph: unquoteGlyph
 };
