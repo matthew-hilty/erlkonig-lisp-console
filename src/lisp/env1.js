@@ -11,29 +11,29 @@ var createErlNumber               = require('./type-utilities').createErlNumber;
 var createErlString               = require('./type-utilities').createErlString;
 var createErlSymbol               = require('./type-utilities').createErlSymbol;
 var drop                          = require('./linked-list').drop;
-var empty_question_               = require('./linked-list').empty_question_;
-var equal_question_               = require('./linked-list').equal_question_;
+var isEmpty               = require('./linked-list').isEmpty;
+var areEqual               = require('./linked-list').areEqual;
 var extractJsValue                = require('./type-utilities').extractJsValue;
 var fromArray                     = require('./linked-list').fromArray;
 var interpret                     = require('./interpret');
 var last                          = require('./linked-list').last;
-var erlAtom_question_             = require('./type-utilities').erlAtom_question_;
-var erlCorePureFunction_question_ = require('./type-utilities').erlCorePureFunction_question_;
-var erlBoolean_question_          = require('./type-utilities').erlBoolean_question_;
+var isErlAtom             = require('./type-utilities').isErlAtom;
+var isErlCorePureFunction = require('./type-utilities').isErlCorePureFunction;
+var isErlBoolean          = require('./type-utilities').isErlBoolean;
 var erlFalse                      = require('./type-utilities').erlFalse;
-var erlFalse_question_            = require('./type-utilities').erlFalse_question_;
+var isErlFalse            = require('./type-utilities').isErlFalse;
 var erlIgnore                     = require('./type-utilities').erlIgnore;
-var erlIndex_question_            = require('./type-utilities').erlIndex_question_;
-var erlList_question_             = require('./type-utilities').erlList_question_;
-var erlMacro_question_            = require('./type-utilities').erlMacro_question_;
+var isErlIndex            = require('./type-utilities').isErlIndex;
+var isErlList             = require('./type-utilities').isErlList;
+var isErlMacro            = require('./type-utilities').isErlMacro;
 var erlNil                        = require('./type-utilities').erlNil;
-var erlNil_question_              = require('./type-utilities').erlNil_question_;
-var erlNumber_question_           = require('./type-utilities').erlNumber_question_;
-var erlString_question_           = require('./type-utilities').erlString_question_;
-var erlSymbol_question_           = require('./type-utilities').erlSymbol_question_;
+var isErlNil              = require('./type-utilities').isErlNil;
+var isErlNumber           = require('./type-utilities').isErlNumber;
+var isErlString           = require('./type-utilities').isErlString;
+var isErlSymbol           = require('./type-utilities').isErlSymbol;
 var erlTrue                       = require('./type-utilities').erlTrue;
-var erlTrue_question_             = require('./type-utilities').erlTrue_question_;
-var erlUserPureFunction_question_ = require('./type-utilities').erlUserPureFunction_question_;
+var isErlTrue             = require('./type-utilities').isErlTrue;
+var isErlUserPureFunction = require('./type-utilities').isErlUserPureFunction;
 var next                          = require('./linked-list').next;
 var recurse                       = require('./linked-list').recurse;
 var reduce                        = require('./linked-list').reduce;
@@ -53,23 +53,23 @@ var append = function(erlArgs) {
   return concat(erlList, fromArray(erlValues));
 };
 
-var areEqual = function(erlArgs) {
+var _areEqual = function(erlArgs) {
   var partialArray = toPartialArray(2, erlArgs);
   var erlValue0 = partialArray[0];
   var erlValue1 = partialArray[1];
-  var _areEqual = function(erlValue0, erlValue1) {
-    if (erlList_question_(erlValue0) && erlList_question_(erlValue1)) {
-      return equal_question_(erlValue0, erlValue1, _areEqual);
-    } else if (erlIndex_question_(erlValue0) && erlIndex_question_(erlValue1)) {
+  var __areEqual = function(erlValue0, erlValue1) {
+    if (isErlList(erlValue0) && isErlList(erlValue1)) {
+      return areEqual(erlValue0, erlValue1, __areEqual);
+    } else if (isErlIndex(erlValue0) && isErlIndex(erlValue1)) {
       var jsIndex0 = erlValue0.jsValue;
       var jsIndex1 = erlValue1.jsValue;
-      return (_areEqual(keys(jsIndex0), keys(jsIndex1)))
-        && (_areEqual(vals(jsIndex0), vals(jsIndex1)));
+      return (__areEqual(keys(jsIndex0), keys(jsIndex1)))
+        && (__areEqual(vals(jsIndex0), vals(jsIndex1)));
     } else {
       return erlValue0.jsValue === erlValue1.jsValue;
     }
   };
-  return createErlBoolean(_areEqual(erlValue0, erlValue1));
+  return createErlBoolean(__areEqual(erlValue0, erlValue1));
 };
 
 var assoc = function(erlArgs) {
@@ -84,7 +84,7 @@ var assoc = function(erlArgs) {
     var value = jsIndex[key];
     copy[key] = value;
   }
-  while (!empty_question_(args)) {
+  while (!isEmpty(args)) {
     var k = car(args);
     var v = next(args);
     args = recurse(recurse(args));
@@ -99,7 +99,7 @@ var atom = function(erlArgs) {
 
 var _car = function(erlArgs) {
   var arg = car(erlArgs);
-  if (erlList_question_(arg)) {
+  if (isErlList(arg)) {
     return car(arg);
   } else {
     return erlNil;
@@ -108,7 +108,7 @@ var _car = function(erlArgs) {
 
 var _cdr = function(erlArgs) {
   var arg = car(erlArgs);
-  if (erlList_question_(arg)) {
+  if (isErlList(arg)) {
     return cdr(arg);
   } else {
     return erlNil;
@@ -126,7 +126,7 @@ var cons = function(erlArgs) {
 
 var count = function(erlArgs) {
   var erlList = car(erlArgs);
-  if (!erlList_question_(erlList)) {
+  if (!isErlList(erlList)) {
     return erlNil;
   }
   var _reduce = function(sum, value) {
@@ -153,11 +153,11 @@ var _drop = function(erlArgs) {
   return drop(extractJsValue(erlNumber), erlList);
 };
 
-var _empty_question_ = function(erlArgs) {
-  if (empty_question_(erlArgs)) {
+var _isEmpty = function(erlArgs) {
+  if (isEmpty(erlArgs)) {
     return erlFalse;
   } else {
-    if (empty_question_(car(erlArgs))) {
+    if (isEmpty(car(erlArgs))) {
       return erlTrue;
     } else {
       return erlFalse;
@@ -169,18 +169,19 @@ var first = function(erlArgs) {
   return car(car(erlArgs));
 };
 
-var function_question_ = function(jsList) {
+var isFunction = function(jsList) {
   var erlValue = jsList.value;
-  return createErlBoolean(erlCorePureFunction_question_(erlValue) || erlUserPureFunction_question_(erlValue));
+  return createErlBoolean(isErlCorePureFunction(erlValue)
+    || isErlUserPureFunction(erlValue));
 };
 
 var getEnvironment = function(config) {
   var environment = config.environment;
-  setCoreFnsOnErlValues_bang_(environment, functionsOnErlValues);
+  setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
 
-var ignore_bang_ = function(erlArgs) {
+var ignore = function(erlArgs) {
   return erlIgnore;
 };
 
@@ -212,7 +213,7 @@ var _interpret = function(erlArgs) {
 
 var _last = function(erlArgs) {
   var arg = car(erlArgs);
-  if (erlList_question_(arg)) {
+  if (isErlList(arg)) {
     return last(arg);
   } else {
     return erlNil;
@@ -234,7 +235,7 @@ var meta = function(erlArgs) {
 
 var _not = function(erlArgs) {
   var erlVal = car(erlArgs);
-  if (erlNil_question_(erlVal) || erlFalse_question_(erlVal)) {
+  if (isErlNil(erlVal) || isErlFalse(erlVal)) {
     return erlTrue;
   } else {
     return erlFalse;
@@ -296,7 +297,7 @@ var reset = function(erlArgs) {
 
 var rest = function(erlArgs) {
   var arg = car(erlArgs);
-  if (erlList_question_(arg)) {
+  if (isErlList(arg)) {
     return cdr(arg);
   } else {
     return erlNil;
@@ -305,7 +306,7 @@ var rest = function(erlArgs) {
 
 var _reverse = function(erlArgs) {
   var arg = car(erlArgs);
-  if (erlList_question_(arg)) {
+  if (isErlList(arg)) {
     return reverse(arg);
   } else {
     return erlNil;
@@ -321,7 +322,7 @@ var set = function(erlArgs) {
   return index;
 };
 
-var setCoreFnsOnErlValues_bang_ = function(env, fns) {
+var setCoreFnsOnErlValues = function(env, fns) {
   var _results = [];
   for (var fnName in fns) {
     if (!__hasProp.call(fns, fnName)) continue;
@@ -347,7 +348,7 @@ var stripQuotes = function(jsString) {
 
 var symbol = function(erlArgs) {
   var erlValue = car(erlArgs);
-  if (erlString_question_(erlValue)) {
+  if (isErlString(erlValue)) {
     var jsStr = extractJsValue(erlValue);
     return createErlSymbol(jsStr.slice(1, -1));
   } else {
@@ -371,7 +372,7 @@ var _throw = function(erlArgs) {
   throw car(erlArgs);
 };
 
-var time_hyphen_ms = function() {
+var timeMs = function() {
   return createErlNumber(new Date().getTime());
 };
 
@@ -379,7 +380,7 @@ var withMeta = function(erlArgs) {
   var partialArray = toPartialArray(2, erlArgs);
   var erlVal = partialArray[0];
   var erlMeta = partialArray[1];
-  if (erlAtom_question_(erlVal)) {
+  if (isErlAtom(erlVal)) {
     var erlValue = erlVal.erlValue;
     var type = erlVal.type;
     return {
@@ -403,83 +404,83 @@ var write = function(erlArgs) {
 };
 
 var predicates = [
-  erlAtom_question_,
-  erlBoolean_question_,
-  erlCorePureFunction_question_,
-  erlFalse_question_,
-  erlList_question_,
-  erlMacro_question_,
-  erlNil_question_,
-  erlNumber_question_,
-  erlSymbol_question_,
-  erlString_question_,
-  erlUserPureFunction_question_,
-  erlTrue_question_
+  isErlAtom,
+  isErlBoolean,
+  isErlCorePureFunction,
+  isErlFalse,
+  isErlList,
+  isErlMacro,
+  isErlNil,
+  isErlNumber,
+  isErlSymbol,
+  isErlString,
+  isErlUserPureFunction,
+  isErlTrue
 ].map(createPredicate);
 
-var atom_question_    = predicates[0];
-var boolean_question_ = predicates[1];
-var coreFn_question_  = predicates[2];
-var false_question_   = predicates[3];
-var list_question_    = predicates[4];
-var macro_question_   = predicates[5];
-var nil_question_     = predicates[6];
-var number_question_  = predicates[7];
-var symbol_question_  = predicates[8];
-var string_question_  = predicates[9];
-var userFn_question_  = predicates[10];
-var true_question_    = predicates[11];
+var isAtom    = predicates[0];
+var isBoolean = predicates[1];
+var isCoreFn  = predicates[2];
+var isFalse   = predicates[3];
+var isList    = predicates[4];
+var isMacro   = predicates[5];
+var isNil     = predicates[6];
+var isNumber  = predicates[7];
+var isSymbol  = predicates[8];
+var isString  = predicates[9];
+var isUserFn  = predicates[10];
+var isTrue    = predicates[11];
 
 var functionsOnErlValues = {
-  '=': areEqual,
+  '=': _areEqual,
   'append': append,
   'assoc': assoc,
   'atom': atom,
-  'atom?': atom_question_,
-  'boolean?': boolean_question_,
+  'atom?': isAtom,
+  'boolean?': isBoolean,
   'car': _car,
   'cdr': _cdr,
   'cons': cons,
   'concat': _concat,
-  'core-fn?': coreFn_question_,
+  'core-fn?': isCoreFn,
   'count': count,
   'deref': deref,
   'drop': _drop,
-  'empty?': _empty_question_,
+  'empty?': _isEmpty,
   'first': _car,
-  'false?': false_question_,
-  'function?': function_question_,
-  'ignore!': ignore_bang_,
+  'false?': isFalse,
+  'function?': isFunction,
+  'ignore!': ignore,
   'ignoreIfTrue': ignoreIfTrue,
   'ignoreUnlessTrue': ignoreUnlessTrue,
   'last': _last,
   'list': list,
-  'list?': list_question_,
-  'macro?': macro_question_,
+  'list?': isList,
+  'macro?': isMacro,
   'meta': meta,
-  'nil?': nil_question_,
+  'nil?': isNil,
   'not': _not,
   'nth': nth,
-  'number?': number_question_,
+  'number?': isNumber,
   'parse': _interpret,
   'prepend': prepend,
   'pretty-string': prettyString,
   'rest': _cdr,
   'reverse': _reverse,
   'string': string,
-  'string?': string_question_,
+  'string?': isString,
   'symbol': symbol,
-  'symbol?': symbol_question_,
+  'symbol?': isSymbol,
   'take': _take,
   'throw': _throw,
-  'true?': true_question_,
+  'true?': isTrue,
   'typeof': typeOf,
-  'user-fn?': userFn_question_,
+  'user-fn?': isUserFn,
   'read': read,
   'reset!': reset,
   'set!': set,
   'slurp': slurp,
-  'time-ms': time_hyphen_ms,
+  'time-ms': timeMs,
   'with-meta': withMeta,
   'write': write
 };

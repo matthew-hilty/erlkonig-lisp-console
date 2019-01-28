@@ -2,7 +2,7 @@ var createErlList = require('./linked-list').createErlList;
 var erlAtomType   = require('./types').erlAtomType;
 var erlTypes      = require('./types').erlTypes;
 
-var create_hyphen_factory_hyphen__ampersand__hyphen_predicate = function(erlType) {
+var createFactoryAndPredicate = function(erlType) {
   var factory = function(jsValue) {
     return createErlValue(jsValue, erlType);
   };
@@ -52,39 +52,38 @@ var extractJsValue = function(erlValue) {
   return erlValue.jsValue;
 };
 
-var _erlTypes = erlTypes.map(
-  create_hyphen_factory_hyphen__ampersand__hyphen_predicate);
+var _erlTypes = erlTypes.map(createFactoryAndPredicate);
 
 var _createErlBoolean                  = _erlTypes[0][0];
-var erlBoolean_question_               = _erlTypes[0][1];
+var isErlBoolean               = _erlTypes[0][1];
 var createErlCoreEffectfulFunction     = _erlTypes[1][0];
-var erlCoreEffectfulFunction_question_ = _erlTypes[1][1];
+var isErlCoreEffectfulFunction = _erlTypes[1][1];
 var createErlCorePureFunction          = _erlTypes[2][0];
-var erlCorePureFunction_question_      = _erlTypes[2][1];
+var isErlCorePureFunction      = _erlTypes[2][1];
 var createErlIdentifier                = _erlTypes[3][0];
-var erlIdentifier_question_            = _erlTypes[3][1];
+var isErlIdentifier            = _erlTypes[3][1];
 var createErlIndex                     = _erlTypes[4][0];
-var erlIndex_question_                 = _erlTypes[4][1];
+var isErlIndex                 = _erlTypes[4][1];
 var createErlKeyword                   = _erlTypes[5][0];
-var erlKeyword_question_               = _erlTypes[5][1];
+var isErlKeyword               = _erlTypes[5][1];
 var _createErlList                     = _erlTypes[6][0];
-var erlList_question_                  = _erlTypes[6][1];
+var isErlList                  = _erlTypes[6][1];
 var createErlMacro                     = _erlTypes[7][0];
-var erlMacro_question_                 = _erlTypes[7][1];
+var isErlMacro                 = _erlTypes[7][1];
 var createErlNumber                    = _erlTypes[8][0];
-var erlNumber_question_                = _erlTypes[8][1];
+var isErlNumber                = _erlTypes[8][1];
 var createErlSpecialForm               = _erlTypes[9][0];
-var erlSpecialForm_question_           = _erlTypes[9][1];
+var isErlSpecialForm           = _erlTypes[9][1];
 var createErlString                    = _erlTypes[10][0];
-var erlString_question_                = _erlTypes[10][1];
+var isErlString                = _erlTypes[10][1];
 var createErlSymbol                    = _erlTypes[11][0];
-var erlSymbol_question_                = _erlTypes[11][1];
+var isErlSymbol                = _erlTypes[11][1];
 var _createErlUnit                     = _erlTypes[12][0];
-var _erlUnit_question_                 = _erlTypes[12][1];
+var _isErlUnit                 = _erlTypes[12][1];
 var createErlUserPureFunction          = _erlTypes[13][0];
-var erlUserPureFunction_question_      = _erlTypes[13][1];
+var isErlUserPureFunction      = _erlTypes[13][1];
 var _createErlAtom                     = _erlTypes[14][0];
-var erlAtom_question_                  = _erlTypes[14][1];
+var isErlAtom                  = _erlTypes[14][1];
 
 var erlIgnore = _createErlUnit(null);
 
@@ -97,10 +96,10 @@ var erlTrue  = erlBooleans[1];
 
 var predicates = [erlFalse, erlIgnore, erlNil, erlTrue].map(createPredicate);
 
-var erlFalse_question_  = predicates[0];
-var erlIgnore_question_ = predicates[1];
-var erlNil_question_    = predicates[2];
-var erlTrue_question_   = predicates[3];
+var isErlFalse  = predicates[0];
+var isErlIgnore = predicates[1];
+var isErlNil    = predicates[2];
+var isErlTrue   = predicates[3];
 
 module.exports = {
   createErlAtom: createErlAtom,
@@ -120,26 +119,26 @@ module.exports = {
   createErlSymbol: createErlSymbol,
   createErlUserPureFunction: createErlUserPureFunction,
   extractJsValue: extractJsValue,
-  erlAtom_question_: erlAtom_question_,
-  erlBoolean_question_: erlBoolean_question_,
-  erlCoreEffectfulFunction_question_: erlCoreEffectfulFunction_question_,
-  erlCorePureFunction_question_: erlCorePureFunction_question_,
+  isErlAtom: isErlAtom,
+  isErlBoolean: isErlBoolean,
+  isErlCoreEffectfulFunction: isErlCoreEffectfulFunction,
+  isErlCorePureFunction: isErlCorePureFunction,
   erlFalse: erlFalse,
-  erlFalse_question_: erlFalse_question_,
-  erlIdentifier_question_: erlIdentifier_question_,
+  isErlFalse: isErlFalse,
+  isErlIdentifier: isErlIdentifier,
   erlIgnore: erlIgnore,
-  erlIgnore_question_: erlIgnore_question_,
-  erlIndex_question_: erlIndex_question_,
-  erlKeyword_question_: erlKeyword_question_,
-  erlList_question_: erlList_question_,
-  erlMacro_question_: erlMacro_question_,
+  isErlIgnore: isErlIgnore,
+  isErlIndex: isErlIndex,
+  isErlKeyword: isErlKeyword,
+  isErlList: isErlList,
+  isErlMacro: isErlMacro,
   erlNil: erlNil,
-  erlNil_question_: erlNil_question_,
-  erlNumber_question_: erlNumber_question_,
-  erlSpecialForm_question_: erlSpecialForm_question_,
-  erlString_question_: erlString_question_,
-  erlSymbol_question_: erlSymbol_question_,
+  isErlNil: isErlNil,
+  isErlNumber: isErlNumber,
+  isErlSpecialForm: isErlSpecialForm,
+  isErlString: isErlString,
+  isErlSymbol: isErlSymbol,
   erlTrue: erlTrue,
-  erlTrue_question_: erlTrue_question_,
-  erlUserPureFunction_question_: erlUserPureFunction_question_
+  isErlTrue: isErlTrue,
+  isErlUserPureFunction: isErlUserPureFunction
 };

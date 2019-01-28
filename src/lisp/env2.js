@@ -9,7 +9,7 @@ var __hasProp = {}.hasOwnProperty;
 var getEnvironment = function(config) {
   var display = config.display;
   var environment = config.environment;
-  setCoreEffectfulFnsOnErlValues_bang_(display)(environment, displayEffectsOnErlValues);
+  setCoreEffectfulFnsOnErlValues(display)(environment, displayEffectsOnErlValues);
   return environment;
 };
 
@@ -43,7 +43,7 @@ var _quit_ = function() {
   }
 };
 
-var setCoreEffectfulFnsOnErlValues_bang_ = function(represent) {
+var setCoreEffectfulFnsOnErlValues = function(represent) {
   return function(env, fns) {
     var _results = [];
     for (var fnName in fns) {

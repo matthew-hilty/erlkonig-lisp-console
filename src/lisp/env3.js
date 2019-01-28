@@ -5,7 +5,7 @@ var createErlSymbol           = require('./type-utilities').createErlSymbol;
 var extractJsValue            = require('./type-utilities').extractJsValue;
 var fromArray                 = require('./linked-list').fromArray;
 var fromErlIndex              = require('./index-utilities').fromErlIndex;
-var erlList_question_         = require('./type-utilities').erlList_question_;
+var isErlList         = require('./type-utilities').isErlList;
 var _process                  = require('./_process');
 var toArray                   = require('./linked-list').toArray;
 var tokenizeAndParse          = require('./tokenizeAndParse');
@@ -31,8 +31,8 @@ var getEnvironment = function(config) {
     return _eval(car(erlArgs));
   };
   var evalString = function(erlArgs) {
-    return (function(__i) {
-      return _eval(tokenizeAndParse(stripQuotes(extractJsValue(car(__i)))));
+    return (function(_erlArgs) {
+      return _eval(tokenizeAndParse(stripQuotes(extractJsValue(car(_erlArgs)))));
     })(erlArgs);
   };
   var evalWithBareEnv = function(erlArgs) {
@@ -51,11 +51,11 @@ var getEnvironment = function(config) {
     return tokenizeAndParse(stripQuotes(extractJsValue(car(erlArgs))));
   };
   var functionsOnErlValues = { parse: parse };
-  setCoreFnsOnErlValues_bang_(environment, functionsOnErlValues);
+  setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
 
-var setCoreFnsOnErlValues_bang_ = function(env, fns) {
+var setCoreFnsOnErlValues = function(env, fns) {
   var _results = [];
   for (var fnName in fns) {
     if (!__hasProp.call(fns, fnName)) {

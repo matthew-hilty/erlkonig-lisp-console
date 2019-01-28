@@ -47,7 +47,7 @@ var getEnvironment = function(config) {
   var readFile = function(jsFileName) {
     return require('fs').readFileSync(jsFileName).toString();
   };
-  var setCoreFnsOnErlValues_bang_ = function(env, fns) {
+  var setCoreFnsOnErlValues = function(env, fns) {
     var _results = [];
     for (var fnName in fns) {
       if (!__hasProp.call(fns, fnName)) continue;
@@ -64,7 +64,7 @@ var getEnvironment = function(config) {
     'load-with-env': loadWithEnv,
     'load-with-bare-env': loadWithBareEnv
   };
-  setCoreFnsOnErlValues_bang_(environment, functionsOnErlValues);
+  setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
 

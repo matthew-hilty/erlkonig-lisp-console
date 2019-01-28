@@ -1,7 +1,7 @@
-var setEnv0_bang_ = require('./env0');
-var setEnv1_bang_ = require('./env1');
-var setEnv2_bang_ = require('./env2');
-var setEnv3_bang_ = require('./env3');
+var setEnv0 = require('./env0');
+var setEnv1 = require('./env1');
+var setEnv2 = require('./env2');
+var setEnv3 = require('./env3');
 
 var getLispEnvironment = function(config) {
   var display = config.display;
@@ -10,10 +10,10 @@ var getLispEnvironment = function(config) {
     display: display,
     environment: environment
   };
-  setEnv0_bang_(config);
-  setEnv1_bang_(config);
-  setEnv2_bang_(config);
-  setEnv3_bang_(config);
+  setEnv0(config);
+  setEnv1(config);
+  setEnv2(config);
+  setEnv3(config);
   return environment;
 };
 

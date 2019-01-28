@@ -2,10 +2,10 @@ var erlTypes = require('./types').erlTypes;
 
 var erlListType = erlTypes[6];
 
-var  __slice = [].slice;
+var __slice = [].slice;
 
 var car = function(erlList) {
-  if (empty_question_(erlList)) {
+  if (isEmpty(erlList)) {
     return EOL;
   } else {
     return erlList.value;
@@ -13,7 +13,7 @@ var car = function(erlList) {
 };
 
 var cdr = function(erlList) {
-  if (empty_question_(erlList)) {
+  if (isEmpty(erlList)) {
     return EOL;
   } else {
     return erlList.next;
@@ -32,12 +32,12 @@ var concat = function() {
   for (var i = 0; i < len; i++) {
     var erlList = remaining[i];
     var _copy = copy(erlList);
-    if (empty_question_(tail)) {
+    if (isEmpty(tail)) {
       result = _copy;
       tail = lastTail(result);
       continue;
     }
-    if (!empty_question_(_copy)) {
+    if (!isEmpty(_copy)) {
       tail.next = _copy;
       tail = lastTail(_copy);
     }
@@ -78,19 +78,19 @@ var drop = function(nbr, erlList) {
   return erlList;
 };
 
-var empty_question_ = function(value) {
+var isEmpty = function(value) {
   return value === EOL;
 };
 
-var equal_question_ = function(list0, list1, equivalent_question_) {
-  while (!(empty_question_(list0) || empty_question_(list1))) {
-    if (!equivalent_question_(list0.value, list1.value)) {
+var areEqual = function(list0, list1, _areEqual) {
+  while (!(isEmpty(list0) || isEmpty(list1))) {
+    if (!_areEqual(list0.value, list1.value)) {
       return false;
     }
     list0 = cdr(list0);
     list1 = cdr(list1);
   }
-  return empty_question_(list0) && empty_question_(list1);
+  return isEmpty(list0) && isEmpty(list1);
 };
 
 var filter = function(predicate, list) {
@@ -106,7 +106,7 @@ var filter = function(predicate, list) {
 
 var forEach = function(fn, list) {
   var result = list;
-  while (!empty_question_(list)) {
+  while (!isEmpty(list)) {
     result = fn(list.value);
     list = recurse(list);
   }
@@ -125,12 +125,12 @@ var last = function(erlList) {
 };
 
 var lastTail = function(erlList) {
-  if (empty_question_(erlList)) {
+  if (isEmpty(erlList)) {
     return erlList;
   }
   var prior = erlList;
   var current = cdr(erlList);
-  while (!empty_question_(current)) {
+  while (!isEmpty(current)) {
     prior = cdr(prior);
     current = cdr(current);
   }
@@ -149,7 +149,7 @@ var next = function(erlList) {
 };
 
 var recurse = function(list) {
-  if (empty_question_(list)) {
+  if (isEmpty(list)) {
     return list;
   } else {
     return list.next;
@@ -157,7 +157,7 @@ var recurse = function(list) {
 };
 
 var reduce = function(seed, fn, list) {
-  while (!empty_question_(list)) {
+  while (!isEmpty(list)) {
     seed = fn(seed, list.value);
     list = recurse(list);
   }
@@ -165,7 +165,7 @@ var reduce = function(seed, fn, list) {
 };
 
 var reduceBy2 = function(seed, fn, list) {
-  while (!empty_question_(list)) {
+  while (!isEmpty(list)) {
     var value0 = list.value;
     list = recurse(list);
     var value1 = list.value;
@@ -177,7 +177,7 @@ var reduceBy2 = function(seed, fn, list) {
 
 var reverse = function(list) {
   var result = EOL;
-  while (!empty_question_(list)) {
+  while (!isEmpty(list)) {
     result = createErlList(list.value, result);
     list = list.next;
   }
@@ -216,7 +216,7 @@ var toPartialArray = function(nbr, list) {
 };
 
 var zip = function(seed, fn, list0, list1) {
-  while (!(empty_question_(list0) || empty_question_(list1))) {
+  while (!(isEmpty(list0) || isEmpty(list1))) {
     var value0 = car(list0);
     list0 = cdr(list0);
     var value1 = car(list1);
@@ -238,8 +238,8 @@ module.exports = {
   copy: copy,
   createErlList: createErlList,
   drop: drop,
-  empty_question_: empty_question_,
-  equal_question_: equal_question_,
+  isEmpty: isEmpty,
+  areEqual: areEqual,
   filter: filter,
   forEach: forEach,
   fromArray: fromArray,

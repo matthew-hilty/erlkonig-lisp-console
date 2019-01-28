@@ -6,9 +6,9 @@ var createErlNumber           = require('./type-utilities').createErlNumber;
 var createErlString           = require('./type-utilities').createErlString;
 var extractJsValue            = require('./type-utilities').extractJsValue;
 var fromArray                 = require('./linked-list').fromArray;
-var jsNaN_question_           = require('./js-utilities').jsNaN_question_;
-var jsNumber_question_        = require('./js-utilities').jsNumber_question_;
-var jsString_question_        = require('./js-utilities').jsString_question_;
+var isJsNaN           = require('./js-utilities').isJsNaN;
+var isJsNumber        = require('./js-utilities').isJsNumber;
+var isJsString        = require('./js-utilities').isJsString;
 var erlNil                    = require('./type-utilities').erlNil;
 var reduce                    = require('./linked-list').reduce;
 var toArray                   = require('./linked-list').toArray;
@@ -23,7 +23,7 @@ var add = function() {
   }));
 };
 
-var contains_question_ = function(index, key) {
+var contains = function(index, key) {
   return createErlBoolean(key in index);
 };
 
@@ -97,7 +97,7 @@ var keys = function(index) {
     if (!__hasProp.call(index, key)) continue;
     var value = index[key];
     var jsNbr = parseFloat(key, 10);
-    var _key = jsNaN_question_(jsNbr)
+    var _key = isJsNaN(jsNbr)
         ? (key[0] === ':' ? createErlIdentifier : createErlString)(key)
         : createErlNumber(jsNbr);
     _keys.push(_key);
@@ -106,7 +106,7 @@ var keys = function(index) {
 };
 
 var length = function(jsVal) {
-  if (!jsString_question_(jsVal)) {
+  if (!isJsString(jsVal)) {
     return erlNil;
   }
   return createErlNumber(jsVal.length - 2);
@@ -154,14 +154,14 @@ var negate = function(nbr) {
 };
 
 var parseNumber = function(jsVal) {
-  if (jsNumber_question_(jsVal)) {
+  if (isJsNumber(jsVal)) {
     return jsVal;
   }
-  if (!jsString_question_(jsVal)) {
+  if (!isJsString(jsVal)) {
     return erlNil;
   }
   var jsNbr = parseFloat(stripQuotes(jsVal), 10);
-  if (jsNaN_question_(jsNbr)) {
+  if (isJsNaN(jsNbr)) {
     return erlNil;
   } else {
     return createErlNumber(jsNbr);
@@ -200,7 +200,7 @@ var vals = function(index) {
 
 var functionsOnJsValues = {
   '+': add,
-  'contains?': contains_question_,
+  'contains?': contains,
   'dissoc': dissoc,
   '/': divide,
   '**': exponentiate,

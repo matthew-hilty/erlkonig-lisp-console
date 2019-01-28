@@ -1,6 +1,6 @@
 var commentSignal = require('./commentSignal');
 
-var comment_question_ = function(match) {
+var isComment = function(match) {
   return match[0] === ';';
 };
 
@@ -8,7 +8,7 @@ var createTokenRegex = function() {
   return /[\s,]*(~@|\#\+|\#\-|\#\!|[\[\](){}'`~@^]|"(?:\\.|[^\\"])*"|;.*|[^\s\[\](){}'"`,;]*)/g;
 };
 
-var meaningful_question_ = function(match) {
+var isMeaningful = function(match) {
   return match !== '';
 };
 
@@ -16,8 +16,8 @@ var tokenize = function(sourceCode) {
   var match;
   var tokenRegex = createTokenRegex();
   var result = [];
-  while (meaningful_question_(match = tokenRegex.exec(sourceCode)[1])) {
-    if (comment_question_(match)) {
+  while (isMeaningful(match = tokenRegex.exec(sourceCode)[1])) {
+    if (isComment(match)) {
       continue;
     }
     result.push(match);
