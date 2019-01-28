@@ -20,6 +20,17 @@ var cdr = function(erlList) {
   }
 };
 
+var areEqual = function(list0, list1, _areEqual) {
+  while (!(isEmpty(list0) || isEmpty(list1))) {
+    if (!_areEqual(list0.value, list1.value)) {
+      return false;
+    }
+    list0 = cdr(list0);
+    list1 = cdr(list1);
+  }
+  return isEmpty(list0) && isEmpty(list1);
+};
+
 var concat = function() {
   var erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   if (erlLists.length === 0) {
@@ -80,17 +91,6 @@ var drop = function(nbr, erlList) {
 
 var isEmpty = function(value) {
   return value === EOL;
-};
-
-var areEqual = function(list0, list1, _areEqual) {
-  while (!(isEmpty(list0) || isEmpty(list1))) {
-    if (!_areEqual(list0.value, list1.value)) {
-      return false;
-    }
-    list0 = cdr(list0);
-    list1 = cdr(list1);
-  }
-  return isEmpty(list0) && isEmpty(list1);
 };
 
 var filter = function(predicate, list) {
@@ -231,6 +231,7 @@ var _EOL = {};
 var EOL = createNode(_EOL, _EOL);
 
 module.exports = {
+  areEqual: areEqual,
   car: car,
   cdr: cdr,
   concat: concat,
@@ -239,7 +240,6 @@ module.exports = {
   createErlList: createErlList,
   drop: drop,
   isEmpty: isEmpty,
-  areEqual: areEqual,
   filter: filter,
   forEach: forEach,
   fromArray: fromArray,

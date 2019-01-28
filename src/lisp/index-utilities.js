@@ -1,27 +1,8 @@
-var createErlIndex     = require('./type-utilities').createErlIndex;
-var isJsString = require('./js-utilities').isJsString;
+var createErlIndex = require('./type-utilities').createErlIndex;
+var isJsString     = require('./js-utilities').isJsString;
 
 var __slice   = [].slice;
 var __hasProp = {}.hasOwnProperty;
-
-var fromJsObjects = function() {
-  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var copy = {};
-  var len = jsObjects.length;
-  for (var i = 0;  i < len; i++) {
-    var jsObject = jsObjects[i];
-    for (var key in jsObject) {
-      if (!__hasProp.call(jsObject, key)) continue;
-      var val = jsObject[key];
-      if (isJsString(key)) {
-        copy[':' + key] = val;
-      } else {
-        copy[key] = val;
-      }
-    }
-  }
-  return createErlIndex(copy);
-};
 
 var fromErlIndex = function(erlIndex) {
   var result = {};
@@ -46,6 +27,25 @@ var fromErlIndex = function(erlIndex) {
     }
   }
   return result;
+};
+
+var fromJsObjects = function() {
+  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  var copy = {};
+  var len = jsObjects.length;
+  for (var i = 0;  i < len; i++) {
+    var jsObject = jsObjects[i];
+    for (var key in jsObject) {
+      if (!__hasProp.call(jsObject, key)) continue;
+      var val = jsObject[key];
+      if (isJsString(key)) {
+        copy[':' + key] = val;
+      } else {
+        copy[key] = val;
+      }
+    }
+  }
+  return createErlIndex(copy);
 };
 
 module.exports = {

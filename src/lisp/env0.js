@@ -4,12 +4,12 @@ var createErlIdentifier       = require('./type-utilities').createErlIdentifier;
 var createErlIndex            = require('./type-utilities').createErlIndex;
 var createErlNumber           = require('./type-utilities').createErlNumber;
 var createErlString           = require('./type-utilities').createErlString;
+var erlNil                    = require('./type-utilities').erlNil;
 var extractJsValue            = require('./type-utilities').extractJsValue;
 var fromArray                 = require('./linked-list').fromArray;
-var isJsNaN           = require('./js-utilities').isJsNaN;
-var isJsNumber        = require('./js-utilities').isJsNumber;
-var isJsString        = require('./js-utilities').isJsString;
-var erlNil                    = require('./type-utilities').erlNil;
+var isJsNaN                   = require('./js-utilities').isJsNaN;
+var isJsNumber                = require('./js-utilities').isJsNumber;
+var isJsString                = require('./js-utilities').isJsString;
 var reduce                    = require('./linked-list').reduce;
 var toArray                   = require('./linked-list').toArray;
 
@@ -105,7 +105,7 @@ var keys = function(index) {
   return fromArray(_keys);
 };
 
-var length = function(jsVal) {
+var lengthString = function(jsVal) {
   if (!isJsString(jsVal)) {
     return erlNil;
   }
@@ -209,7 +209,7 @@ var functionsOnJsValues = {
   '>=': greaterThanOrEqual,
   'index': index,
   'keys': keys,
-  'length': length,
+  'length-string': lengthString,
   'max': max,
   'min': min,
   '<': lessThan,

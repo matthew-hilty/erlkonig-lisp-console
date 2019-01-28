@@ -1,11 +1,11 @@
 var commentSignal = require('./commentSignal');
 
-var isComment = function(match) {
-  return match[0] === ';';
-};
-
 var createTokenRegex = function() {
   return /[\s,]*(~@|\#\+|\#\-|\#\!|[\[\](){}'`~@^]|"(?:\\.|[^\\"])*"|;.*|[^\s\[\](){}'"`,;]*)/g;
+};
+
+var isComment = function(match) {
+  return match[0] === ';';
 };
 
 var isMeaningful = function(match) {

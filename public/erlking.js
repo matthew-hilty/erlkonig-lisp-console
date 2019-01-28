@@ -45,7 +45,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	module.exports = __webpack_require__(51);
+	module.exports = __webpack_require__(52);
 
 
 /***/ }),
@@ -54,7 +54,7 @@
 
 	var initialize    = __webpack_require__(2);
 	var interpretLisp = __webpack_require__(28);
-	var keyTokens     = __webpack_require__(38).keyTokens;
+	var keyTokens     = __webpack_require__(39).keyTokens;
 
 	var _keyTokens =  keyTokens.map(function (keyToken) {
 	  return ':' + keyToken;
@@ -2110,8 +2110,8 @@
 	var fromArray            = __webpack_require__(31).fromArray;
 	var getLispEnvironment   = __webpack_require__(33);
 	var _process             = __webpack_require__(44);
-	var _serialize           = __webpack_require__(36);
-	var standardFnsAndMacros = __webpack_require__(50);
+	var _serialize           = __webpack_require__(37);
+	var standardFnsAndMacros = __webpack_require__(51);
 	var tokenizeAndParse     = __webpack_require__(47);
 
 	var __hasProp = {}.hasOwnProperty;
@@ -2226,16 +2226,6 @@
 	var erlAtomType   = __webpack_require__(32).erlAtomType;
 	var erlTypes      = __webpack_require__(32).erlTypes;
 
-	var createFactoryAndPredicate = function(erlType) {
-	  var factory = function(jsValue) {
-	    return createErlValue(jsValue, erlType);
-	  };
-	  var predicate = function(erlValue) {
-	    return erlValue.type === erlType;
-	  };
-	  return [factory, predicate];
-	};
-
 	var createErlAtom = function(erlValue) {
 	  return {
 	    erlValue: erlValue,
@@ -2266,6 +2256,16 @@
 	  };
 	};
 
+	var createFactoryAndPredicate = function(erlType) {
+	  var factory = function(jsValue) {
+	    return createErlValue(jsValue, erlType);
+	  };
+	  var predicate = function(erlValue) {
+	    return erlValue.type === erlType;
+	  };
+	  return [factory, predicate];
+	};
+
 	var createPredicate = function(constant) {
 	  return function(value) {
 	    return value === constant;
@@ -2278,36 +2278,36 @@
 
 	var _erlTypes = erlTypes.map(createFactoryAndPredicate);
 
-	var _createErlBoolean                  = _erlTypes[0][0];
-	var isErlBoolean               = _erlTypes[0][1];
-	var createErlCoreEffectfulFunction     = _erlTypes[1][0];
-	var isErlCoreEffectfulFunction = _erlTypes[1][1];
-	var createErlCorePureFunction          = _erlTypes[2][0];
-	var isErlCorePureFunction      = _erlTypes[2][1];
-	var createErlIdentifier                = _erlTypes[3][0];
-	var isErlIdentifier            = _erlTypes[3][1];
-	var createErlIndex                     = _erlTypes[4][0];
-	var isErlIndex                 = _erlTypes[4][1];
-	var createErlKeyword                   = _erlTypes[5][0];
-	var isErlKeyword               = _erlTypes[5][1];
-	var _createErlList                     = _erlTypes[6][0];
-	var isErlList                  = _erlTypes[6][1];
-	var createErlMacro                     = _erlTypes[7][0];
-	var isErlMacro                 = _erlTypes[7][1];
-	var createErlNumber                    = _erlTypes[8][0];
-	var isErlNumber                = _erlTypes[8][1];
-	var createErlSpecialForm               = _erlTypes[9][0];
-	var isErlSpecialForm           = _erlTypes[9][1];
-	var createErlString                    = _erlTypes[10][0];
-	var isErlString                = _erlTypes[10][1];
-	var createErlSymbol                    = _erlTypes[11][0];
-	var isErlSymbol                = _erlTypes[11][1];
-	var _createErlUnit                     = _erlTypes[12][0];
-	var _isErlUnit                 = _erlTypes[12][1];
-	var createErlUserPureFunction          = _erlTypes[13][0];
-	var isErlUserPureFunction      = _erlTypes[13][1];
-	var _createErlAtom                     = _erlTypes[14][0];
-	var isErlAtom                  = _erlTypes[14][1];
+	var _createErlBoolean              = _erlTypes[0][0];
+	var isErlBoolean                   = _erlTypes[0][1];
+	var createErlCoreEffectfulFunction = _erlTypes[1][0];
+	var isErlCoreEffectfulFunction     = _erlTypes[1][1];
+	var createErlCorePureFunction      = _erlTypes[2][0];
+	var isErlCorePureFunction          = _erlTypes[2][1];
+	var createErlIdentifier            = _erlTypes[3][0];
+	var isErlIdentifier                = _erlTypes[3][1];
+	var createErlIndex                 = _erlTypes[4][0];
+	var isErlIndex                     = _erlTypes[4][1];
+	var createErlKeyword               = _erlTypes[5][0];
+	var isErlKeyword                   = _erlTypes[5][1];
+	var _createErlList                 = _erlTypes[6][0];
+	var isErlList                      = _erlTypes[6][1];
+	var createErlMacro                 = _erlTypes[7][0];
+	var isErlMacro                     = _erlTypes[7][1];
+	var createErlNumber                = _erlTypes[8][0];
+	var isErlNumber                    = _erlTypes[8][1];
+	var createErlSpecialForm           = _erlTypes[9][0];
+	var isErlSpecialForm               = _erlTypes[9][1];
+	var createErlString                = _erlTypes[10][0];
+	var isErlString                    = _erlTypes[10][1];
+	var createErlSymbol                = _erlTypes[11][0];
+	var isErlSymbol                    = _erlTypes[11][1];
+	var _createErlUnit                 = _erlTypes[12][0];
+	var _isErlUnit                     = _erlTypes[12][1];
+	var createErlUserPureFunction      = _erlTypes[13][0];
+	var isErlUserPureFunction          = _erlTypes[13][1];
+	var _createErlAtom                 = _erlTypes[14][0];
+	var isErlAtom                      = _erlTypes[14][1];
 
 	var erlIgnore = _createErlUnit(null);
 
@@ -2394,6 +2394,17 @@
 	  }
 	};
 
+	var areEqual = function(list0, list1, _areEqual) {
+	  while (!(isEmpty(list0) || isEmpty(list1))) {
+	    if (!_areEqual(list0.value, list1.value)) {
+	      return false;
+	    }
+	    list0 = cdr(list0);
+	    list1 = cdr(list1);
+	  }
+	  return isEmpty(list0) && isEmpty(list1);
+	};
+
 	var concat = function() {
 	  var erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
 	  if (erlLists.length === 0) {
@@ -2454,17 +2465,6 @@
 
 	var isEmpty = function(value) {
 	  return value === EOL;
-	};
-
-	var areEqual = function(list0, list1, _areEqual) {
-	  while (!(isEmpty(list0) || isEmpty(list1))) {
-	    if (!_areEqual(list0.value, list1.value)) {
-	      return false;
-	    }
-	    list0 = cdr(list0);
-	    list1 = cdr(list1);
-	  }
-	  return isEmpty(list0) && isEmpty(list1);
 	};
 
 	var filter = function(predicate, list) {
@@ -2605,6 +2605,7 @@
 	var EOL = createNode(_EOL, _EOL);
 
 	module.exports = {
+	  areEqual: areEqual,
 	  car: car,
 	  cdr: cdr,
 	  concat: concat,
@@ -2613,7 +2614,6 @@
 	  createErlList: createErlList,
 	  drop: drop,
 	  isEmpty: isEmpty,
-	  areEqual: areEqual,
 	  filter: filter,
 	  forEach: forEach,
 	  fromArray: fromArray,
@@ -2694,8 +2694,9 @@
 
 	var setEnv0 = __webpack_require__(34);
 	var setEnv1 = __webpack_require__(35);
-	var setEnv2 = __webpack_require__(40);
+	var setEnv2 = __webpack_require__(41);
 	var setEnv3 = __webpack_require__(42);
+	var setEnv4 = __webpack_require__(50);
 
 	var getLispEnvironment = function(config) {
 	  var display = config.display;
@@ -2708,6 +2709,7 @@
 	  setEnv1(config);
 	  setEnv2(config);
 	  setEnv3(config);
+	  setEnv4(config);
 	  return environment;
 	};
 
@@ -2724,12 +2726,12 @@
 	var createErlIndex            = __webpack_require__(30).createErlIndex;
 	var createErlNumber           = __webpack_require__(30).createErlNumber;
 	var createErlString           = __webpack_require__(30).createErlString;
+	var erlNil                    = __webpack_require__(30).erlNil;
 	var extractJsValue            = __webpack_require__(30).extractJsValue;
 	var fromArray                 = __webpack_require__(31).fromArray;
-	var isJsNaN           = __webpack_require__(29).isJsNaN;
-	var isJsNumber        = __webpack_require__(29).isJsNumber;
-	var isJsString        = __webpack_require__(29).isJsString;
-	var erlNil                    = __webpack_require__(30).erlNil;
+	var isJsNaN                   = __webpack_require__(29).isJsNaN;
+	var isJsNumber                = __webpack_require__(29).isJsNumber;
+	var isJsString                = __webpack_require__(29).isJsString;
 	var reduce                    = __webpack_require__(31).reduce;
 	var toArray                   = __webpack_require__(31).toArray;
 
@@ -2825,7 +2827,7 @@
 	  return fromArray(_keys);
 	};
 
-	var length = function(jsVal) {
+	var lengthString = function(jsVal) {
 	  if (!isJsString(jsVal)) {
 	    return erlNil;
 	  }
@@ -2929,7 +2931,7 @@
 	  '>=': greaterThanOrEqual,
 	  'index': index,
 	  'keys': keys,
-	  'length': length,
+	  'length-string': lengthString,
 	  'max': max,
 	  'min': min,
 	  '<': lessThan,
@@ -2949,50 +2951,50 @@
 /* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var car                           = __webpack_require__(31).car;
-	var cdr                           = __webpack_require__(31).cdr;
-	var circumpendQuotes              = __webpack_require__(29).circumpendQuotes;
-	var concat                        = __webpack_require__(31).concat;
-	var createErlAtom                 = __webpack_require__(30).createErlAtom;
-	var createErlBoolean              = __webpack_require__(30).createErlBoolean;
-	var createErlCorePureFunction     = __webpack_require__(30).createErlCorePureFunction;
-	var createErlIndex                = __webpack_require__(30).createErlIndex;
-	var createErlList                 = __webpack_require__(30).createErlList;
-	var createErlNumber               = __webpack_require__(30).createErlNumber;
-	var createErlString               = __webpack_require__(30).createErlString;
-	var createErlSymbol               = __webpack_require__(30).createErlSymbol;
-	var drop                          = __webpack_require__(31).drop;
-	var isEmpty               = __webpack_require__(31).isEmpty;
-	var areEqual               = __webpack_require__(31).areEqual;
-	var extractJsValue                = __webpack_require__(30).extractJsValue;
-	var fromArray                     = __webpack_require__(31).fromArray;
-	var interpret                     = __webpack_require__(28);
-	var last                          = __webpack_require__(31).last;
-	var isErlAtom             = __webpack_require__(30).isErlAtom;
-	var isErlCorePureFunction = __webpack_require__(30).isErlCorePureFunction;
-	var isErlBoolean          = __webpack_require__(30).isErlBoolean;
-	var erlFalse                      = __webpack_require__(30).erlFalse;
-	var isErlFalse            = __webpack_require__(30).isErlFalse;
-	var erlIgnore                     = __webpack_require__(30).erlIgnore;
-	var isErlIndex            = __webpack_require__(30).isErlIndex;
-	var isErlList             = __webpack_require__(30).isErlList;
-	var isErlMacro            = __webpack_require__(30).isErlMacro;
-	var erlNil                        = __webpack_require__(30).erlNil;
-	var isErlNil              = __webpack_require__(30).isErlNil;
-	var isErlNumber           = __webpack_require__(30).isErlNumber;
-	var isErlString           = __webpack_require__(30).isErlString;
-	var isErlSymbol           = __webpack_require__(30).isErlSymbol;
-	var erlTrue                       = __webpack_require__(30).erlTrue;
-	var isErlTrue             = __webpack_require__(30).isErlTrue;
-	var isErlUserPureFunction = __webpack_require__(30).isErlUserPureFunction;
-	var next                          = __webpack_require__(31).next;
-	var recurse                       = __webpack_require__(31).recurse;
-	var reduce                        = __webpack_require__(31).reduce;
-	var reverse                       = __webpack_require__(31).reverse;
-	var serialize                     = __webpack_require__(36);
-	var take                          = __webpack_require__(31).take;
-	var toArray                       = __webpack_require__(31).toArray;
-	var toPartialArray                = __webpack_require__(31).toPartialArray;
+	/* WEBPACK VAR INJECTION */(function(process) {var areEqual                  = __webpack_require__(31).areEqual;
+	var car                       = __webpack_require__(31).car;
+	var cdr                       = __webpack_require__(31).cdr;
+	var circumpendQuotes          = __webpack_require__(29).circumpendQuotes;
+	var concat                    = __webpack_require__(31).concat;
+	var createErlAtom             = __webpack_require__(30).createErlAtom;
+	var createErlBoolean          = __webpack_require__(30).createErlBoolean;
+	var createErlCorePureFunction = __webpack_require__(30).createErlCorePureFunction;
+	var createErlIndex            = __webpack_require__(30).createErlIndex;
+	var createErlList             = __webpack_require__(30).createErlList;
+	var createErlNumber           = __webpack_require__(30).createErlNumber;
+	var createErlString           = __webpack_require__(30).createErlString;
+	var createErlSymbol           = __webpack_require__(30).createErlSymbol;
+	var drop                      = __webpack_require__(31).drop;
+	var erlFalse                  = __webpack_require__(30).erlFalse;
+	var erlIgnore                 = __webpack_require__(30).erlIgnore;
+	var erlNil                    = __webpack_require__(30).erlNil;
+	var erlTrue                   = __webpack_require__(30).erlTrue;
+	var extractJsValue            = __webpack_require__(30).extractJsValue;
+	var fromArray                 = __webpack_require__(31).fromArray;
+	var interpret                 = __webpack_require__(28);
+	var isEmpty                   = __webpack_require__(31).isEmpty;
+	var isErlAtom                 = __webpack_require__(30).isErlAtom;
+	var isErlCorePureFunction     = __webpack_require__(30).isErlCorePureFunction;
+	var isErlBoolean              = __webpack_require__(30).isErlBoolean;
+	var isErlFalse                = __webpack_require__(30).isErlFalse;
+	var isErlIndex                = __webpack_require__(30).isErlIndex;
+	var isErlList                 = __webpack_require__(30).isErlList;
+	var isErlMacro                = __webpack_require__(30).isErlMacro;
+	var isErlNil                  = __webpack_require__(30).isErlNil;
+	var isErlNumber               = __webpack_require__(30).isErlNumber;
+	var isErlString               = __webpack_require__(30).isErlString;
+	var isErlSymbol               = __webpack_require__(30).isErlSymbol;
+	var isErlTrue                 = __webpack_require__(30).isErlTrue;
+	var isErlUserPureFunction     = __webpack_require__(30).isErlUserPureFunction;
+	var last                      = __webpack_require__(31).last;
+	var next                      = __webpack_require__(31).next;
+	var recurse                   = __webpack_require__(31).recurse;
+	var reduce                    = __webpack_require__(31).reduce;
+	var reverse                   = __webpack_require__(31).reverse;
+	var serialize                 = __webpack_require__(37);
+	var take                      = __webpack_require__(31).take;
+	var toArray                   = __webpack_require__(31).toArray;
+	var toPartialArray            = __webpack_require__(31).toPartialArray;
 
 	var __slice   = [].slice;
 	var __hasProp = {}.hasOwnProperty;
@@ -3104,26 +3106,8 @@
 	  return drop(extractJsValue(erlNumber), erlList);
 	};
 
-	var _isEmpty = function(erlArgs) {
-	  if (isEmpty(erlArgs)) {
-	    return erlFalse;
-	  } else {
-	    if (isEmpty(car(erlArgs))) {
-	      return erlTrue;
-	    } else {
-	      return erlFalse;
-	    }
-	  }
-	};
-
 	var first = function(erlArgs) {
 	  return car(car(erlArgs));
-	};
-
-	var isFunction = function(jsList) {
-	  var erlValue = jsList.value;
-	  return createErlBoolean(isErlCorePureFunction(erlValue)
-	    || isErlUserPureFunction(erlValue));
 	};
 
 	var getEnvironment = function(config) {
@@ -3131,6 +3115,14 @@
 	  setCoreFnsOnErlValues(environment, functionsOnErlValues);
 	  return environment;
 	};
+
+	var hasProcess = function() {
+	  return typeof process !== 'undefined';
+	}
+
+	var hasProcessWebpackShim = function() {
+	  return(process.title === 'browser' && process.browser);
+	}
 
 	var ignore = function(erlArgs) {
 	  return erlIgnore;
@@ -3161,6 +3153,28 @@
 	var _interpret = function(erlArgs) {
 	  return interpret(stripQuotes(extractJsValue(car(erlArgs))));
 	};
+
+	var _isEmpty = function(erlArgs) {
+	  if (isEmpty(erlArgs)) {
+	    return erlFalse;
+	  } else {
+	    if (isEmpty(car(erlArgs))) {
+	      return erlTrue;
+	    } else {
+	      return erlFalse;
+	    }
+	  }
+	};
+
+	var isFunction = function(jsList) {
+	  var erlValue = jsList.value;
+	  return createErlBoolean(isErlCorePureFunction(erlValue)
+	    || isErlUserPureFunction(erlValue));
+	};
+
+	var isNode = function() {
+	  return hasProcess() && !hasProcessWebpackShim();
+	}
 
 	var _last = function(erlArgs) {
 	  var arg = car(erlArgs);
@@ -3231,11 +3245,15 @@
 	};
 
 	var read = function(jsList) {
-	  var _read = function(erlArgs) {
-	    var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-	    return __webpack_require__(39).readFileSync(jsFileName).toString();
-	  };
-	  return createErlString(_read(jsList));
+	  if (isNode()) {
+	    var _read = function(_jsList) {
+	      var jsFileName = stripQuotes(extractJsValue(car(_jsList)));
+	      return __webpack_require__(40).readFileSync(jsFileName).toString();
+	    };
+	    return createErlString(_read(jsList));
+	  } else {
+	    return erlNil;
+	  }
 	};
 
 	var reset = function(erlArgs) {
@@ -3284,9 +3302,13 @@
 	};
 
 	var slurp = function(erlArgs) {
-	  var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-	  var _fs_ = __webpack_require__(39);
-	  return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
+	  if (isNode()) {
+	    var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
+	    var _fs_ = __webpack_require__(40);
+	    return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
+	  } else {
+	    return erlNil;
+	  }
 	};
 
 	var string = function(erlArgs) {
@@ -3438,447 +3460,10 @@
 
 	module.exports = getEnvironment;
 
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
 
 /***/ }),
 /* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var commentSignal                      = __webpack_require__(37);
-	var extractJsValue                     = __webpack_require__(30).extractJsValue;
-	var indexEnd                           = __webpack_require__(38).indexEnd;
-	var indexStart                         = __webpack_require__(38).indexStart;
-	var listEnd                            = __webpack_require__(38).listEnd;
-	var listStart                          = __webpack_require__(38).listStart;
-	var isErlAtom                  = __webpack_require__(30).isErlAtom;
-	var isErlCoreEffectfulFunction = __webpack_require__(30).isErlCoreEffectfulFunction;
-	var isErlCorePureFunction      = __webpack_require__(30).isErlCorePureFunction;
-	var isErlIdentifier            = __webpack_require__(30).isErlIdentifier;
-	var isErlIgnore                = __webpack_require__(30).isErlIgnore;
-	var isErlIndex                 = __webpack_require__(30).isErlIndex;
-	var isErlKeyword               = __webpack_require__(30).isErlKeyword;
-	var isErlList                  = __webpack_require__(30).isErlList;
-	var isErlMacro                 = __webpack_require__(30).isErlMacro;
-	var isErlNil                   = __webpack_require__(30).isErlNil;
-	var isErlString                = __webpack_require__(30).isErlString;
-	var isErlUserPureFunction      = __webpack_require__(30).isErlUserPureFunction;
-	var reduce                             = __webpack_require__(31).reduce;
-
-	var  __hasProp = {}.hasOwnProperty;
-
-	var adjoinErlValue = function(shouldBeReadable) {
-	  return function(memo, erlValue) {
-	    var serialized = serialize(erlValue, shouldBeReadable);
-	    if (memo.length === 0) {
-	      return serialized;
-	    } else {
-	      return "" + memo + " " + serialized;
-	    }
-	  };
-	};
-
-	var serialize = function(erlExpr, shouldBeReadable) {
-	  if (erlExpr === commentSignal) {
-	    return commentSignal;
-	  }
-	  var _serialize = (function() {
-	    if (isErlList(erlExpr)) {
-	      return serializeList;
-	    } else if (isErlIgnore(erlExpr)) {
-	      return function(erlValue) {
-	        return ignoreLabel;
-	      };
-	    } else if (isErlIndex(erlExpr)) {
-	      return serializeIndex;
-	    } else if (isErlKeyword(erlExpr)) {
-	      return function(erlValue) {
-	        return keywordLabel;
-	      };
-	    } else if (isErlCoreEffectfulFunction(erlExpr)) {
-	      return function(erlValue) {
-	        return coreEffectfulFunctionLabel;
-	      };
-	    } else if (isErlCorePureFunction(erlExpr)) {
-	      return function(erlValue) {
-	        return corePureFunctionLabel;
-	      };
-	    } else if (isErlUserPureFunction(erlExpr)) {
-	      return function(erlValue) {
-	        return userPureFunctionLabel;
-	      };
-	    } else if (isErlMacro(erlExpr)) {
-	      return function(erlValue) {
-	        return macroLabel;
-	      };
-	    } else if (isErlNil(erlExpr)) {
-	      return function(erlValue) {
-	        return nilLabel;
-	      };
-	    } else if (isErlIdentifier(erlExpr)) {
-	      return serializeIdentifier;
-	    } else if (isErlString(erlExpr)) {
-	      return serializeString;
-	    } else if (isErlAtom(erlExpr)) {
-	      return serializeAtom;
-	    } else if (erlExpr.jsValue != null) {
-	      return extractJsValue;
-	    } else {
-	      return function(erlValue) {
-	        return erlValue;
-	      };
-	    }
-	  })();
-	  return _serialize(erlExpr, shouldBeReadable);
-	};
-
-	var serializeAtom = function(erlAtom, shouldBeReadable) {
-	  return "(atom " + (serialize(erlAtom.erlValue, shouldBeReadable)) + ")";
-	};
-
-	var serializeIdentifier = function(erlString, shouldBeReadable) {
-	  return extractJsValue(erlString);
-	};
-
-	var serializeIndex = function(erlIndex, shouldBeReadable) {
-	  var jsIndex = erlIndex.jsValue;
-	  var memo = '';
-	  for (var key in jsIndex) {
-	    if (!__hasProp.call(jsIndex, key)) continue;
-	    var erlValue = jsIndex[key];
-	    if (memo === '') {
-	      memo = ""
-	        + key
-	        + " "
-	        + (serialize(erlValue, shouldBeReadable));
-	    } else {
-	      memo = ""
-	        + memo
-	        + ", "
-	        + key
-	        + " "
-	        + (serialize(erlValue, shouldBeReadable));
-	    }
-	  }
-	  return indexStart + memo + indexEnd;
-	};
-
-	var serializeList = function(erlList, shouldBeReadable) {
-	  var serializedList = reduce(
-	    "",
-	    adjoinErlValue(shouldBeReadable),
-	    erlList);
-	  return listStart + serializedList + listEnd;
-	};
-
-	var serializeString = function(erlString, shouldBeReadable) {
-	  var jsString = stripQuotes(extractJsValue(erlString));
-	  if (!shouldBeReadable) {
-	    return jsString;
-	  }
-	  return jsString
-	    .replace(/\\/g, '\\\\')
-	    .replace(/"/g, '\\"')
-	    .replace(/\n/g, '\\n');
-	};
-
-	var stripQuotes = function(jsString) {
-	  return jsString.slice(1, -1);
-	};
-
-	var coreEffectfulFunctionLabel = '<effectful core function>';
-	var corePureFunctionLabel      = '<core function>';
-	var ignoreLabel                = '<ignore>';
-	var keywordLabel               = '<keyword>';
-	var macroLabel                 = '<macro>';
-	var nilLabel                   = 'nil';
-	var userPureFunctionLabel      = '<function>';
-
-	module.exports = serialize;
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-	var comment = {};
-
-	module.exports = comment;
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-	var deref                 = 'deref';
-	var derefGlyph            = '@';
-	var catchStar       = 'catch*';
-	var defBang             = 'def!';
-	var _do                   = 'do';
-	var _eval                 = 'eval';
-	var _evalWithEnv          = 'eval-with-env';
-	var expandMacro   = 'expand-macro';
-	var _false                = 'false';
-	var fnStar          = 'fn*';
-	var _getCurrentEnv        = '-get-current-env-';
-	var _getDefaultEnv        = '-get-default-env-';
-	var _if                   = 'if';
-	var ignoreBang          = 'ignore!';
-	var ignoreBangGlyph     = '#!';
-	var ignoreIfTrue          = 'ignoreIfTrue';
-	var ignoreIfTrueGlyph     = '#-';
-	var ignoreUnlessTrue      = 'ignoreUnlessTrue';
-	var ignoreUnlessTrueGlyph = '#+';
-	var ignore                = 'ignore';
-	var indexEnd              = '}';
-	var indexStart            = '{';
-	var letStar         = 'let*';
-	var letrecStar      = 'letrec*';
-	var listEnd               = ')';
-	var listStart             = '(';
-	var macroStar       = 'macro*';
-	var nil                   = 'nil';
-	var _process              = '-process-';
-	var quasiquote            = 'quasiquote';
-	var quasiquoteGlyph       = '`';
-	var quote                 = 'quote';
-	var quoteGlyph            = '\'';
-	var splat                 = '&';
-	var spliceUnquote         = 'splice-unquote';
-	var spliceUnquoteGlyph    = '~@';
-	var _true                 = 'true';
-	var tryStar         = 'try*';
-	var undefBang           = 'undef!';
-	var unquote               = 'unquote';
-	var unquoteGlyph          = '~'
-
-	var keyTokens = [
-	  deref,
-	  derefGlyph,
-	  catchStar,
-	  defBang,
-	  _do,
-	  _eval,
-	  _evalWithEnv,
-	  expandMacro,
-	  _false,
-	  fnStar,
-	  _getCurrentEnv,
-	  _getDefaultEnv,
-	  _if,
-	  ignoreBang,
-	  ignoreBangGlyph,
-	  ignoreIfTrue,
-	  ignoreIfTrueGlyph,
-	  ignoreUnlessTrue,
-	  ignoreUnlessTrueGlyph,
-	  ignore,
-	  indexEnd,
-	  indexStart,
-	  letStar,
-	  letrecStar,
-	  listEnd,
-	  listStart,
-	  macroStar,
-	  nil,
-	  _process,
-	  quasiquote,
-	  quasiquoteGlyph,
-	  quote,
-	  quoteGlyph,
-	  splat,
-	  spliceUnquote,
-	  spliceUnquoteGlyph,
-	  _true,
-	  tryStar,
-	  undefBang,
-	  unquote,
-	  unquoteGlyph
-	];
-
-	var keywords = [
-	  catchStar,
-	  defBang,
-	  _do,
-	  _eval,
-	  _evalWithEnv,
-	  expandMacro,
-	  _false,
-	  fnStar,
-	  _getCurrentEnv,
-	  _getDefaultEnv,
-	  _if,
-	  ignore,
-	  letStar,
-	  letrecStar,
-	  macroStar,
-	  nil,
-	  _process,
-	  quasiquote,
-	  quote,
-	  spliceUnquote,
-	  _true,
-	  tryStar,
-	  undefBang,
-	  unquote
-	];
-
-	var macroTokens = [quasiquote, quote, spliceUnquote, unquote];
-
-	var glyphTokens = [
-	  derefGlyph,
-	  ignoreBangGlyph,
-	  quasiquoteGlyph,
-	  quoteGlyph,
-	  spliceUnquoteGlyph,
-	  unquoteGlyph
-	];
-
-	var binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
-
-	var __indexOf = [].indexOf || function(item) {
-	  for (var i = 0, l = this.length; i < l; i++) {
-	    if (i in this && this[i] === item) return i;
-	  } return -1;
-	};
-
-	var isKeyword = function(jsString) {
-	  return __indexOf.call(keywords, jsString) >= 0;
-	};
-
-	module.exports = {
-	  binaryGlyphTokens: binaryGlyphTokens,
-	  deref: deref,
-	  derefGlyph: derefGlyph,
-	  catchStar: catchStar,
-	  defBang: defBang,
-	  _do: _do,
-	  _eval: _eval,
-	  _evalWithEnv: _evalWithEnv,
-	  expandMacro: expandMacro,
-	  _false: _false,
-	  fnStar: fnStar,
-	  _getCurrentEnv: _getCurrentEnv,
-	  _getDefaultEnv: _getDefaultEnv,
-	  glyphTokens: glyphTokens,
-	  _if: _if,
-	  ignoreIfTrue: ignoreIfTrue,
-	  ignoreIfTrueGlyph: ignoreIfTrueGlyph,
-	  ignoreUnlessTrue: ignoreUnlessTrue,
-	  ignoreUnlessTrueGlyph: ignoreUnlessTrueGlyph,
-	  ignore: ignore,
-	  ignoreBang: ignoreBang,
-	  ignoreBangGlyph: ignoreBangGlyph,
-	  indexEnd: indexEnd,
-	  indexStart: indexStart,
-	  keyTokens: keyTokens,
-	  isKeyword: isKeyword,
-	  letStar: letStar,
-	  letrecStar: letrecStar,
-	  listEnd: listEnd,
-	  listStart: listStart,
-	  macroStar: macroStar,
-	  macroTokens: macroTokens,
-	  nil: nil,
-	  _process: _process,
-	  quasiquote: quasiquote,
-	  quasiquoteGlyph: quasiquoteGlyph,
-	  quote: quote,
-	  quoteGlyph: quoteGlyph,
-	  splat: splat,
-	  spliceUnquote: spliceUnquote,
-	  spliceUnquoteGlyph: spliceUnquoteGlyph,
-	  _true: _true,
-	  tryStar: tryStar,
-	  undefBang: undefBang,
-	  unquote: unquote,
-	  unquoteGlyph: unquoteGlyph
-	};
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-	
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {var createErlCoreEffectfulFunction = __webpack_require__(30).createErlCoreEffectfulFunction;
-	var createErlList                  = __webpack_require__(30).createErlList;
-	var createErlString                = __webpack_require__(30).createErlString;
-	var serialize                      = __webpack_require__(36);
-	var toArray                        = __webpack_require__(31).toArray;
-
-	var __hasProp = {}.hasOwnProperty;
-
-	var getEnvironment = function(config) {
-	  var display = config.display;
-	  var environment = config.environment;
-	  setCoreEffectfulFnsOnErlValues(display)(environment, displayEffectsOnErlValues);
-	  return environment;
-	};
-
-	var hasProcess = function() {
-	  return typeof process !== 'undefined';
-	}
-
-	var hasProcessWebpackShim = function() {
-	  return(process.title === 'browser' && process.browser);
-	}
-
-	var isNode = function() {
-	  return hasProcess() && !hasProcessWebpackShim();
-	}
-
-	var _prStr = function(erlArgs, printReadably_question_) {
-	  return ((toArray(erlArgs)).map(function(erlArg) {
-	    return serialize(erlArg, printReadably_question_);
-	  })).join('');
-	};
-
-	var _quit_ = function() {
-	  if (isNode()) {
-	    return process.exit(0);
-	  } else {
-	    return _prStr(
-	      createErlList(
-	        createErlString(
-	          "\"'Erlkönig Lisp Console' is not permitted to close this window.\"")),
-	          false);
-	  }
-	};
-
-	var setCoreEffectfulFnsOnErlValues = function(represent) {
-	  return function(env, fns) {
-	    var _results = [];
-	    for (var fnName in fns) {
-	      if (!__hasProp.call(fns, fnName)) continue;
-	      var fn = fns[fnName];
-	      _results.push(env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
-	        return represent(fn(erlArgs));
-	      }));
-	    }
-	    return _results;
-	  };
-	};
-
-	displayEffectsOnErlValues = {
-	  'print': function(erlArgs) {
-	    return _prStr(erlArgs, false);
-	  },
-	  'pretty-print': function(erlArgs) {
-	    return _prStr(erlArgs, true);
-	  },
-	  '-quit-': _quit_,
-	};
-
-	module.exports = getEnvironment;
-
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
-
-/***/ }),
-/* 41 */
 /***/ (function(module, exports) {
 
 	// shim for using process in browser
@@ -4068,6 +3653,447 @@
 
 
 /***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var commentSignal              = __webpack_require__(38);
+	var extractJsValue             = __webpack_require__(30).extractJsValue;
+	var indexEnd                   = __webpack_require__(39).indexEnd;
+	var indexStart                 = __webpack_require__(39).indexStart;
+	var isErlAtom                  = __webpack_require__(30).isErlAtom;
+	var isErlCoreEffectfulFunction = __webpack_require__(30).isErlCoreEffectfulFunction;
+	var isErlCorePureFunction      = __webpack_require__(30).isErlCorePureFunction;
+	var isErlIdentifier            = __webpack_require__(30).isErlIdentifier;
+	var isErlIgnore                = __webpack_require__(30).isErlIgnore;
+	var isErlIndex                 = __webpack_require__(30).isErlIndex;
+	var isErlKeyword               = __webpack_require__(30).isErlKeyword;
+	var isErlList                  = __webpack_require__(30).isErlList;
+	var isErlMacro                 = __webpack_require__(30).isErlMacro;
+	var isErlNil                   = __webpack_require__(30).isErlNil;
+	var isErlString                = __webpack_require__(30).isErlString;
+	var isErlUserPureFunction      = __webpack_require__(30).isErlUserPureFunction;
+	var listEnd                    = __webpack_require__(39).listEnd;
+	var listStart                  = __webpack_require__(39).listStart;
+	var reduce                     = __webpack_require__(31).reduce;
+
+	var __hasProp = {}.hasOwnProperty;
+
+	var adjoinErlValue = function(shouldBeReadable) {
+	  return function(memo, erlValue) {
+	    var serialized = serialize(erlValue, shouldBeReadable);
+	    if (memo.length === 0) {
+	      return serialized;
+	    } else {
+	      return "" + memo + " " + serialized;
+	    }
+	  };
+	};
+
+	var serialize = function(erlExpr, shouldBeReadable) {
+	  if (erlExpr === commentSignal) {
+	    return commentSignal;
+	  }
+	  var _serialize = (function() {
+	    if (isErlList(erlExpr)) {
+	      return serializeList;
+	    } else if (isErlIgnore(erlExpr)) {
+	      return function(erlValue) {
+	        return ignoreLabel;
+	      };
+	    } else if (isErlIndex(erlExpr)) {
+	      return serializeIndex;
+	    } else if (isErlKeyword(erlExpr)) {
+	      return function(erlValue) {
+	        return keywordLabel;
+	      };
+	    } else if (isErlCoreEffectfulFunction(erlExpr)) {
+	      return function(erlValue) {
+	        return coreEffectfulFunctionLabel;
+	      };
+	    } else if (isErlCorePureFunction(erlExpr)) {
+	      return function(erlValue) {
+	        return corePureFunctionLabel;
+	      };
+	    } else if (isErlUserPureFunction(erlExpr)) {
+	      return function(erlValue) {
+	        return userPureFunctionLabel;
+	      };
+	    } else if (isErlMacro(erlExpr)) {
+	      return function(erlValue) {
+	        return macroLabel;
+	      };
+	    } else if (isErlNil(erlExpr)) {
+	      return function(erlValue) {
+	        return nilLabel;
+	      };
+	    } else if (isErlIdentifier(erlExpr)) {
+	      return serializeIdentifier;
+	    } else if (isErlString(erlExpr)) {
+	      return serializeString;
+	    } else if (isErlAtom(erlExpr)) {
+	      return serializeAtom;
+	    } else if (erlExpr.jsValue != null) {
+	      return extractJsValue;
+	    } else {
+	      return function(erlValue) {
+	        return erlValue;
+	      };
+	    }
+	  })();
+	  return _serialize(erlExpr, shouldBeReadable);
+	};
+
+	var serializeAtom = function(erlAtom, shouldBeReadable) {
+	  return "(atom " + (serialize(erlAtom.erlValue, shouldBeReadable)) + ")";
+	};
+
+	var serializeIdentifier = function(erlString, shouldBeReadable) {
+	  return extractJsValue(erlString);
+	};
+
+	var serializeIndex = function(erlIndex, shouldBeReadable) {
+	  var jsIndex = erlIndex.jsValue;
+	  var memo = '';
+	  for (var key in jsIndex) {
+	    if (!__hasProp.call(jsIndex, key)) continue;
+	    var erlValue = jsIndex[key];
+	    if (memo === '') {
+	      memo = ""
+	        + key
+	        + " "
+	        + (serialize(erlValue, shouldBeReadable));
+	    } else {
+	      memo = ""
+	        + memo
+	        + ", "
+	        + key
+	        + " "
+	        + (serialize(erlValue, shouldBeReadable));
+	    }
+	  }
+	  return indexStart + memo + indexEnd;
+	};
+
+	var serializeList = function(erlList, shouldBeReadable) {
+	  var serializedList = reduce(
+	    "",
+	    adjoinErlValue(shouldBeReadable),
+	    erlList);
+	  return listStart + serializedList + listEnd;
+	};
+
+	var serializeString = function(erlString, shouldBeReadable) {
+	  var jsString = stripQuotes(extractJsValue(erlString));
+	  if (!shouldBeReadable) {
+	    return jsString;
+	  }
+	  return jsString
+	    .replace(/\\/g, '\\\\')
+	    .replace(/"/g, '\\"')
+	    .replace(/\n/g, '\\n');
+	};
+
+	var stripQuotes = function(jsString) {
+	  return jsString.slice(1, -1);
+	};
+
+	var coreEffectfulFunctionLabel = '<effectful core function>';
+	var corePureFunctionLabel      = '<core function>';
+	var ignoreLabel                = '<ignore>';
+	var keywordLabel               = '<keyword>';
+	var macroLabel                 = '<macro>';
+	var nilLabel                   = 'nil';
+	var userPureFunctionLabel      = '<function>';
+
+	module.exports = serialize;
+
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports) {
+
+	var comment = {};
+
+	module.exports = comment;
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports) {
+
+	var deref                 = 'deref';
+	var derefGlyph            = '@';
+	var catchStar             = 'catch*';
+	var defBang               = 'def!';
+	var _do                   = 'do';
+	var _eval                 = 'eval';
+	var _evalWithEnv          = 'eval-with-env';
+	var expandMacro           = 'expand-macro';
+	var _false                = 'false';
+	var fnStar                = 'fn*';
+	var _getCurrentEnv        = '-get-current-env-';
+	var _getDefaultEnv        = '-get-default-env-';
+	var _if                   = 'if';
+	var ignoreBang            = 'ignore!';
+	var ignoreBangGlyph       = '#!';
+	var ignoreIfTrue          = 'ignoreIfTrue';
+	var ignoreIfTrueGlyph     = '#-';
+	var ignoreUnlessTrue      = 'ignoreUnlessTrue';
+	var ignoreUnlessTrueGlyph = '#+';
+	var ignore                = 'ignore';
+	var indexEnd              = '}';
+	var indexStart            = '{';
+	var letStar               = 'let*';
+	var letrecStar            = 'letrec*';
+	var listEnd               = ')';
+	var listStart             = '(';
+	var macroStar             = 'macro*';
+	var nil                   = 'nil';
+	var _process              = '-process-';
+	var quasiquote            = 'quasiquote';
+	var quasiquoteGlyph       = '`';
+	var quote                 = 'quote';
+	var quoteGlyph            = '\'';
+	var splat                 = '&';
+	var spliceUnquote         = 'splice-unquote';
+	var spliceUnquoteGlyph    = '~@';
+	var _true                 = 'true';
+	var tryStar               = 'try*';
+	var undefBang             = 'undef!';
+	var unquote               = 'unquote';
+	var unquoteGlyph          = '~'
+
+	var keyTokens = [
+	  deref,
+	  derefGlyph,
+	  catchStar,
+	  defBang,
+	  _do,
+	  _eval,
+	  _evalWithEnv,
+	  expandMacro,
+	  _false,
+	  fnStar,
+	  _getCurrentEnv,
+	  _getDefaultEnv,
+	  _if,
+	  ignoreBang,
+	  ignoreBangGlyph,
+	  ignoreIfTrue,
+	  ignoreIfTrueGlyph,
+	  ignoreUnlessTrue,
+	  ignoreUnlessTrueGlyph,
+	  ignore,
+	  indexEnd,
+	  indexStart,
+	  letStar,
+	  letrecStar,
+	  listEnd,
+	  listStart,
+	  macroStar,
+	  nil,
+	  _process,
+	  quasiquote,
+	  quasiquoteGlyph,
+	  quote,
+	  quoteGlyph,
+	  splat,
+	  spliceUnquote,
+	  spliceUnquoteGlyph,
+	  _true,
+	  tryStar,
+	  undefBang,
+	  unquote,
+	  unquoteGlyph
+	];
+
+	var keywords = [
+	  catchStar,
+	  defBang,
+	  _do,
+	  _eval,
+	  _evalWithEnv,
+	  expandMacro,
+	  _false,
+	  fnStar,
+	  _getCurrentEnv,
+	  _getDefaultEnv,
+	  _if,
+	  ignore,
+	  letStar,
+	  letrecStar,
+	  macroStar,
+	  nil,
+	  _process,
+	  quasiquote,
+	  quote,
+	  spliceUnquote,
+	  _true,
+	  tryStar,
+	  undefBang,
+	  unquote
+	];
+
+	var macroTokens = [quasiquote, quote, spliceUnquote, unquote];
+
+	var glyphTokens = [
+	  derefGlyph,
+	  ignoreBangGlyph,
+	  quasiquoteGlyph,
+	  quoteGlyph,
+	  spliceUnquoteGlyph,
+	  unquoteGlyph
+	];
+
+	var binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
+
+	var __indexOf = [].indexOf || function(item) {
+	  for (var i = 0, l = this.length; i < l; i++) {
+	    if (i in this && this[i] === item) return i;
+	  } return -1;
+	};
+
+	var isKeyword = function(jsString) {
+	  return __indexOf.call(keywords, jsString) >= 0;
+	};
+
+	module.exports = {
+	  binaryGlyphTokens: binaryGlyphTokens,
+	  deref: deref,
+	  derefGlyph: derefGlyph,
+	  catchStar: catchStar,
+	  defBang: defBang,
+	  _do: _do,
+	  _eval: _eval,
+	  _evalWithEnv: _evalWithEnv,
+	  expandMacro: expandMacro,
+	  _false: _false,
+	  fnStar: fnStar,
+	  _getCurrentEnv: _getCurrentEnv,
+	  _getDefaultEnv: _getDefaultEnv,
+	  glyphTokens: glyphTokens,
+	  _if: _if,
+	  ignoreIfTrue: ignoreIfTrue,
+	  ignoreIfTrueGlyph: ignoreIfTrueGlyph,
+	  ignoreUnlessTrue: ignoreUnlessTrue,
+	  ignoreUnlessTrueGlyph: ignoreUnlessTrueGlyph,
+	  ignore: ignore,
+	  ignoreBang: ignoreBang,
+	  ignoreBangGlyph: ignoreBangGlyph,
+	  indexEnd: indexEnd,
+	  indexStart: indexStart,
+	  keyTokens: keyTokens,
+	  isKeyword: isKeyword,
+	  letStar: letStar,
+	  letrecStar: letrecStar,
+	  listEnd: listEnd,
+	  listStart: listStart,
+	  macroStar: macroStar,
+	  macroTokens: macroTokens,
+	  nil: nil,
+	  _process: _process,
+	  quasiquote: quasiquote,
+	  quasiquoteGlyph: quasiquoteGlyph,
+	  quote: quote,
+	  quoteGlyph: quoteGlyph,
+	  splat: splat,
+	  spliceUnquote: spliceUnquote,
+	  spliceUnquoteGlyph: spliceUnquoteGlyph,
+	  _true: _true,
+	  tryStar: tryStar,
+	  undefBang: undefBang,
+	  unquote: unquote,
+	  unquoteGlyph: unquoteGlyph
+	};
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+	
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {var createErlCoreEffectfulFunction =
+	  __webpack_require__(30).createErlCoreEffectfulFunction;
+
+	var createErlList   = __webpack_require__(30).createErlList;
+	var createErlString = __webpack_require__(30).createErlString;
+	var serialize       = __webpack_require__(37);
+	var toArray         = __webpack_require__(31).toArray;
+
+	var __hasProp = {}.hasOwnProperty;
+
+	var getEnvironment = function(config) {
+	  var display = config.display;
+	  var environment = config.environment;
+	  setCoreEffectfulFnsOnErlValues(display)(environment, displayEffectsOnErlValues);
+	  return environment;
+	};
+
+	var hasProcess = function() {
+	  return typeof process !== 'undefined';
+	}
+
+	var hasProcessWebpackShim = function() {
+	  return(process.title === 'browser' && process.browser);
+	}
+
+	var isNode = function() {
+	  return hasProcess() && !hasProcessWebpackShim();
+	}
+
+	var _prStr = function(erlArgs, shouldBeReadable) {
+	  return ((toArray(erlArgs)).map(function(erlArg) {
+	    return serialize(erlArg, shouldBeReadable);
+	  })).join('');
+	};
+
+	var _quit_ = function() {
+	  if (isNode()) {
+	    return process.exit(0);
+	  } else {
+	    return _prStr(
+	      createErlList(
+	        createErlString(
+	          "\"'Erlkönig Lisp Console' is not permitted to close this window.\"")),
+	          false);
+	  }
+	};
+
+	var setCoreEffectfulFnsOnErlValues = function(represent) {
+	  return function(env, fns) {
+	    var _results = [];
+	    for (var fnName in fns) {
+	      if (!__hasProp.call(fns, fnName)) continue;
+	      var fn = fns[fnName];
+	      _results.push(env[fnName] =
+	        createErlCoreEffectfulFunction(function(erlArgs) {
+	          return represent(fn(erlArgs));
+	        }));
+	    }
+	    return _results;
+	  };
+	};
+
+	displayEffectsOnErlValues = {
+	  'print': function(erlArgs) {
+	    return _prStr(erlArgs, false);
+	  },
+	  'pretty-print': function(erlArgs) {
+	    return _prStr(erlArgs, true);
+	  },
+	  '-quit-': _quit_,
+	};
+
+	module.exports = getEnvironment;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
+
+/***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4078,7 +4104,7 @@
 	var extractJsValue            = __webpack_require__(30).extractJsValue;
 	var fromArray                 = __webpack_require__(31).fromArray;
 	var fromErlIndex              = __webpack_require__(43).fromErlIndex;
-	var isErlList         = __webpack_require__(30).isErlList;
+	var isErlList                 = __webpack_require__(30).isErlList;
 	var _process                  = __webpack_require__(44);
 	var toArray                   = __webpack_require__(31).toArray;
 	var tokenizeAndParse          = __webpack_require__(47);
@@ -4088,38 +4114,6 @@
 
 	var getEnvironment = function(config) {
 	  var environment = config.environment;
-	  var apply = function(erlArgs) {
-	    var erlArgsArray = toArray(erlArgs);
-	    var erlFn = erlArgsArray[0];
-	    var erlArgList = erlArgsArray[1];
-	    return _eval(createErlList(erlFn, erlArgList));
-	  };
-	  var call = function(erlArgs) {
-	    return _eval(erlArgs);
-	  };
-	  var _eval = function(erlVal) {
-	    return _process_([environment])(erlVal);
-	  };
-	  var _evalListHead = function(erlArgs) {
-	    return _eval(car(erlArgs));
-	  };
-	  var evalString = function(erlArgs) {
-	    return (function(_erlArgs) {
-	      return _eval(tokenizeAndParse(stripQuotes(extractJsValue(car(_erlArgs)))));
-	    })(erlArgs);
-	  };
-	  var evalWithBareEnv = function(erlArgs) {
-	    var partialArray = toPartialArray(2, erlArgs);
-	    var expr = partialArray[0];
-	    var localEnv = partialArray[1];
-	    return _process_([fromErlIndex(localEnv)])(expr);
-	  };
-	  var evalWithEnv = function(erlArgs) {
-	    var partialArray = toPartialArray(2, erlArgs);
-	    var expr = partialArray[0];
-	    var localEnv = partialArray[1];
-	    return _process_([fromErlIndex(localEnv), environment])(expr);
-	  };
 	  var parse = function(erlArgs) {
 	    return tokenizeAndParse(stripQuotes(extractJsValue(car(erlArgs))));
 	  };
@@ -4127,6 +4121,10 @@
 	  setCoreFnsOnErlValues(environment, functionsOnErlValues);
 	  return environment;
 	};
+
+	var _process_ = _process(function(erlVal) {
+	  return erlVal;
+	});
 
 	var setCoreFnsOnErlValues = function(env, fns) {
 	  var _results = [];
@@ -4144,10 +4142,6 @@
 	  return jsString.slice(1, -1);
 	};
 
-	var _process_ = _process(function(erlVal) {
-	  return erlVal;
-	});
-
 	module.exports = getEnvironment;
 
 
@@ -4155,30 +4149,11 @@
 /* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var createErlIndex     = __webpack_require__(30).createErlIndex;
-	var isJsString = __webpack_require__(29).isJsString;
+	var createErlIndex = __webpack_require__(30).createErlIndex;
+	var isJsString     = __webpack_require__(29).isJsString;
 
 	var __slice   = [].slice;
 	var __hasProp = {}.hasOwnProperty;
-
-	var fromJsObjects = function() {
-	  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-	  var copy = {};
-	  var len = jsObjects.length;
-	  for (var i = 0;  i < len; i++) {
-	    var jsObject = jsObjects[i];
-	    for (var key in jsObject) {
-	      if (!__hasProp.call(jsObject, key)) continue;
-	      var val = jsObject[key];
-	      if (isJsString(key)) {
-	        copy[':' + key] = val;
-	      } else {
-	        copy[key] = val;
-	      }
-	    }
-	  }
-	  return createErlIndex(copy);
-	};
 
 	var fromErlIndex = function(erlIndex) {
 	  var result = {};
@@ -4205,6 +4180,25 @@
 	  return result;
 	};
 
+	var fromJsObjects = function() {
+	  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+	  var copy = {};
+	  var len = jsObjects.length;
+	  for (var i = 0;  i < len; i++) {
+	    var jsObject = jsObjects[i];
+	    for (var key in jsObject) {
+	      if (!__hasProp.call(jsObject, key)) continue;
+	      var val = jsObject[key];
+	      if (isJsString(key)) {
+	        copy[':' + key] = val;
+	      } else {
+	        copy[key] = val;
+	      }
+	    }
+	  }
+	  return createErlIndex(copy);
+	};
+
 	module.exports = {
 	  fromJsObjects: fromJsObjects,
 	  fromErlIndex: fromErlIndex
@@ -4215,7 +4209,7 @@
 /* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var commentSignal = __webpack_require__(37);
+	var commentSignal = __webpack_require__(38);
 	var evaluate      = __webpack_require__(45);
 
 	var _process = function(transform) {
@@ -4242,42 +4236,37 @@
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var addEnv                             = __webpack_require__(46).addEnv;
-	var car                                = __webpack_require__(31).car;
-	var catchStar                    = __webpack_require__(38).catchStar;
-	var cdr                                = __webpack_require__(31).cdr;
-	var circumpendQuotes                   = __webpack_require__(29).circumpendQuotes;
-	var commentSignal                      = __webpack_require__(37);
-	var createErlIndex                     = __webpack_require__(30).createErlIndex;
-	var createErlKeyword                   = __webpack_require__(30).createErlKeyword;
-	var createErlList                      = __webpack_require__(30).createErlList;
-	var createErlMacro                     = __webpack_require__(30).createErlMacro;
-	var createErlNumber                    = __webpack_require__(30).createErlNumber;
-	var createErlString                    = __webpack_require__(30).createErlString;
-	var createErlSymbol                    = __webpack_require__(30).createErlSymbol;
-	var createErlUserPureFunction          = __webpack_require__(30).createErlUserPureFunction;
-	var defBang                          = __webpack_require__(38).defBang;
-	var _do                                = __webpack_require__(38)._do;
+	var addEnv                     = __webpack_require__(46).addEnv;
+	var car                        = __webpack_require__(31).car;
+	var catchStar                  = __webpack_require__(39).catchStar;
+	var cdr                        = __webpack_require__(31).cdr;
+	var circumpendQuotes           = __webpack_require__(29).circumpendQuotes;
+	var commentSignal              = __webpack_require__(38);
+	var createErlIndex             = __webpack_require__(30).createErlIndex;
+	var createErlKeyword           = __webpack_require__(30).createErlKeyword;
+	var createErlList              = __webpack_require__(30).createErlList;
+	var createErlMacro             = __webpack_require__(30).createErlMacro;
+	var createErlNumber            = __webpack_require__(30).createErlNumber;
+	var createErlString            = __webpack_require__(30).createErlString;
+	var createErlSymbol            = __webpack_require__(30).createErlSymbol;
+	var createErlUserPureFunction  = __webpack_require__(30).createErlUserPureFunction;
+	var defBang                    = __webpack_require__(39).defBang;
+	var _do                        = __webpack_require__(39)._do;
+	var erlNil                     = __webpack_require__(30).erlNil;
+	var _eval                      = __webpack_require__(39)._eval;
+	var _evalWithEnv               = __webpack_require__(39)._evalWithEnv;
+	var expandMacro                = __webpack_require__(39).expandMacro;
+	var extractJsValue             = __webpack_require__(30).extractJsValue;
+	var filter                     = __webpack_require__(31).filter;
+	var fnStar                     = __webpack_require__(39).fnStar;
+	var forEach                    = __webpack_require__(31).forEach;
+	var fromArray                  = __webpack_require__(31).fromArray;
+	var fromErlIndex               = __webpack_require__(43).fromErlIndex;
+	var fromJsObjects              = __webpack_require__(43).fromJsObjects;
+	var _getCurrentEnv             = __webpack_require__(39)._getCurrentEnv;
+	var _getDefaultEnv             = __webpack_require__(39)._getDefaultEnv;
+	var _if                        = __webpack_require__(39)._if;
 	var isEmpty                    = __webpack_require__(31).isEmpty;
-	var _eval                              = __webpack_require__(38)._eval;
-	var _evalWithEnv                       = __webpack_require__(38)._evalWithEnv;
-	var expandMacro                = __webpack_require__(38).expandMacro;
-	var extractJsValue                     = __webpack_require__(30).extractJsValue;
-	var filter                             = __webpack_require__(31).filter;
-	var fnStar                       = __webpack_require__(38).fnStar;
-	var forEach                            = __webpack_require__(31).forEach;
-	var fromArray                          = __webpack_require__(31).fromArray;
-	var fromJsObjects                      = __webpack_require__(43).fromJsObjects;
-	var fromErlIndex                       = __webpack_require__(43).fromErlIndex;
-	var _getCurrentEnv                     = __webpack_require__(38)._getCurrentEnv;
-	var _getDefaultEnv                     = __webpack_require__(38)._getDefaultEnv;
-	var _if                                = __webpack_require__(38)._if;
-	var isJsString                 = __webpack_require__(29).isJsString;
-	var isKeyword                  = __webpack_require__(38).isKeyword;
-	var letStar                      = __webpack_require__(38).letStar;
-	var letrecStar                   = __webpack_require__(38).letrecStar;
-	var lookup                             = __webpack_require__(46).lookup;
-	var macroStar                    = __webpack_require__(38).macroStar;
 	var isErlCoreEffectfulFunction = __webpack_require__(30).isErlCoreEffectfulFunction;
 	var isErlCorePureFunction      = __webpack_require__(30).isErlCorePureFunction;
 	var isErlIgnore                = __webpack_require__(30).isErlIgnore;
@@ -4285,25 +4274,30 @@
 	var isErlKeyword               = __webpack_require__(30).isErlKeyword;
 	var isErlList                  = __webpack_require__(30).isErlList;
 	var isErlMacro                 = __webpack_require__(30).isErlMacro;
-	var erlNil                             = __webpack_require__(30).erlNil;
 	var isErlSymbol                = __webpack_require__(30).isErlSymbol;
 	var isErlUserPureFunction      = __webpack_require__(30).isErlUserPureFunction;
-	var map                                = __webpack_require__(31).map;
-	var next                               = __webpack_require__(31).next;
-	var quasiquote                         = __webpack_require__(38).quasiquote;
-	var quote                              = __webpack_require__(38).quote;
-	var spliceUnquote                      = __webpack_require__(38).spliceUnquote;
-	var unquote                            = __webpack_require__(38).unquote;
-	var recurse                            = __webpack_require__(31).recurse;
-	var reduce                             = __webpack_require__(31).reduce;
-	var reduceBy2                          = __webpack_require__(31).reduceBy2;
-	var reverse                            = __webpack_require__(31).reverse;
-	var setMainEnv                         = __webpack_require__(46).setMainEnv;
-	var splat                              = __webpack_require__(38).splat;
-	var toPartialArray                     = __webpack_require__(31).toPartialArray;
-	var tryStar                      = __webpack_require__(38).tryStar;
-	var undefBang                        = __webpack_require__(38).undefBang;
-	var unsetMainEnv                       = __webpack_require__(46).unsetMainEnv;
+	var isJsString                 = __webpack_require__(29).isJsString;
+	var isKeyword                  = __webpack_require__(39).isKeyword;
+	var letStar                    = __webpack_require__(39).letStar;
+	var letrecStar                 = __webpack_require__(39).letrecStar;
+	var lookup                     = __webpack_require__(46).lookup;
+	var macroStar                  = __webpack_require__(39).macroStar;
+	var map                        = __webpack_require__(31).map;
+	var next                       = __webpack_require__(31).next;
+	var quasiquote                 = __webpack_require__(39).quasiquote;
+	var quote                      = __webpack_require__(39).quote;
+	var spliceUnquote              = __webpack_require__(39).spliceUnquote;
+	var unquote                    = __webpack_require__(39).unquote;
+	var recurse                    = __webpack_require__(31).recurse;
+	var reduce                     = __webpack_require__(31).reduce;
+	var reduceBy2                  = __webpack_require__(31).reduceBy2;
+	var reverse                    = __webpack_require__(31).reverse;
+	var setMainEnv                 = __webpack_require__(46).setMainEnv;
+	var splat                      = __webpack_require__(39).splat;
+	var toPartialArray             = __webpack_require__(31).toPartialArray;
+	var tryStar                    = __webpack_require__(39).tryStar;
+	var undefBang                  = __webpack_require__(39).undefBang;
+	var unsetMainEnv               = __webpack_require__(46).unsetMainEnv;
 
 	var __hasProp = {}.hasOwnProperty;
 
@@ -4493,7 +4487,9 @@
 	            var newEnv = createLocalEnv(erlParameters, erlArgs);
 	            envs = addEnv(localEnvs, newEnv);
 	          } else {
-	            throw "" + (extractJsValue(erlSymbol)) + " does not evaluate to a function, macro, or keyword.";
+	            throw ""
+	              + (extractJsValue(erlSymbol))
+	              + " does not evaluate to a function, macro, or keyword.";
 	          }
 	      }
 	    }
@@ -4670,8 +4666,8 @@
 /* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var binaryGlyphTokens     = __webpack_require__(38).binaryGlyphTokens;
-	var comment               = __webpack_require__(37);
+	var binaryGlyphTokens     = __webpack_require__(39).binaryGlyphTokens;
+	var comment               = __webpack_require__(38);
 	var createErlBoolean      = __webpack_require__(30).createErlBoolean;
 	var createErlIdentifier   = __webpack_require__(30).createErlIdentifier;
 	var createErlIgnore       = __webpack_require__(30).createErlIgnore;
@@ -4681,34 +4677,34 @@
 	var createErlNumber       = __webpack_require__(30).createErlNumber;
 	var createErlString       = __webpack_require__(30).createErlString;
 	var createErlSymbol       = __webpack_require__(30).createErlSymbol;
-	var deref                 = __webpack_require__(38).deref;
-	var derefGlyph            = __webpack_require__(38).derefGlyph;
+	var deref                 = __webpack_require__(39).deref;
+	var derefGlyph            = __webpack_require__(39).derefGlyph;
 	var extractJsValue        = __webpack_require__(30).extractJsValue;
-	var _false                = __webpack_require__(38)._false;
-	var glyphTokens           = __webpack_require__(38).glyphTokens;
-	var ignore                = __webpack_require__(38).ignore;
-	var ignoreBang          = __webpack_require__(38).ignoreBang;
-	var ignoreBangGlyph     = __webpack_require__(38).ignoreBangGlyph;
-	var ignoreIfTrue          = __webpack_require__(38).ignoreIfTrue;
-	var ignoreIfTrueGlyph     = __webpack_require__(38).ignoreIfTrueGlyph;
-	var ignoreUnlessTrue      = __webpack_require__(38).ignoreUnlessTrue;
-	var ignoreUnlessTrueGlyph = __webpack_require__(38).ignoreUnlessTrueGlyph;
-	var indexEnd              = __webpack_require__(38).indexEnd;
-	var indexStart            = __webpack_require__(38).indexStart;
-	var keyTokens             = __webpack_require__(38).keyTokens;
-	var listEnd               = __webpack_require__(38).listEnd;
-	var listStart             = __webpack_require__(38).listStart;
-	var nil                   = __webpack_require__(38).nil;
-	var quasiquote            = __webpack_require__(38).quasiquote;
-	var quote                 = __webpack_require__(38).quote;
-	var spliceUnquote         = __webpack_require__(38).spliceUnquote;
-	var unquote               = __webpack_require__(38).unquote;
-	var quasiquoteGlyph       = __webpack_require__(38).quasiquoteGlyph;
-	var quoteGlyph            = __webpack_require__(38).quoteGlyph;
-	var spliceUnquoteGlyph    = __webpack_require__(38).spliceUnquoteGlyph;
-	var unquoteGlyph          = __webpack_require__(38).unquoteGlyph;
+	var _false                = __webpack_require__(39)._false;
+	var glyphTokens           = __webpack_require__(39).glyphTokens;
+	var ignore                = __webpack_require__(39).ignore;
+	var ignoreBang            = __webpack_require__(39).ignoreBang;
+	var ignoreBangGlyph       = __webpack_require__(39).ignoreBangGlyph;
+	var ignoreIfTrue          = __webpack_require__(39).ignoreIfTrue;
+	var ignoreIfTrueGlyph     = __webpack_require__(39).ignoreIfTrueGlyph;
+	var ignoreUnlessTrue      = __webpack_require__(39).ignoreUnlessTrue;
+	var ignoreUnlessTrueGlyph = __webpack_require__(39).ignoreUnlessTrueGlyph;
+	var indexEnd              = __webpack_require__(39).indexEnd;
+	var indexStart            = __webpack_require__(39).indexStart;
+	var keyTokens             = __webpack_require__(39).keyTokens;
+	var listEnd               = __webpack_require__(39).listEnd;
+	var listStart             = __webpack_require__(39).listStart;
+	var nil                   = __webpack_require__(39).nil;
+	var quasiquote            = __webpack_require__(39).quasiquote;
+	var quote                 = __webpack_require__(39).quote;
+	var spliceUnquote         = __webpack_require__(39).spliceUnquote;
+	var unquote               = __webpack_require__(39).unquote;
+	var quasiquoteGlyph       = __webpack_require__(39).quasiquoteGlyph;
+	var quoteGlyph            = __webpack_require__(39).quoteGlyph;
+	var spliceUnquoteGlyph    = __webpack_require__(39).spliceUnquoteGlyph;
+	var unquoteGlyph          = __webpack_require__(39).unquoteGlyph;
 	var reverse               = __webpack_require__(31).reverse;
-	var _true                 = __webpack_require__(38)._true;
+	var _true                 = __webpack_require__(39)._true;
 
 	var  __indexOf = [].indexOf || function(item) {
 	  for (var i = 0, l = this.length; i < l; i++) {
@@ -4867,7 +4863,7 @@
 	var glyphIndex = {};
 
 	glyphIndex[derefGlyph]         = deref;
-	glyphIndex[ignoreBangGlyph]  = ignoreBang;
+	glyphIndex[ignoreBangGlyph]    = ignoreBang;
 	glyphIndex[quasiquoteGlyph]    = quasiquote;
 	glyphIndex[quoteGlyph]         = quote;
 	glyphIndex[spliceUnquoteGlyph] = spliceUnquote;
@@ -4889,14 +4885,14 @@
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var commentSignal = __webpack_require__(37);
-
-	var isComment = function(match) {
-	  return match[0] === ';';
-	};
+	var commentSignal = __webpack_require__(38);
 
 	var createTokenRegex = function() {
 	  return /[\s,]*(~@|\#\+|\#\-|\#\!|[\[\](){}'`~@^]|"(?:\\.|[^\\"])*"|;.*|[^\s\[\](){}'"`,;]*)/g;
+	};
+
+	var isComment = function(match) {
+	  return match[0] === ';';
 	};
 
 	var isMeaningful = function(match) {
@@ -4925,13 +4921,126 @@
 
 /***/ }),
 /* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {var createErlCorePureFunction = __webpack_require__(30).createErlCorePureFunction;
+	var erlNil                    = __webpack_require__(30).erlNil;
+	var extractJsValue            = __webpack_require__(30).extractJsValue;
+	var fromErlIndex              = __webpack_require__(43).fromErlIndex;
+	var _process                  = __webpack_require__(44);
+	var toPartialArray            = __webpack_require__(31).toPartialArray;
+
+	var __hasProp = {}.hasOwnProperty;
+
+	var getEnvironment = function(config) {
+	  var environment = config.environment;
+	  var functionsOnErlValues = {
+	    'load': load,
+	    'load-with-env': loadWithEnv,
+	    'load-with-bare-env': loadWithBareEnv
+	  };
+	  setCoreFnsOnErlValues(environment, functionsOnErlValues);
+	  return environment;
+	};
+
+	var get_jsFileName_and_localEnv = function(erlArgs) {
+	  var partialArray = toPartialArray(2, erlArgs);
+	  var erlFileName = partialArray[0];
+	  var localEnv = partialArray[1];
+	  var jsFileName = stripQuotes(extractJsValue(erlFileName));
+	  return [jsFileName, localEnv];
+	};
+
+	var hasProcess = function() {
+	  return typeof process !== 'undefined';
+	}
+
+	var hasProcessWebpackShim = function() {
+	  return(process.title === 'browser' && process.browser);
+	}
+
+	var isNode = function() {
+	  return hasProcess() && !hasProcessWebpackShim();
+	}
+
+	var load = function(erlArgs) {
+	  if (isNode()) {
+	    return _process_(_read(erlArgs));
+	  } else {
+	    return erlNil;
+	  }
+	};
+
+	var loadWithBareEnv = function(erlArgs) {
+	  if (isNode()) {
+	    var temp = get_jsFileName_and_localEnv(erlArgs);
+	    var jsFileName = temp[0];
+	    var localEnv = temp[1];
+	    return _processFileAndEnv(
+	      readFile(jsFileName),
+	      [fromErlIndex(localEnv)]);
+	  } else {
+	    return erlNil;
+	  }
+	};
+
+	var loadWithEnv = function(erlArgs) {
+	  if (isNode()) {
+	    var temp = get_jsFileName_and_localEnv(erlArgs);
+	    var jsFileName = temp[0];
+	    var localEnv = temp[1];
+	    return _processFileAndEnv(
+	      readFile(jsFileName),
+	      [fromErlIndex(localEnv), environment]);
+	  } else {
+	    return erlNil;
+	  }
+	};
+
+	var _process_ = function(jsString) {
+	  return _process([environment])(jsString);
+	};
+
+	var _processFileAndEnv = function(file, envStack) {
+	  return _process(envStack)(file);
+	};
+
+	var _read = function(erlArgs) {
+	  var jsFileName = get_jsFileName_and_localEnv(erlArgs)[0];
+	  return readFile(jsFileName);
+	};
+
+	var readFile = function(jsFileName) {
+	  return __webpack_require__(40).readFileSync(jsFileName).toString();
+	};
+
+	var setCoreFnsOnErlValues = function(env, fns) {
+	  var _results = [];
+	  for (var fnName in fns) {
+	    if (!__hasProp.call(fns, fnName)) continue;
+	    var fn = fns[fnName];
+	    _results.push(env[fnName] = createErlCorePureFunction(fn));
+	  }
+	  return _results;
+	};
+
+	var stripQuotes = function(jsString) {
+	  return jsString.slice(1, -1);
+	};
+
+	module.exports = getEnvironment;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(36)))
+
+/***/ }),
+/* 51 */
 /***/ (function(module, exports) {
 
 	module.exports = "(do\n (def! fix*\n (fn* (f)\n ( (fn* (x) (f (fn* (& ys) (apply (x x) ys))))\n (fn* (x) (f (fn* (& ys) (apply (x x) ys)))))))\n\n (def! memfix*\n (fn* (f)\n (let* (cache {})\n (\n (fn* (x cache)\n (f\n (fn* (z)\n (if (contains? cache z)\n (get cache z)\n (let* (result ((fn* (y) ((x x cache) y)) z))\n (do (set! cache z result) result))))\n cache))\n (fn* (x cache)\n (f\n (fn* (z)\n (if (contains? cache z)\n (get cache z)\n (let* (result ((fn* (y) ((x x cache) y)) z))\n (do (set! cache z result) result))))\n cache))\n cache))))\n\n (def! _0 car)\n (def! _1 (fn* (xs) (nth 1 xs)))\n (def! _2 (fn* (xs) (nth 2 xs)))\n\n (def! swap! (macro* (atom & xs)\n (if (empty? xs)\n atom\n `(let* (-atom- ~atom)\n (do\n (reset! -atom- (~(car xs) (deref -atom-) ~@(cdr xs)))\n (deref -atom-))))))\n\n (def! *gensym-counter* (atom 0))\n\n (def! gensym (fn* ()\n (symbol (string \"G__\" (swap! *gensym-counter* incr)))))\n\n (def! or (macro* (& xs)\n (if (empty? xs)\n false\n (let* (-query- (gensym))\n `(let* (~-query- ~(car xs))\n (if ~-query- \n ~-query-\n (or ~@(cdr xs))))))))\n\n (def! and (macro* (& xs)\n (if (empty? xs)\n true\n (let* (-query- (gensym))\n `(let* (~-query- ~(car xs))\n (if ~-query-\n (and ~@(cdr xs))\n false))))))\n\n (def! cond (macro* (& xs)\n (if (empty? xs)\n nil\n (if (empty? (cdr xs))\n (throw \"`cond` requires an even number of forms.\")\n (let* (-query- (gensym))\n `(let* (~-query- ~(car xs))\n (if ~-query-\n ~(_1 xs)\n (cond ~@(cdr (cdr xs))))))))))\n\n (def! loop (macro* (form0 form1)\n `(let* (loop (memfix* (fn* (loop) (fn* (~(_0 form0)) ~form1)))) (loop ~(_1 form0)))))\n\n (def! -> (macro* (& xs)\n (if (empty? xs)\n nil\n (let* (x (car xs)\n xs (cdr xs))\n (if (empty? xs)\n x\n (let* (form (car xs)\n forms (cdr xs))\n (if (empty? forms)\n (if (list? form)\n (if (= (symbol \"fn*\") (car form))\n `(~form ~x)\n `(~(car form) ~x ~@(cdr form)))\n (list form x))\n `(-> (-> ~x ~form) ~@forms))))))))\n\n (def! ->> (macro* (& xs)\n (if (empty? xs)\n nil\n (let* (x (car xs)\n xs (cdr xs))\n (if (empty? xs)\n x\n (let* (form (car xs)\n forms (cdr xs))\n (if (empty? forms)\n (if (list? form)\n (if (= (symbol \"fn*\") (car form))\n `(~form ~x)\n `(~@form ~x))\n (list form x))\n `(->> (->> ~x ~form) ~@forms))))))))\n\n (def! ->* (macro* (& xs) `(fn* (-x-) (-> -x- ~@xs))))\n\n (def! ->>* (macro* (& xs) `(fn* (-x-) (->> -x- ~@xs))))\n\n (def! not (fn* (x) (if x false true)))\n (def! incr (->* (+ 1)))\n (def! decr (->* (- 1)))\n (def! zero? (->* (= 0)))\n\n (def! identity (fn* (x) x))\n\n (def! constant-fn (fn* (x) (fn* (y) x)))\n\n (def! call-on (fn* (& xs) (fn* (fn) (apply fn xs))))\n\n (def! step-into-list (fn* (xs fn0 fn1)\n (let* (x (car xs)\n -xs- (cdr xs))\n (if (empty? -xs-)\n (fn1 x)\n (fn0 x -xs-)))))\n\n (def! apply-on (fn* (& xs)\n (step-into-list\n xs\n (fn* (arguments -xs-) (apply (car -xs-) arguments))\n (fn* (arguments) (fn* (f) (apply f arguments))))))\n\n (def! reduce (fn* (f seed xs)\n (if (empty? xs)\n seed\n (reduce f (f seed (car xs)) (cdr xs)))))\n\n (def! filter (fn* (predicate xs)\n (reverse\n (reduce\n (fn* (memo x)\n (if (predicate x)\n (cons x memo)\n memo))\n '()\n xs))))\n\n (def! map (fn* (f xs)\n (reverse (reduce (fn* (memo x) (cons (f x) memo)) '() xs))))\n\n (def! every? (fn* (pred xs)\n (if (empty? xs)\n true\n (if (pred (car xs))\n (every? pred (cdr xs))\n false))))\n\n (def! some? (fn* (pred xs)\n (if (empty? xs)\n false\n (if (pred (car xs))\n true\n (some? pred (cdr xs))))))\n\n (def! letmemrec* (macro* (alias expr)\n `(let* (~(car alias) (memfix* (fn* (~(car alias)) ~(_1 alias)))) ~expr)))\n\n (def! skip (fn* (nbr xs)\n (letrec* (-skip- (fn* (ys)\n (let* (nbr (car ys)\n xs (_1 ys))\n (cond\n (= 0 nbr) xs\n (= 1 nbr) (cdr xs)\n \"default\" (-skip- (list (decr nbr) (cdr xs)))))))\n (-skip- (list nbr xs)))))\n\n (def! invokable? (fn* (x) (or (function? x) (macro? x))))\n\n (def! . (macro* (x key & xs)\n (if (empty? xs)\n `(get ~x ~key)\n `((get ~x ~key) ~@xs))))\n\n (def! .. (fn* (lo hi)\n (letrec* (-..- (fn* (xs)\n (let* (lo (_0 xs)\n hi (_1 xs)\n -list- (_2 xs))\n (if (= lo hi)\n (cons hi -list-)\n (-..- (list lo (decr hi) (cons hi -list-)))))))\n (-..- (list lo hi '())))))\n\n (def! defrec! (macro* (fn-name fn-body)\n `(def! ~fn-name (letrec* (~fn-name ~fn-body) ~fn-name))))\n\n (def! for* (macro* (loop-parameters body)\n `(loop\n ~(_0 loop-parameters)\n (if ~(_1 loop-parameters)\n (do ~body (loop ~(_2 loop-parameters)))\n nil))))\n\n (def! for-each (fn* (f xs)\n (reduce\n (fn* (memo x) (do (f x) memo))\n nil\n xs)))\n\n (def! n-times (fn* (n f)\n (loop (i 0)\n (if (= i n)\n nil\n (do (f i) (loop (+ i 1)))))))\n\n (def! tap (fn* (f x) (do (f x) x)))\n\n (def! with-side-effect (fn* (thunk x)\n (do (thunk) x)))\n\n (def! thunk (macro* (form)\n `(fn* () ~form)))\n\n (def! call (macro* (f & xs) `(~f ~@xs)))\n\n (def! apply (macro* (f xs) `(eval (cons ~f ~xs))))\n\n (def! eval-string (fn* (erlString) (eval (parse erlString))))\n\n)";
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	module.exports = {

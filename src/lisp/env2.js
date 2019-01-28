@@ -1,8 +1,10 @@
-var createErlCoreEffectfulFunction = require('./type-utilities').createErlCoreEffectfulFunction;
-var createErlList                  = require('./type-utilities').createErlList;
-var createErlString                = require('./type-utilities').createErlString;
-var serialize                      = require('./serialize');
-var toArray                        = require('./linked-list').toArray;
+var createErlCoreEffectfulFunction =
+  require('./type-utilities').createErlCoreEffectfulFunction;
+
+var createErlList   = require('./type-utilities').createErlList;
+var createErlString = require('./type-utilities').createErlString;
+var serialize       = require('./serialize');
+var toArray         = require('./linked-list').toArray;
 
 var __hasProp = {}.hasOwnProperty;
 
@@ -25,9 +27,9 @@ var isNode = function() {
   return hasProcess() && !hasProcessWebpackShim();
 }
 
-var _prStr = function(erlArgs, printReadably_question_) {
+var _prStr = function(erlArgs, shouldBeReadable) {
   return ((toArray(erlArgs)).map(function(erlArg) {
-    return serialize(erlArg, printReadably_question_);
+    return serialize(erlArg, shouldBeReadable);
   })).join('');
 };
 
@@ -49,9 +51,10 @@ var setCoreEffectfulFnsOnErlValues = function(represent) {
     for (var fnName in fns) {
       if (!__hasProp.call(fns, fnName)) continue;
       var fn = fns[fnName];
-      _results.push(env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
-        return represent(fn(erlArgs));
-      }));
+      _results.push(env[fnName] =
+        createErlCoreEffectfulFunction(function(erlArgs) {
+          return represent(fn(erlArgs));
+        }));
     }
     return _results;
   };

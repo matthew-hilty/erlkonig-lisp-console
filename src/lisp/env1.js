@@ -1,47 +1,47 @@
-var car                           = require('./linked-list').car;
-var cdr                           = require('./linked-list').cdr;
-var circumpendQuotes              = require('./js-utilities').circumpendQuotes;
-var concat                        = require('./linked-list').concat;
-var createErlAtom                 = require('./type-utilities').createErlAtom;
-var createErlBoolean              = require('./type-utilities').createErlBoolean;
-var createErlCorePureFunction     = require('./type-utilities').createErlCorePureFunction;
-var createErlIndex                = require('./type-utilities').createErlIndex;
-var createErlList                 = require('./type-utilities').createErlList;
-var createErlNumber               = require('./type-utilities').createErlNumber;
-var createErlString               = require('./type-utilities').createErlString;
-var createErlSymbol               = require('./type-utilities').createErlSymbol;
-var drop                          = require('./linked-list').drop;
-var isEmpty               = require('./linked-list').isEmpty;
-var areEqual               = require('./linked-list').areEqual;
-var extractJsValue                = require('./type-utilities').extractJsValue;
-var fromArray                     = require('./linked-list').fromArray;
-var interpret                     = require('./interpret');
-var last                          = require('./linked-list').last;
-var isErlAtom             = require('./type-utilities').isErlAtom;
-var isErlCorePureFunction = require('./type-utilities').isErlCorePureFunction;
-var isErlBoolean          = require('./type-utilities').isErlBoolean;
-var erlFalse                      = require('./type-utilities').erlFalse;
-var isErlFalse            = require('./type-utilities').isErlFalse;
-var erlIgnore                     = require('./type-utilities').erlIgnore;
-var isErlIndex            = require('./type-utilities').isErlIndex;
-var isErlList             = require('./type-utilities').isErlList;
-var isErlMacro            = require('./type-utilities').isErlMacro;
-var erlNil                        = require('./type-utilities').erlNil;
-var isErlNil              = require('./type-utilities').isErlNil;
-var isErlNumber           = require('./type-utilities').isErlNumber;
-var isErlString           = require('./type-utilities').isErlString;
-var isErlSymbol           = require('./type-utilities').isErlSymbol;
-var erlTrue                       = require('./type-utilities').erlTrue;
-var isErlTrue             = require('./type-utilities').isErlTrue;
-var isErlUserPureFunction = require('./type-utilities').isErlUserPureFunction;
-var next                          = require('./linked-list').next;
-var recurse                       = require('./linked-list').recurse;
-var reduce                        = require('./linked-list').reduce;
-var reverse                       = require('./linked-list').reverse;
-var serialize                     = require('./serialize');
-var take                          = require('./linked-list').take;
-var toArray                       = require('./linked-list').toArray;
-var toPartialArray                = require('./linked-list').toPartialArray;
+var areEqual                  = require('./linked-list').areEqual;
+var car                       = require('./linked-list').car;
+var cdr                       = require('./linked-list').cdr;
+var circumpendQuotes          = require('./js-utilities').circumpendQuotes;
+var concat                    = require('./linked-list').concat;
+var createErlAtom             = require('./type-utilities').createErlAtom;
+var createErlBoolean          = require('./type-utilities').createErlBoolean;
+var createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
+var createErlIndex            = require('./type-utilities').createErlIndex;
+var createErlList             = require('./type-utilities').createErlList;
+var createErlNumber           = require('./type-utilities').createErlNumber;
+var createErlString           = require('./type-utilities').createErlString;
+var createErlSymbol           = require('./type-utilities').createErlSymbol;
+var drop                      = require('./linked-list').drop;
+var erlFalse                  = require('./type-utilities').erlFalse;
+var erlIgnore                 = require('./type-utilities').erlIgnore;
+var erlNil                    = require('./type-utilities').erlNil;
+var erlTrue                   = require('./type-utilities').erlTrue;
+var extractJsValue            = require('./type-utilities').extractJsValue;
+var fromArray                 = require('./linked-list').fromArray;
+var interpret                 = require('./interpret');
+var isEmpty                   = require('./linked-list').isEmpty;
+var isErlAtom                 = require('./type-utilities').isErlAtom;
+var isErlCorePureFunction     = require('./type-utilities').isErlCorePureFunction;
+var isErlBoolean              = require('./type-utilities').isErlBoolean;
+var isErlFalse                = require('./type-utilities').isErlFalse;
+var isErlIndex                = require('./type-utilities').isErlIndex;
+var isErlList                 = require('./type-utilities').isErlList;
+var isErlMacro                = require('./type-utilities').isErlMacro;
+var isErlNil                  = require('./type-utilities').isErlNil;
+var isErlNumber               = require('./type-utilities').isErlNumber;
+var isErlString               = require('./type-utilities').isErlString;
+var isErlSymbol               = require('./type-utilities').isErlSymbol;
+var isErlTrue                 = require('./type-utilities').isErlTrue;
+var isErlUserPureFunction     = require('./type-utilities').isErlUserPureFunction;
+var last                      = require('./linked-list').last;
+var next                      = require('./linked-list').next;
+var recurse                   = require('./linked-list').recurse;
+var reduce                    = require('./linked-list').reduce;
+var reverse                   = require('./linked-list').reverse;
+var serialize                 = require('./serialize');
+var take                      = require('./linked-list').take;
+var toArray                   = require('./linked-list').toArray;
+var toPartialArray            = require('./linked-list').toPartialArray;
 
 var __slice   = [].slice;
 var __hasProp = {}.hasOwnProperty;
@@ -153,26 +153,8 @@ var _drop = function(erlArgs) {
   return drop(extractJsValue(erlNumber), erlList);
 };
 
-var _isEmpty = function(erlArgs) {
-  if (isEmpty(erlArgs)) {
-    return erlFalse;
-  } else {
-    if (isEmpty(car(erlArgs))) {
-      return erlTrue;
-    } else {
-      return erlFalse;
-    }
-  }
-};
-
 var first = function(erlArgs) {
   return car(car(erlArgs));
-};
-
-var isFunction = function(jsList) {
-  var erlValue = jsList.value;
-  return createErlBoolean(isErlCorePureFunction(erlValue)
-    || isErlUserPureFunction(erlValue));
 };
 
 var getEnvironment = function(config) {
@@ -180,6 +162,14 @@ var getEnvironment = function(config) {
   setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
+
+var hasProcess = function() {
+  return typeof process !== 'undefined';
+}
+
+var hasProcessWebpackShim = function() {
+  return(process.title === 'browser' && process.browser);
+}
 
 var ignore = function(erlArgs) {
   return erlIgnore;
@@ -210,6 +200,28 @@ var ignoreUnlessTrue = function(erlArgs) {
 var _interpret = function(erlArgs) {
   return interpret(stripQuotes(extractJsValue(car(erlArgs))));
 };
+
+var _isEmpty = function(erlArgs) {
+  if (isEmpty(erlArgs)) {
+    return erlFalse;
+  } else {
+    if (isEmpty(car(erlArgs))) {
+      return erlTrue;
+    } else {
+      return erlFalse;
+    }
+  }
+};
+
+var isFunction = function(jsList) {
+  var erlValue = jsList.value;
+  return createErlBoolean(isErlCorePureFunction(erlValue)
+    || isErlUserPureFunction(erlValue));
+};
+
+var isNode = function() {
+  return hasProcess() && !hasProcessWebpackShim();
+}
 
 var _last = function(erlArgs) {
   var arg = car(erlArgs);
@@ -280,11 +292,15 @@ var prettyString = function(erlArgs) {
 };
 
 var read = function(jsList) {
-  var _read = function(erlArgs) {
-    var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-    return require('fs').readFileSync(jsFileName).toString();
-  };
-  return createErlString(_read(jsList));
+  if (isNode()) {
+    var _read = function(_jsList) {
+      var jsFileName = stripQuotes(extractJsValue(car(_jsList)));
+      return require('fs').readFileSync(jsFileName).toString();
+    };
+    return createErlString(_read(jsList));
+  } else {
+    return erlNil;
+  }
 };
 
 var reset = function(erlArgs) {
@@ -333,9 +349,13 @@ var setCoreFnsOnErlValues = function(env, fns) {
 };
 
 var slurp = function(erlArgs) {
-  var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-  var _fs_ = require('fs');
-  return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
+  if (isNode()) {
+    var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
+    var _fs_ = require('fs');
+    return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
+  } else {
+    return erlNil;
+  }
 };
 
 var string = function(erlArgs) {

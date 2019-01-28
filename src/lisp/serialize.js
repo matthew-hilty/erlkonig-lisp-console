@@ -1,9 +1,7 @@
-var commentSignal                      = require('./commentSignal');
-var extractJsValue                     = require('./type-utilities').extractJsValue;
-var indexEnd                           = require('./keyTokens').indexEnd;
-var indexStart                         = require('./keyTokens').indexStart;
-var listEnd                            = require('./keyTokens').listEnd;
-var listStart                          = require('./keyTokens').listStart;
+var commentSignal              = require('./commentSignal');
+var extractJsValue             = require('./type-utilities').extractJsValue;
+var indexEnd                   = require('./keyTokens').indexEnd;
+var indexStart                 = require('./keyTokens').indexStart;
 var isErlAtom                  = require('./type-utilities').isErlAtom;
 var isErlCoreEffectfulFunction = require('./type-utilities').isErlCoreEffectfulFunction;
 var isErlCorePureFunction      = require('./type-utilities').isErlCorePureFunction;
@@ -16,9 +14,11 @@ var isErlMacro                 = require('./type-utilities').isErlMacro;
 var isErlNil                   = require('./type-utilities').isErlNil;
 var isErlString                = require('./type-utilities').isErlString;
 var isErlUserPureFunction      = require('./type-utilities').isErlUserPureFunction;
-var reduce                             = require('./linked-list').reduce;
+var listEnd                    = require('./keyTokens').listEnd;
+var listStart                  = require('./keyTokens').listStart;
+var reduce                     = require('./linked-list').reduce;
 
-var  __hasProp = {}.hasOwnProperty;
+var __hasProp = {}.hasOwnProperty;
 
 var adjoinErlValue = function(shouldBeReadable) {
   return function(memo, erlValue) {
