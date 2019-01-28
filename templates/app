@@ -7,11 +7,11 @@
       http-equiv="Content-Security-Policy"
       content="
         default-src  'none';
-        connect-src  'self' https://erlkonig-lisp-console.herokuapp.com;
-        font-src     'self' https://erlkonig-lisp-console.herokuapp.com;
-        img-src      'self' https://erlkonig-lisp-console.herokuapp.com;
-        script-src   'self' https://erlkonig-lisp-console.herokuapp.com;
-        style-src    'self' https://erlkonig-lisp-console.herokuapp.com 'nonce-$NONCE$';
+        connect-src  'self';
+        font-src     'self';
+        img-src      'self';
+        script-src   'self';
+        style-src    'self' 'nonce-$NONCE$';
       "
     >
   <body>
