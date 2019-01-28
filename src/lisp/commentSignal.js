@@ -1,5 +1,3 @@
-var comment;
-
-comment = {};
+var comment = {};
 
 module.exports = comment;

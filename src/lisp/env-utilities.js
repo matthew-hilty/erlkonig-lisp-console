@@ -1,22 +1,18 @@
-var addEnv, getLast, lookup, set, setMainEnv, unset, unsetMainEnv;
-
-addEnv = function(envStack, newEnv) {
-  var copy;
-  copy = envStack.slice(0);
+var addEnv = function (envStack, newEnv) {
+  var copy = envStack.slice(0);
   copy.unshift(newEnv);
   return copy;
 };
 
-getLast = function(array) {
+var getLast = function (array) {
   return array[array.length - 1];
 };
 
-lookup = function(envStack, key) {
-  var copy, env, value;
-  copy = envStack.slice(0);
+var lookup = function (envStack, key) {
+  var copy = envStack.slice(0);
   while (copy.length !== 0) {
-    env = copy[0];
-    value = env[key];
+    var env = copy[0];
+    var value = env[key];
     if (value != null) {
       return value;
     }
@@ -25,23 +21,22 @@ lookup = function(envStack, key) {
   throw "VALUE CORRESPONDING TO \"" + key + "\" DOES NOT EXIST IN ENV-STACK";
 };
 
-set = function(env, key, value) {
+var set = function (env, key, value) {
   env[key] = value;
   return value;
 };
 
-setMainEnv = function(envStack, key, value) {
+var setMainEnv = function (envStack, key, value) {
   return set(getLast(envStack), key, value);
 };
 
-unset = function(env, key) {
-  var value;
-  value = env[key];
+var unset = function (env, key) {
+  var value = env[key];
   delete env[key];
   return value;
 };
 
-unsetMainEnv = function(envStack, key) {
+var unsetMainEnv = function (envStack, key) {
   return unset(getLast(envStack), key);
 };
 

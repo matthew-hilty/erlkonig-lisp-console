@@ -1,20 +1,18 @@
-var createErlIndex, fromErlIndex, fromJsObjects, jsString_question_,
-  __slice = [].slice,
-  __hasProp = {}.hasOwnProperty;
+var createErlIndex     = require('./type-utilities').createErlIndex;
+var jsString_question_ = require('./js-utilities').jsString_question_;
 
-createErlIndex = require('./type-utilities').createErlIndex;
+var  __slice = [].slice;
+var __hasProp = {}.hasOwnProperty;
 
-jsString_question_ = require('./js-utilities').jsString_question_;
-
-fromJsObjects = function() {
-  var copy, jsObject, jsObjects, key, val, _i, _len;
-  jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  copy = {};
-  for (_i = 0, _len = jsObjects.length; _i < _len; _i++) {
-    jsObject = jsObjects[_i];
-    for (key in jsObject) {
+var fromJsObjects = function() {
+  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  var copy = {};
+  var len = jsObjects.length;
+  for (var i = 0;  i < len; i++) {
+    var jsObject = jsObjects[i];
+    for (var key in jsObject) {
       if (!__hasProp.call(jsObject, key)) continue;
-      val = jsObject[key];
+      var val = jsObject[key];
       if (jsString_question_(key)) {
         copy[':' + key] = val;
       } else {
@@ -25,15 +23,14 @@ fromJsObjects = function() {
   return createErlIndex(copy);
 };
 
-fromErlIndex = function(erlIndex) {
-  var key, newKey, result, value, _ref;
-  result = {};
-  _ref = erlIndex.jsValue;
-  for (key in _ref) {
-    if (!__hasProp.call(_ref, key)) continue;
-    value = _ref[key];
+var fromErlIndex = function(erlIndex) {
+  var result = {};
+  var jsValue = erlIndex.jsValue;
+  for (var key in jsValue) {
+    if (!__hasProp.call(jsValue, key)) continue;
+    var value = jsValue[key];
     if (jsString_question_(key)) {
-      newKey = (function() {
+      var newKey = (function() {
         switch (key[0]) {
           case ':':
             return key.slice(1);

@@ -1,27 +1,19 @@
-var circumpendQuotes, createErlString, encapsulate, environment, error, flattenIfNecessary, fromArray, getLispEnvironment, interpret, serialize, standardFnsAndMacros, tokenizeAndParse, _createErlString, _interpret, _process, _serialize,
-  __hasProp = {}.hasOwnProperty;
+var circumpendQuotes     = require('./js-utilities').circumpendQuotes;
+var createErlString      = require('./type-utilities').createErlString;
+var fromArray            = require('./linked-list').fromArray;
+var getLispEnvironment   = require('./getLispEnvironment');
+var _process             = require('./_process');
+var _serialize           = require('./serialize');
+var standardFnsAndMacros = require('./standard-fns-and-macros');
+var tokenizeAndParse     = require('./tokenizeAndParse');
 
-circumpendQuotes = require('./js-utilities').circumpendQuotes;
+var  __hasProp = {}.hasOwnProperty;
 
-createErlString = require('./type-utilities').createErlString;
-
-fromArray = require('./linked-list').fromArray;
-
-getLispEnvironment = require('./getLispEnvironment');
-
-_process = require('./_process');
-
-_serialize = require('./serialize');
-
-standardFnsAndMacros = require('./standard-fns-and-macros');
-
-tokenizeAndParse = require('./tokenizeAndParse');
-
-_createErlString = function(jsString) {
+var _createErlString = function(jsString) {
   return createErlString(circumpendQuotes(jsString));
 };
 
-encapsulate = function(type) {
+var encapsulate = function(type) {
   return function(erlValue) {
     return {
       effect: {
@@ -32,33 +24,32 @@ encapsulate = function(type) {
   };
 };
 
-error = function(errorMessage) {
+var error = function(errorMessage) {
   return [encapsulate('error')("repl error: (" + errorMessage + ")")];
 };
 
-flattenIfNecessary = function(effects) {
-  var result, value;
-  result = effects;
+var flattenIfNecessary = function(effects) {
+  var value;
+  var result = effects;
   while (result.length === 1 && Array.isArray(value = result[0].value)) {
     result = flattenIfNecessary(value);
   }
   return result;
 };
 
-_interpret = function(envs, jsString) {
-  var e;
+var _interpret = function(envs, jsString) {
   try {
-    return serialize(flattenIfNecessary(_process(tokenizeAndParse)(envs)(jsString)));
+    return serialize(
+      flattenIfNecessary(
+        _process(tokenizeAndParse)(envs)(jsString)));
   } catch (_error) {
-    e = _error;
-    return error(e);
+    return error(_error);
   }
 };
 
-interpret = function(jsString, userJsArray) {
-  var userEnv;
+var interpret = function(jsString, userJsArray) {
   if (userJsArray != null) {
-    userEnv = {
+    var userEnv = {
       '*ARGV*': fromArray(userJsArray.map(_createErlString))
     };
     return _interpret([userEnv, environment], jsString);
@@ -67,13 +58,12 @@ interpret = function(jsString, userJsArray) {
   }
 };
 
-serialize = function(results) {
+var serialize = function(results) {
   return results.map(function(result) {
-    var key, value, _result;
-    _result = {};
-    for (key in result) {
+    var _result = {};
+    for (var key in result) {
       if (!__hasProp.call(result, key)) continue;
-      value = result[key];
+      var value = result[key];
       if (key === 'effect') {
         _result[key] = value;
       } else {
@@ -84,7 +74,7 @@ serialize = function(results) {
   });
 };
 
-environment = getLispEnvironment({
+var environment = getLispEnvironment({
   display: encapsulate('display')
 });
 

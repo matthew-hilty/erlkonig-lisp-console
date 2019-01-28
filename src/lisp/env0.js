@@ -1,188 +1,166 @@
-var add, contains_question_, createErlBoolean, createErlCorePureFunction, createErlIdentifier, createErlIndex, createErlNumber, createErlString, dissoc, divide, erlNil, exponentiate, extractJsValue, fromArray, functionsOnJsValues, get, getEnvironment, greaterThan, greaterThanOrEqual, index, jsNaN_question_, jsNumber_question_, jsString_question_, keys, length, lessThan, lessThanOrEqual, lift, max, min, mod, multiply, negate, parseNumber, reduce, setCoreFnsOnJsValues_bang_, subtract, toArray, vals,
-  __slice = [].slice,
-  __hasProp = {}.hasOwnProperty;
+var createErlBoolean          = require('./type-utilities').createErlBoolean;
+var createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
+var createErlIdentifier       = require('./type-utilities').createErlIdentifier;
+var createErlIndex            = require('./type-utilities').createErlIndex;
+var createErlNumber           = require('./type-utilities').createErlNumber;
+var createErlString           = require('./type-utilities').createErlString;
+var extractJsValue            = require('./type-utilities').extractJsValue;
+var fromArray                 = require('./linked-list').fromArray;
+var jsNaN_question_           = require('./js-utilities').jsNaN_question_;
+var jsNumber_question_        = require('./js-utilities').jsNumber_question_;
+var jsString_question_        = require('./js-utilities').jsString_question_;
+var erlNil                    = require('./type-utilities').erlNil;
+var reduce                    = require('./linked-list').reduce;
+var toArray                   = require('./linked-list').toArray;
 
-createErlBoolean = require('./type-utilities').createErlBoolean;
+var  __slice  = [].slice;
+var __hasProp = {}.hasOwnProperty;
 
-createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
-
-createErlIdentifier = require('./type-utilities').createErlIdentifier;
-
-createErlIndex = require('./type-utilities').createErlIndex;
-
-createErlNumber = require('./type-utilities').createErlNumber;
-
-createErlString = require('./type-utilities').createErlString;
-
-extractJsValue = require('./type-utilities').extractJsValue;
-
-fromArray = require('./linked-list').fromArray;
-
-jsNaN_question_ = require('./js-utilities').jsNaN_question_;
-
-jsNumber_question_ = require('./js-utilities').jsNumber_question_;
-
-jsString_question_ = require('./js-utilities').jsString_question_;
-
-erlNil = require('./type-utilities').erlNil;
-
-reduce = require('./linked-list').reduce;
-
-toArray = require('./linked-list').toArray;
-
-add = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var add = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(nbrs.reduce(function(x, nbr) {
     return x += nbr;
   }));
 };
 
-contains_question_ = function(index, key) {
+var contains_question_ = function(index, key) {
   return createErlBoolean(key in index);
 };
 
-dissoc = function() {
-  var copy, index, key, keys, value, _i, _len;
-  index = arguments[0], keys = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-  copy = {};
-  for (key in index) {
+var dissoc = function() {
+  var index = arguments[0];
+  var keys = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+  var len = keys.length;
+  var copy = {};
+  for (var key in index) {
     if (!__hasProp.call(index, key)) continue;
-    value = index[key];
+    var value = index[key];
     copy[key] = value;
   }
-  for (_i = 0, _len = keys.length; _i < _len; _i++) {
-    key = keys[_i];
+  for (var i = 0; i < len; i++) {
+    var key = keys[i];
     delete copy[key];
   }
   return createErlIndex(copy);
 };
 
-divide = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var divide = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(nbrs.reduce(function(x, nbr) {
     return x /= nbr;
   }));
 };
 
-exponentiate = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var exponentiate = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(nbrs.reduce(function(x, nbr) {
     return Math.pow(x, nbr);
   }));
 };
 
-get = function(jsIndex, jsKey) {
+var get = function(jsIndex, jsKey) {
   return jsIndex[jsKey];
 };
 
-getEnvironment = function(config) {
-  var environment;
-  environment = config.environment;
+var getEnvironment = function(config) {
+  var environment = config.environment;
   setCoreFnsOnJsValues_bang_(environment, functionsOnJsValues);
   return environment;
 };
 
-greaterThanOrEqual = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var greaterThanOrEqual = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlBoolean(nbrs[0] >= nbrs[1]);
 };
 
-greaterThan = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var greaterThan = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlBoolean(nbrs[0] > nbrs[1]);
 };
 
-index = function() {
-  var args, i, k, _i, _len;
-  args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  index = {};
-  for (i = _i = 0, _len = args.length; _i < _len; i = ++_i) {
-    k = args[i];
+var index = function() {
+  var args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  var len = args.length;
+  var _index = {};
+  for (var i = 0; i < len; i++) {
+    var k = args[i];
     if (i % 2 === 0) {
-      index[k] = args[i + 1];
+      _index[k] = args[i + 1];
     }
   }
-  return createErlIndex(index);
+  return createErlIndex(_index);
 };
 
-keys = function(index) {
-  var jsNbr, key, value, _keys;
-  _keys = [];
-  for (key in index) {
+var keys = function(index) {
+  var _keys = [];
+  for (var key in index) {
     if (!__hasProp.call(index, key)) continue;
-    value = index[key];
-    _keys.push(jsNaN_question_(jsNbr = parseFloat(key, 10)) ? (key[0] === ':' ? createErlIdentifier : createErlString)(key) : createErlNumber(jsNbr));
+    var value = index[key];
+    var jsNbr = parseFloat(key, 10);
+    var _key = jsNaN_question_(jsNbr)
+        ? (key[0] === ':' ? createErlIdentifier : createErlString)(key)
+        : createErlNumber(jsNbr);
+    _keys.push(_key);
   }
   return fromArray(_keys);
 };
 
-length = function(jsVal) {
+var length = function(jsVal) {
   if (!jsString_question_(jsVal)) {
     return erlNil;
   }
   return createErlNumber(jsVal.length - 2);
 };
 
-lessThan = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var lessThan = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlBoolean(nbrs[0] < nbrs[1]);
 };
 
-lessThanOrEqual = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var lessThanOrEqual = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlBoolean(nbrs[0] <= nbrs[1]);
 };
 
-lift = function(fnOnJsValues) {
+var lift = function(fnOnJsValues) {
   return function(erlValueList) {
     return fnOnJsValues.apply(null, (toArray(erlValueList)).map(extractJsValue));
   };
 };
 
-max = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var max = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(Math.max.apply(Math, nbrs));
 };
 
-min = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var min = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(Math.min.apply(Math, nbrs));
 };
 
-mod = function(nbr0, nbr1) {
+var mod = function(nbr0, nbr1) {
   return createErlNumber(nbr0 % nbr1);
 };
 
-multiply = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var multiply = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(nbrs.reduce(function(x, nbr) {
     return x *= nbr;
   }));
 };
 
-negate = function(nbr) {
+var negate = function(nbr) {
   return createErlNumber(-1 * nbr);
 };
 
-parseNumber = function(jsVal) {
-  var jsNbr;
+var parseNumber = function(jsVal) {
   if (jsNumber_question_(jsVal)) {
     return jsVal;
   }
   if (!jsString_question_(jsVal)) {
     return erlNil;
   }
-  jsNbr = parseFloat(stripQuotes(jsVal), 10);
+  var jsNbr = parseFloat(stripQuotes(jsVal), 10);
   if (jsNaN_question_(jsNbr)) {
     return erlNil;
   } else {
@@ -190,37 +168,37 @@ parseNumber = function(jsVal) {
   }
 };
 
-setCoreFnsOnJsValues_bang_ = function(env, fns) {
-  var fn, fnName, _results;
-  _results = [];
-  for (fnName in fns) {
+var setCoreFnsOnJsValues_bang_ = function(env, fns) {
+  var _results = [];
+  for (var fnName in fns) {
     if (!__hasProp.call(fns, fnName)) continue;
-    fn = fns[fnName];
-    _results.push(env[fnName] = createErlCorePureFunction(lift(fn)));
+    var fn = fns[fnName];
+    env[fnName] = createErlCorePureFunction(lift(fn));
+    _results.push(env[fnName]);
   }
   return _results;
 };
 
-subtract = function() {
-  var nbrs;
-  nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var subtract = function() {
+  var nbrs = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   return createErlNumber(nbrs.reduce(function(x, nbr) {
     return x -= nbr;
   }));
 };
 
-vals = function(index) {
-  var key, value, values;
-  values = [];
-  for (key in index) {
-    if (!__hasProp.call(index, key)) continue;
-    value = index[key];
+var vals = function(index) {
+  var values = [];
+  for (var key in index) {
+    if (!__hasProp.call(index, key)) {
+      continue;
+    }
+    var value = index[key];
     values.push(value);
   }
   return fromArray(values);
 };
 
-functionsOnJsValues = {
+var functionsOnJsValues = {
   '+': add,
   'contains?': contains_question_,
   'dissoc': dissoc,

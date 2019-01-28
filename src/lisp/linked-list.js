@@ -1,11 +1,10 @@
-var EOL, car, cdr, concat, cons, copy, createErlList, createNode, drop, empty_question_, equal_question_, erlListType, erlTypes, filter, forEach, fromArray, last, lastTail, map, next, recurse, reduce, reduceBy2, reverse, take, toArray, toPartialArray, zip, _EOL,
-  __slice = [].slice;
+var erlTypes = require('./types').erlTypes;
 
-erlTypes = require('./types').erlTypes;
+var erlListType = erlTypes[6];
 
-erlListType = erlTypes[6];
+var  __slice = [].slice;
 
-car = function(erlList) {
+var car = function(erlList) {
   if (empty_question_(erlList)) {
     return EOL;
   } else {
@@ -13,7 +12,7 @@ car = function(erlList) {
   }
 };
 
-cdr = function(erlList) {
+var cdr = function(erlList) {
   if (empty_question_(erlList)) {
     return EOL;
   } else {
@@ -21,18 +20,18 @@ cdr = function(erlList) {
   }
 };
 
-concat = function() {
-  var erlList, erlLists, result, tail, _copy, _i, _len, _ref;
-  erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+var concat = function() {
+  var erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   if (erlLists.length === 0) {
     return EOL;
   }
-  result = copy(erlLists[0]);
-  tail = lastTail(result);
-  _ref = erlLists.slice(1);
-  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-    erlList = _ref[_i];
-    _copy = copy(erlList);
+  var result = copy(erlLists[0]);
+  var tail = lastTail(result);
+  var remaining = erlLists.slice(1);
+  var len = remaining.length;
+  for (var i = 0; i < len; i++) {
+    var erlList = remaining[i];
+    var _copy = copy(erlList);
     if (empty_question_(tail)) {
       result = _copy;
       tail = lastTail(result);
@@ -46,24 +45,24 @@ concat = function() {
   return result;
 };
 
-cons = function(erlArgs) {
+var cons = function(erlArgs) {
   return createErlList(car(erlArgs), next(erlArgs));
 };
 
-copy = function(erlList) {
+var copy = function(erlList) {
   return map((function(x) {
     return x;
   }), erlList);
 };
 
-createErlList = function(value, nextNode) {
+var createErlList = function(value, nextNode) {
   if (value == null) {
     return EOL;
   }
   return createNode(value, nextNode != null ? nextNode : EOL);
 };
 
-createNode = function(value, nextNode) {
+var createNode = function(value, nextNode) {
   return {
     type: erlListType,
     value: value,
@@ -71,7 +70,7 @@ createNode = function(value, nextNode) {
   };
 };
 
-drop = function(nbr, erlList) {
+var drop = function(nbr, erlList) {
   while (nbr !== 0) {
     erlList = cdr(erlList);
     nbr = nbr - 1;
@@ -79,11 +78,11 @@ drop = function(nbr, erlList) {
   return erlList;
 };
 
-empty_question_ = function(value) {
+var empty_question_ = function(value) {
   return value === EOL;
 };
 
-equal_question_ = function(list0, list1, equivalent_question_) {
+var equal_question_ = function(list0, list1, equivalent_question_) {
   while (!(empty_question_(list0) || empty_question_(list1))) {
     if (!equivalent_question_(list0.value, list1.value)) {
       return false;
@@ -94,9 +93,8 @@ equal_question_ = function(list0, list1, equivalent_question_) {
   return empty_question_(list0) && empty_question_(list1);
 };
 
-filter = function(predicate, list) {
-  var _reduce;
-  _reduce = function(list, value) {
+var filter = function(predicate, list) {
+  var _reduce = function(list, value) {
     if (predicate(value)) {
       return createErlList(value, list);
     } else {
@@ -106,9 +104,8 @@ filter = function(predicate, list) {
   return reverse(reduce(EOL, _reduce, list));
 };
 
-forEach = function(fn, list) {
-  var result;
-  result = list;
+var forEach = function(fn, list) {
+  var result = list;
   while (!empty_question_(list)) {
     result = fn(list.value);
     list = recurse(list);
@@ -116,17 +113,23 @@ forEach = function(fn, list) {
   return result;
 };
 
-last = function(erlList) {
+var fromArray = function(array) {
+  var _reduce = function(list, value) {
+    return createErlList(value, list);
+  };
+  return array.reverse().reduce(_reduce, createErlList());
+};
+
+var last = function(erlList) {
   return car(lastTail(erlList));
 };
 
-lastTail = function(erlList) {
-  var current, prior;
+var lastTail = function(erlList) {
   if (empty_question_(erlList)) {
     return erlList;
   }
-  prior = erlList;
-  current = cdr(erlList);
+  var prior = erlList;
+  var current = cdr(erlList);
   while (!empty_question_(current)) {
     prior = cdr(prior);
     current = cdr(current);
@@ -134,19 +137,18 @@ lastTail = function(erlList) {
   return prior;
 };
 
-map = function(fn, list) {
-  var _reduce;
-  _reduce = function(list, value) {
+var map = function(fn, list) {
+  var _reduce = function(list, value) {
     return createErlList(fn(value), list);
   };
   return reverse(reduce(EOL, _reduce, list));
 };
 
-next = function(erlList) {
+var next = function(erlList) {
   return car(cdr(erlList));
 };
 
-recurse = function(list) {
+var recurse = function(list) {
   if (empty_question_(list)) {
     return list;
   } else {
@@ -154,7 +156,7 @@ recurse = function(list) {
   }
 };
 
-reduce = function(seed, fn, list) {
+var reduce = function(seed, fn, list) {
   while (!empty_question_(list)) {
     seed = fn(seed, list.value);
     list = recurse(list);
@@ -162,21 +164,19 @@ reduce = function(seed, fn, list) {
   return seed;
 };
 
-reduceBy2 = function(seed, fn, list) {
-  var value0, value1;
+var reduceBy2 = function(seed, fn, list) {
   while (!empty_question_(list)) {
-    value0 = list.value;
+    var value0 = list.value;
     list = recurse(list);
-    value1 = list.value;
+    var value1 = list.value;
     seed = fn(seed, value0, value1);
     list = recurse(list);
   }
   return seed;
 };
 
-reverse = function(list) {
-  var result;
-  result = EOL;
+var reverse = function(list) {
+  var result = EOL;
   while (!empty_question_(list)) {
     result = createErlList(list.value, result);
     list = list.next;
@@ -184,11 +184,10 @@ reverse = function(list) {
   return result;
 };
 
-take = function(nbr, erlList) {
-  var node, result;
-  result = createErlList();
+var take = function(nbr, erlList) {
+  var result = createErlList();
   while (nbr !== 0) {
-    node = car(erlList);
+    var node = car(erlList);
     erlList = cdr(erlList);
     result = createErlList(node, result);
     nbr = nbr - 1;
@@ -196,28 +195,18 @@ take = function(nbr, erlList) {
   return reverse(result);
 };
 
-toArray = function(list) {
-  var _reduce;
-  _reduce = function(jsArray, value) {
+var toArray = function(list) {
+  var _reduce = function(jsArray, value) {
     jsArray.push(value);
     return jsArray;
   };
   return reduce([], _reduce, list);
 };
 
-fromArray = function(array) {
-  var _reduce;
-  _reduce = function(list, value) {
-    return createErlList(value, list);
-  };
-  return array.reverse().reduce(_reduce, createErlList());
-};
-
-toPartialArray = function(nbr, list) {
-  var node, result;
-  result = [];
+var toPartialArray = function(nbr, list) {
+  var result = [];
   while (nbr !== 0) {
-    node = car(list);
+    var node = car(list);
     list = cdr(list);
     result.push(node);
     nbr = nbr - 1;
@@ -226,21 +215,20 @@ toPartialArray = function(nbr, list) {
   return result;
 };
 
-zip = function(seed, fn, list0, list1) {
-  var value0, value1;
+var zip = function(seed, fn, list0, list1) {
   while (!(empty_question_(list0) || empty_question_(list1))) {
-    value0 = car(list0);
+    var value0 = car(list0);
     list0 = cdr(list0);
-    value1 = car(list1);
+    var value1 = car(list1);
     list1 = cdr(list1);
     seed = fn(seed, value0, value1);
   }
   return seed;
 };
 
-_EOL = {};
+var _EOL = {};
 
-EOL = createNode(_EOL, _EOL);
+var EOL = createNode(_EOL, _EOL);
 
 module.exports = {
   car: car,
