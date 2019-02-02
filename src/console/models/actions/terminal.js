@@ -1,8 +1,8 @@
-var create       = require('../types/createTerminal');
-var createPrompt = require('../types/createPrompt');
+import { createTerminal } from '../types/createTerminal';
+import { createPrompt } from '../types/createPrompt';
 
 function addChar(terminal, char) {
-  return create(
+  return createTerminal(
     terminal.entries,
     terminal.prompts,
     createPrompt(
@@ -41,11 +41,11 @@ function completeWord(terminal, getCandidates) {
     prompt = terminal.prompt;
   }
 
-  return create(entries, terminal.prompts, prompt);
+  return createTerminal(entries, terminal.prompts, prompt);
 }
 
 function deleteLeftChar(terminal) {
-  return create(
+  return createTerminal(
     terminal.entries, 
     terminal.prompts,
     createPrompt(
@@ -54,14 +54,14 @@ function deleteLeftChar(terminal) {
 }
 
 function deletePreCursor(terminal) {
-  return create(
+  return createTerminal(
     terminal.entries, 
     terminal.prompts, 
     createPrompt('', terminal.prompt.postCursor));
 }
 
 function deleteRightChar(terminal) {
-  return create(
+  return createTerminal(
     terminal.entries, 
     terminal.prompts, 
     createPrompt(
@@ -71,7 +71,7 @@ function deleteRightChar(terminal) {
 
 function deleteWord(terminal) {
   var preCursor = terminal.prompt.preCursor;
-  return create(
+  return createTerminal(
     terminal.entries, 
     terminal.prompts, 
     createPrompt(
@@ -98,7 +98,7 @@ function moveCursorLeft(terminal) {
     return terminal;
   } else {
     var postCursor = terminal.prompt.postCursor;
-    return create(
+    return createTerminal(
       terminal.entries,
       terminal.prompts,
       createPrompt(
@@ -113,7 +113,7 @@ function moveCursorRight(terminal) {
     return terminal;
   } else {
     var preCursor = terminal.prompt.preCursor;
-    return create(
+    return createTerminal(
       terminal.entries,
       terminal.prompts,
       createPrompt(
@@ -124,7 +124,7 @@ function moveCursorRight(terminal) {
 
 function moveCursorToEnd(terminal) {
   var prompt = terminal.prompt;
-  return create(
+  return createTerminal(
     terminal.entries,
     terminal.prompts,
     createPrompt(prompt.preCursor + prompt.postCursor, ''));
@@ -132,7 +132,7 @@ function moveCursorToEnd(terminal) {
 
 function moveCursorToStart(terminal) {
   var prompt = terminal.prompt;
-  return create(
+  return createTerminal(
     terminal.entries,
     terminal.prompts,
     createPrompt('', prompt.preCursor + prompt.postCursor));
@@ -167,22 +167,22 @@ function submit(terminal, transform) {
   var command = { type: 'command', value: commandText };
   var prompt = normalizePrompt(terminal.prompt);
 
-  return create(
+  return createTerminal(
     terminal.entries.concat([command], displayEntries, response),
     [prompt].concat(terminal.prompts),
     createPrompt('', ''));
 }
 
-module.exports = {
-  addChar: addChar,
-  completeWord: completeWord,
-  deleteLeftChar: deleteLeftChar,
-  deletePreCursor: deletePreCursor,
-  deleteRightChar: deleteRightChar,
-  deleteWord: deleteWord,
-  moveCursorLeft: moveCursorLeft,
-  moveCursorRight: moveCursorRight,
-  moveCursorToEnd: moveCursorToEnd,
-  moveCursorToStart: moveCursorToStart,
-  submit: submit
+export const Terminal = {
+  addChar,
+  completeWord,
+  deleteLeftChar,
+  deletePreCursor,
+  deleteRightChar,
+  deleteWord,
+  moveCursorLeft,
+  moveCursorRight,
+  moveCursorToEnd,
+  moveCursorToStart,
+  submit
 };

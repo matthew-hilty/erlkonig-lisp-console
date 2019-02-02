@@ -1,5 +1,5 @@
-var keyCodeCharts       = require('./keyCodeCharts');
-var keyIdentifierCharts = require('./keyIdentifierCharts');
+import { keyCodeCharts } from './keyCodeCharts';
+import { keyIdentifierCharts } from './keyIdentifierCharts';
 
 function getEventProxy(kind, event) {
   return {
@@ -48,4 +48,4 @@ function getKeyChordValue(conversionCharts, value, shiftKey) {
   return conversionCharts[key][value];
 }
 
-module.exports = getKeyChord;
+export { getKeyChord };

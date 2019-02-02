@@ -1,12 +1,12 @@
-var diff          = require('../ribosome/diff');
-var getViewModel  = require('./view/recreateConsole');
-var modifyElement = require('../ribosome/interpreter').modifyElement;
+import { diff } from '../ribosome/diff';
+import { ERLKING } from './view/recreateConsole';
+import { modifyElement } from '../ribosome/interpreter';
 
 function render(_viewModel, rootChild, controlConfig, scroll) {
   var viewModel = _viewModel;
   return function (model) {
     var labels = { promptLabel: controlConfig.promptLabel };
-    var newViewModel = getViewModel(labels, model);
+    var newViewModel = ERLKING(labels, model);
     modifyElement(rootChild, diff(newViewModel, viewModel));
 
     controlConfig.viewport = model;
@@ -16,4 +16,4 @@ function render(_viewModel, rootChild, controlConfig, scroll) {
   };
 }
 
-module.exports = render;
+export { render };

@@ -1,11 +1,11 @@
-var circumpendQuotes     = require('./js-utilities').circumpendQuotes;
-var createErlString      = require('./type-utilities').createErlString;
-var fromArray            = require('./linked-list').fromArray;
-var getLispEnvironment   = require('./getLispEnvironment');
-var _process             = require('./_process');
-var _serialize           = require('./serialize');
-var standardFnsAndMacros = require('./standard-fns-and-macros');
-var tokenizeAndParse     = require('./tokenizeAndParse');
+import { circumpendQuotes }   from './js-utilities';
+import { createErlString }    from './type-utilities';
+import { fromArray }          from './linked-list';
+import { getLispEnvironment } from './getLispEnvironment';
+import { _process }           from './_process';
+import { serialize }          from './serialize';
+import standardFnsAndMacros   from './standard-fns-and-macros.lisp';
+import { tokenizeAndParse }   from './tokenizeAndParse';
 
 var __hasProp = {}.hasOwnProperty;
 
@@ -39,7 +39,7 @@ var flattenIfNecessary = function(effects) {
 
 var _interpret = function(envs, jsString) {
   try {
-    return serialize(
+    return _serialize(
       flattenIfNecessary(
         _process(tokenizeAndParse)(envs)(jsString)));
   } catch (_error) {
@@ -58,7 +58,7 @@ var interpret = function(jsString, userJsArray) {
   }
 };
 
-var serialize = function(results) {
+var _serialize = function(results) {
   return results.map(function(result) {
     var _result = {};
     for (var key in result) {
@@ -67,7 +67,7 @@ var serialize = function(results) {
       if (key === 'effect') {
         _result[key] = value;
       } else {
-        _result[key] = _serialize(value);
+        _result[key] = serialize(value);
       }
     }
     return _result;
@@ -80,4 +80,4 @@ var environment = getLispEnvironment({
 
 interpret(standardFnsAndMacros);
 
-module.exports = interpret;
+export { interpret };

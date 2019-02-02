@@ -119,4 +119,4 @@ var keyIdentifierCharts = {
   }
 };
 
-module.exports = keyIdentifierCharts
+export { keyIdentifierCharts };

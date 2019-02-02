@@ -1,17 +1,17 @@
-var createErlBoolean          = require('./type-utilities').createErlBoolean;
-var createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
-var createErlIdentifier       = require('./type-utilities').createErlIdentifier;
-var createErlIndex            = require('./type-utilities').createErlIndex;
-var createErlNumber           = require('./type-utilities').createErlNumber;
-var createErlString           = require('./type-utilities').createErlString;
-var erlNil                    = require('./type-utilities').erlNil;
-var extractJsValue            = require('./type-utilities').extractJsValue;
-var fromArray                 = require('./linked-list').fromArray;
-var isJsNaN                   = require('./js-utilities').isJsNaN;
-var isJsNumber                = require('./js-utilities').isJsNumber;
-var isJsString                = require('./js-utilities').isJsString;
-var reduce                    = require('./linked-list').reduce;
-var toArray                   = require('./linked-list').toArray;
+import { createErlBoolean } from './type-utilities';
+import { createErlCorePureFunction } from './type-utilities';
+import { createErlIdentifier } from './type-utilities';
+import { createErlIndex } from './type-utilities';
+import { createErlNumber } from './type-utilities';
+import { createErlString } from './type-utilities';
+import { erlNil } from './type-utilities';
+import { extractJsValue } from './type-utilities';
+import { fromArray } from './linked-list';
+import { isJsNaN } from './js-utilities';
+import { isJsNumber } from './js-utilities';
+import { isJsString } from './js-utilities';
+import { reduce } from './linked-list';
+import { toArray } from './linked-list';
 
 var  __slice  = [].slice;
 var __hasProp = {}.hasOwnProperty;
@@ -222,4 +222,4 @@ var functionsOnJsValues = {
   'vals': vals
 };
 
-module.exports = getEnvironment;
+export { getEnvironment };

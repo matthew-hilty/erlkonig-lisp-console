@@ -1,3 +1,3 @@
-var comment = {};
+var commentSignal = {};
 
-module.exports = comment;
+export { commentSignal };

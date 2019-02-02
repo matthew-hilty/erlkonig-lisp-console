@@ -1,6 +1,6 @@
-var parse    = require('./parse');
-var tokenize = require('./tokenize');
+import { parse } from './parse';
+import { tokenize } from './tokenize';
 
-module.exports = function(sourceCode) {
+export const tokenizeAndParse = function(sourceCode) {
   return parse(tokenize(sourceCode));
 };

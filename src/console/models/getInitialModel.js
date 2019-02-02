@@ -1,7 +1,7 @@
-var createFrame    = require('./types/createFrame');
-var createPrompt   = require('./types/createPrompt');
-var createTerminal = require('./types/createTerminal');
-var createViewport = require('./types/createViewport');
+import { createFrame } from './types/createFrame';
+import { createPrompt } from './types/createPrompt';
+import { createTerminal } from './types/createTerminal';
+import { createViewport } from './types/createViewport';
 
 function getInitialModel() {
   return createViewport(
@@ -9,4 +9,4 @@ function getInitialModel() {
     createFrame(0, 0, 0));
 }
 
-module.exports = getInitialModel;
+export { getInitialModel };

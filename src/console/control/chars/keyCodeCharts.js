@@ -117,4 +117,4 @@ var keyCodeCharts = {
   }
 };
 
-module.exports = keyCodeCharts;
+export { keyCodeCharts };

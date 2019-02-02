@@ -14,9 +14,9 @@ var isJsString = function(jsVal) {
   return Object.prototype.toString.call(jsVal) === '[object String]';
 };
 
-module.exports = {
-  circumpendQuotes: circumpendQuotes,
-  isJsNaN: isJsNaN,
-  isJsNumber: isJsNumber,
-  isJsString: isJsString
+export {
+  circumpendQuotes,
+  isJsNaN,
+  isJsNumber,
+  isJsString
 };

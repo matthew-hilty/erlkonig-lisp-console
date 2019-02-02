@@ -269,7 +269,7 @@ function removeNode(node) {
   node.parentNode.removeChild(node);
 }
 
-module.exports = {
-  createAndAttachElement: createAndAttachElement,
-  modifyElement: modifyElement,
+export {
+  createAndAttachElement,
+  modifyElement
 };

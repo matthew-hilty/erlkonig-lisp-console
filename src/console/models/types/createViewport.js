@@ -4,7 +4,7 @@ function getPrompt(terminal, frame) {
     : terminal.prompts[frame.promptIndex - 1];
 }
 
-module.exports = function (terminal, frame) {
+export const createViewport = function (terminal, frame) {
   return {
     terminal: terminal,
     frame: frame,

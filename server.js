@@ -5,7 +5,7 @@ var fs      = require('fs');
 var http    = require('http');
 var path    = require('path');
 
-var herokuHost   = 'erlking-lisp-console.herokuapp.com';
+var herokuHost   = 'erlkonig-lisp-console.herokuapp.com';
 var isProduction = !!(process.env.NODE_ENV === 'production');
 var host         = isProduction ? herokuHost : 'localhost';
 

@@ -9,4 +9,4 @@ function supressDefault(handleEvent) {
   };
 }
 
-module.exports = subscribe;
+export { subscribe };

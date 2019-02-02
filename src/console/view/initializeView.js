@@ -1,8 +1,7 @@
-var createAndAttachElement =
-  require('../../ribosome/interpreter').createAndAttachElement;
+import { createAndAttachElement } from '../../ribosome/interpreter';
 
 function initializeView(root, viewModel) {
   createAndAttachElement(root, viewModel);
 }
 
-module.exports = initializeView;
+export { initializeView };

@@ -1,5 +1,5 @@
-var getViewport      = require('./getViewport');
-var interpretKeydown = require('./chars/interpretKeydown');
+import { getViewport } from './getViewport';
+import { interpretKeydown } from './chars/interpretKeydown';
 
 function initializeControl(subscribe, render, config) {
   var handleEvent = function (getAction) {
@@ -11,4 +11,4 @@ function initializeControl(subscribe, render, config) {
   subscribe('keydown', handleEvent(interpretKeydown));
 }
 
-module.exports = initializeControl;
+export { initializeControl };

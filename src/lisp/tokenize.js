@@ -1,4 +1,4 @@
-var commentSignal = require('./commentSignal');
+import { commentSignal } from './commentSignal';
 
 var createTokenRegex = function() {
   return /[\s,]*(~@|\#\+|\#\-|\#\!|[\[\](){}'`~@^]|"(?:\\.|[^\\"])*"|;.*|[^\s\[\](){}'"`,;]*)/g;
@@ -29,4 +29,4 @@ var tokenize = function(sourceCode) {
   }
 };
 
-module.exports = tokenize;
+export { tokenize };

@@ -1,4 +1,4 @@
-module.exports = function (offset, start, promptIndex) {
+export const createFrame = function (offset, start, promptIndex) {
   return {
     offset: offset,
     start: start,

@@ -135,4 +135,4 @@ function isObject(value) {
   return {}.toString.call(value) === '[object Object]';
 }
 
-module.exports = diff;
+export { diff };

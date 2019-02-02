@@ -1,5 +1,4 @@
-var createErlCoreEffectfulFunction =
-  require('./type-utilities').createErlCoreEffectfulFunction;
+import { createErlCoreEffectfulFunction } from './type-utilities';
 
 var createErlList   = require('./type-utilities').createErlList;
 var createErlString = require('./type-utilities').createErlString;
@@ -60,7 +59,7 @@ var setCoreEffectfulFnsOnErlValues = function(represent) {
   };
 };
 
-displayEffectsOnErlValues = {
+var displayEffectsOnErlValues = {
   'print': function(erlArgs) {
     return _prStr(erlArgs, false);
   },
@@ -70,4 +69,4 @@ displayEffectsOnErlValues = {
   '-quit-': _quit_,
 };
 
-module.exports = getEnvironment;
+export { getEnvironment };

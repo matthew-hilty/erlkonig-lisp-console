@@ -1,14 +1,14 @@
-var create = require('../types/createFrame');
+import { createFrame } from '../types/createFrame';
 
 function clear(frame, terminal) {
-  return create(
+  return createFrame(
     0,
     terminal.entries.length,
     frame.promptIndex);
 }
 
 function fastForward(frame) {
-  return create(
+  return createFrame(
     frame.offset,
     frame.start,
     frame.promptIndex > 0
@@ -17,14 +17,14 @@ function fastForward(frame) {
 }
 
 function resetPromptIndex(frame) {
-  return create(
+  return createFrame(
     frame.offset,
     frame.start,
     0);
 }
 
 function rewind(frame, terminal) {
-  return create(
+  return createFrame(
     frame.offset,
     frame.start,
     terminal.prompts.length > frame.promptIndex
@@ -32,9 +32,9 @@ function rewind(frame, terminal) {
       : frame.promptIndex);
 }
 
-module.exports = {
-  clear: clear,
-  fastForward: fastForward,
-  resetPromptIndex: resetPromptIndex,
-  rewind: rewind,
+export const Frame = {
+  clear,
+  fastForward,
+  resetPromptIndex,
+  rewind
 };

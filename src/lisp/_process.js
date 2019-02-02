@@ -1,5 +1,5 @@
-var commentSignal = require('./commentSignal');
-var evaluate      = require('./evaluate');
+import { commentSignal } from './commentSignal';
+import { evaluate } from './evaluate';
 
 var _process = function(transform) {
   return function(envs) {
@@ -18,4 +18,4 @@ var _process = function(transform) {
   };
 };
 
-module.exports = _process;
+export { _process };

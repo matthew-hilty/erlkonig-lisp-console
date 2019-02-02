@@ -1,18 +1,18 @@
-var detectCssScrollbar  = require('./detectCssScrollbar');
-var getInitialModel     = require('./models/getInitialModel');
-var getInitialViewModel = require('./view/recreateConsole');
-var initializeControl   = require('./control/initializeControl');
-var initializeView      = require('./view/initializeView');
-var render              = require('./render');
-var scroll              = require('./view/scroll');
-var subscribe           = require('./subscribe');
+import { detectCssScrollbar }  from './detectCssScrollbar';
+import { getInitialModel }     from './models/getInitialModel';
+import { ERLKING }             from './view/recreateConsole';
+import { initializeControl }   from './control/initializeControl';
+import { initializeView }      from './view/initializeView';
+import { render }              from './render';
+import { scroll }              from './view/scroll';
+import { subscribe }           from './subscribe';
 
 function initialize(config) {
   var root = document.getElementById(config.nodeId);
   var initialModel = getInitialModel();
   var promptLabel = config.promptLabel;
   var labels = { promptLabel: promptLabel };
-  var viewModel = getInitialViewModel(labels, initialModel);
+  var viewModel = ERLKING(labels, initialModel);
 
   initializeView(root, viewModel);
 
@@ -45,4 +45,4 @@ function setScrollbarVisibility(cssScrollbarDetected) {
 }
 
 
-module.exports = initialize;
+export { initialize };

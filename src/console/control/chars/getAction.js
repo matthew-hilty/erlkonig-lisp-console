@@ -98,4 +98,4 @@ function wrap(actionName) {
   return { name: actionName };
 }
 
-module.exports = getAction;
+export { getAction };

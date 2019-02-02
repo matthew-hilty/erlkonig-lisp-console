@@ -1,8 +1,8 @@
-var setEnv0 = require('./env0');
-var setEnv1 = require('./env1');
-var setEnv2 = require('./env2');
-var setEnv3 = require('./env3');
-var setEnv4 = require('./env4');
+import { getEnvironment as setEnv0 } from './env0';
+import { getEnvironment as setEnv1 } from './env1';
+import { getEnvironment as setEnv2 } from './env2';
+import { getEnvironment as setEnv3 } from './env3';
+import { getEnvironment as setEnv4 } from './env4';
 
 var getLispEnvironment = function(config) {
   var display = config.display;
@@ -19,4 +19,4 @@ var getLispEnvironment = function(config) {
   return environment;
 };
 
-module.exports = getLispEnvironment;
+export { getLispEnvironment };
