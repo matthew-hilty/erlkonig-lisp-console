@@ -1,6 +1,6 @@
-var initialize    = require('./console/initialize');
-var interpretLisp = require('./lisp/interpret');
-var keyTokens     = require('./lisp/keyTokens').keyTokens;
+import { initialize } from './console/initialize';
+import { interpret }  from './lisp/interpret';
+import { keyTokens }  from './lisp/keyTokens';
 
 var _keyTokens =  keyTokens.map(function (keyToken) {
   return ':' + keyToken;
@@ -9,7 +9,7 @@ var _keyTokens =  keyTokens.map(function (keyToken) {
 var promptLabel = 'Lisp> ';
 
 function getCandidates(prefix) {
-  var envKeys = interpretLisp("(keys (-get-current-env-))")[0]
+  var envKeys = interpret("(keys (-get-current-env-))")[0]
       .value
       .slice(1, -1)
       .split(' ');
@@ -34,6 +34,6 @@ function getMatches(prefix, words) {
 initialize({
   nodeId: 'viewport',
   promptLabel: promptLabel,
-  transform: interpretLisp,
+  transform: interpret,
   getCandidates: getCandidates
 });

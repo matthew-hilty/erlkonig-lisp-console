@@ -23,7 +23,7 @@ function identifyChildren(mode) {
   };
 }
 
-module.exports = {
+export {
   childById: childById,
   childByIndex: childByIndex,
   childByClass: identifyChild('class'),

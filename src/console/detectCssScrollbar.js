@@ -80,4 +80,4 @@ function hasCssScrollbar(node, expectedWidth) {
   return 'scrollWidth' in node && node.scrollWidth === expectedWidth;
 }
 
-module.exports = detectCssScrollbar;
+export { detectCssScrollbar };

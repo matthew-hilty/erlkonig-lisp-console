@@ -1,10 +1,16 @@
+var path = require('path');
+
 module.exports = {
-  entry: './src/initializeErlkingLispConsole.js',
+  mode: 'development',
+  entry: './src/initializeErlkonigLispConsole.js',
+  devtool: 'inline-source-map',
   output: {
-    path: 'public',
-    filename: 'erlking.js'
+    path: path.resolve(__dirname,  'public'),
+    filename: 'erlkonig.js'
   },
-  node: {
-    fs: "empty"
+  module : {
+    rules: [
+      { test: /\.lisp$/, use: 'raw-loader' }
+    ]
   }
 };

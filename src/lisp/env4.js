@@ -1,9 +1,9 @@
-var createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
-var erlNil                    = require('./type-utilities').erlNil;
-var extractJsValue            = require('./type-utilities').extractJsValue;
-var fromErlIndex              = require('./index-utilities').fromErlIndex;
-var _process                  = require('./_process');
-var toPartialArray            = require('./linked-list').toPartialArray;
+import { createErlCorePureFunction } from './type-utilities';
+import { erlNil } from './type-utilities';
+import { extractJsValue } from './type-utilities';
+import { fromErlIndex } from './index-utilities';
+import { _process } from './_process';
+import { toPartialArray } from './linked-list';
 
 var __hasProp = {}.hasOwnProperty;
 
@@ -86,7 +86,8 @@ var _read = function(erlArgs) {
 };
 
 var readFile = function(jsFileName) {
-  return require('fs').readFileSync(jsFileName).toString();
+  //return require('fs').readFileSync(jsFileName).toString();
+  return null;
 };
 
 var setCoreFnsOnErlValues = function(env, fns) {
@@ -103,4 +104,4 @@ var stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 
-module.exports = getEnvironment;
+export { getEnvironment };

@@ -178,4 +178,4 @@ function setYThumbVisibility(viewport, viewportHeight, yTrack, yThumb, cursor) {
   }
 }
 
-module.exports = scroll;
+export { scroll };

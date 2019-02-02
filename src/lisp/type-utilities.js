@@ -1,6 +1,6 @@
-var createErlList = require('./linked-list').createErlList;
-var erlAtomType   = require('./types').erlAtomType;
-var erlTypes      = require('./types').erlTypes;
+import { createErlList } from './linked-list';
+import { erlAtomType } from './types';
+import { erlTypes } from './types';
 
 var createErlAtom = function(erlValue) {
   return {
@@ -101,44 +101,44 @@ var isErlIgnore = predicates[1];
 var isErlNil    = predicates[2];
 var isErlTrue   = predicates[3];
 
-module.exports = {
-  createErlAtom: createErlAtom,
-  createErlBoolean: createErlBoolean,
-  createErlCoreEffectfulFunction: createErlCoreEffectfulFunction,
-  createErlCorePureFunction: createErlCorePureFunction,
-  createErlIdentifier: createErlIdentifier,
-  createErlIgnore: createErlIgnore,
-  createErlIndex: createErlIndex,
-  createErlKeyword: createErlKeyword,
-  createErlList: createErlList,
-  createErlMacro: createErlMacro,
-  createErlNil: createErlNil,
-  createErlNumber: createErlNumber,
-  createErlSpecialForm: createErlSpecialForm,
-  createErlString: createErlString,
-  createErlSymbol: createErlSymbol,
-  createErlUserPureFunction: createErlUserPureFunction,
-  extractJsValue: extractJsValue,
-  isErlAtom: isErlAtom,
-  isErlBoolean: isErlBoolean,
-  isErlCoreEffectfulFunction: isErlCoreEffectfulFunction,
-  isErlCorePureFunction: isErlCorePureFunction,
-  erlFalse: erlFalse,
-  isErlFalse: isErlFalse,
-  isErlIdentifier: isErlIdentifier,
-  erlIgnore: erlIgnore,
-  isErlIgnore: isErlIgnore,
-  isErlIndex: isErlIndex,
-  isErlKeyword: isErlKeyword,
-  isErlList: isErlList,
-  isErlMacro: isErlMacro,
-  erlNil: erlNil,
-  isErlNil: isErlNil,
-  isErlNumber: isErlNumber,
-  isErlSpecialForm: isErlSpecialForm,
-  isErlString: isErlString,
-  isErlSymbol: isErlSymbol,
-  erlTrue: erlTrue,
-  isErlTrue: isErlTrue,
-  isErlUserPureFunction: isErlUserPureFunction
+export {
+  createErlAtom,
+  createErlBoolean,
+  createErlCoreEffectfulFunction,
+  createErlCorePureFunction,
+  createErlIdentifier,
+  createErlIgnore,
+  createErlIndex,
+  createErlKeyword,
+  createErlList,
+  createErlMacro,
+  createErlNil,
+  createErlNumber,
+  createErlSpecialForm,
+  createErlString,
+  createErlSymbol,
+  createErlUserPureFunction,
+  extractJsValue,
+  isErlAtom,
+  isErlBoolean,
+  isErlCoreEffectfulFunction,
+  isErlCorePureFunction,
+  erlFalse,
+  isErlFalse,
+  isErlIdentifier,
+  erlIgnore,
+  isErlIgnore,
+  isErlIndex,
+  isErlKeyword,
+  isErlList,
+  isErlMacro,
+  erlNil,
+  isErlNil,
+  isErlNumber,
+  isErlSpecialForm,
+  isErlString,
+  isErlSymbol,
+  erlTrue,
+  isErlTrue,
+  isErlUserPureFunction
 };

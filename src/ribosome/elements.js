@@ -83,4 +83,36 @@ for (var tagName in tags) {
   elementFactories[tagName] = createElement(tagName);
 }
 
-module.exports = elementFactories;
+export const A = elementFactories.A;
+export const BUTTON = elementFactories.BUTTON;
+export const CANVAS = elementFactories.CANVAS;
+export const CODE = elementFactories.CODE;
+export const DIV = elementFactories.DIV;
+export const FOOTER = elementFactories.FOOTER;
+export const FORM = elementFactories.FORM;
+export const H1 = elementFactories.H1;
+export const H2 = elementFactories.H2;
+export const H3 = elementFactories.H3;
+export const H4 = elementFactories.H4;
+export const H5 = elementFactories.H5;
+export const H6 = elementFactories.H6;
+export const HEADER = elementFactories.HEADER;
+export const IMG = elementFactories.IMG;
+export const LABEL = elementFactories.LABEL;
+export const LI = elementFactories.LI;
+export const LINK = elementFactories.LINK;
+export const NAV = elementFactories.NAV;
+export const NOSCRIPT = elementFactories.NOSCRIPT;
+export const OPTGROUP = elementFactories.OPTGROUP;
+export const OPTION = elementFactories.OPTION;
+export const OUTPUT = elementFactories.OUTPUT;
+export const P = elementFactories.P;
+export const PARAM = elementFactories.PARAM;
+export const PRE = elementFactories.PRE;
+export const SCRIPT = elementFactories.SCRIPT;
+export const SECTION = elementFactories.SECTION;
+export const SELECT = elementFactories.SELECT;
+export const SOURCE = elementFactories.SOURCE;
+export const SPAN = elementFactories.SPAN;
+export const STYLE = elementFactories.STYLE;
+export const TEXTAREA = elementFactories.TEXTAREA;

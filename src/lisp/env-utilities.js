@@ -40,9 +40,9 @@ var unsetMainEnv = function (envStack, key) {
   return unset(getLast(envStack), key);
 };
 
-module.exports = {
-  addEnv: addEnv,
-  lookup: lookup,
-  setMainEnv: setMainEnv,
-  unsetMainEnv: unsetMainEnv
+export {
+  addEnv,
+  lookup,
+  setMainEnv,
+  unsetMainEnv
 };

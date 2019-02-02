@@ -1,17 +1,19 @@
-var components = require('./components');
-var ERL_CURSOR = components.ERL_CURSOR;
-var ERL_INPUT  = components.ERL_INPUT;
-var ERL_ENTRY  = components.ERL_ENTRY;
-var ERL_POST   = components.ERL_POST;
-var ERL_PRE    = components.ERL_PRE;
-var ERL_PROMPT = components.ERL_PROMPT;
+import {
+  ERL_CURSOR,
+  ERL_ENTRY,
+  ERL_INPUT,
+  ERL_POST,
+  ERL_PRE,
+  ERL_PROMPT
+} from './components';
 
-var elements   = require('../../ribosome/elements');
-var DIV        = elements.DIV;
-var SECTION    = elements.SECTION;
-var SPAN       = elements.SPAN;
-var H1         = elements.H1;
-var H4         = elements.H4;
+import {
+  DIV,
+  H1,
+  H4,
+  SECTION,
+  SPAN
+} from '../../ribosome/elements';
 
 var ERL_HEADER = SECTION(
     {
@@ -36,7 +38,7 @@ function ERLKING(prefixes, viewport) {
   var postCursor = prompt.postCursor != null ? prompt.postCursor : emptyString;
 
   return DIV(
-    _erlkingConfig,
+    _erlkonigConfig,
     DIV(
       null,
       ERL_HEADER,
@@ -124,12 +126,12 @@ function specifyEntry(prefixes, component) {
   return ERL_ENTRY(entry);
 }
 
-var _erlkingConfig = {
-  id: 'erlking',
-  classes: { 'erlking': true, 'container': true }
+var _erlkonigConfig = {
+  id: 'erlkonig',
+  classes: { 'erlkonig': true, 'container': true }
 };
 var _consoleConfig = { id: 'erl-console' };
 var _terminalConfig = { classes: { 'terminal': true }};
 var _erlViewportConfig = { classes: { 'erl-viewport': true }};
 
-module.exports = ERLKING;
+export { ERLKING };

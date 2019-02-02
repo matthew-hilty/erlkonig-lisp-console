@@ -1,15 +1,15 @@
-var car                       = require('./linked-list').car;
-var createErlCorePureFunction = require('./type-utilities').createErlCorePureFunction;
-var createErlList             = require('./type-utilities').createErlList;
-var createErlSymbol           = require('./type-utilities').createErlSymbol;
-var extractJsValue            = require('./type-utilities').extractJsValue;
-var fromArray                 = require('./linked-list').fromArray;
-var fromErlIndex              = require('./index-utilities').fromErlIndex;
-var isErlList                 = require('./type-utilities').isErlList;
-var _process                  = require('./_process');
-var toArray                   = require('./linked-list').toArray;
-var tokenizeAndParse          = require('./tokenizeAndParse');
-var toPartialArray            = require('./linked-list').toPartialArray;
+import { car } from './linked-list';
+import { createErlCorePureFunction } from './type-utilities';
+import { createErlList } from './type-utilities';
+import { createErlSymbol } from './type-utilities';
+import { extractJsValue } from './type-utilities';
+import { fromArray } from './linked-list';
+import { fromErlIndex } from './index-utilities';
+import { isErlList } from './type-utilities';
+import { _process } from './_process';
+import { toArray } from './linked-list';
+import { tokenizeAndParse } from './tokenizeAndParse';
+import { toPartialArray } from './linked-list';
 
 var __hasProp = {}.hasOwnProperty;
 
@@ -43,4 +43,4 @@ var stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 
-module.exports = getEnvironment;
+export { getEnvironment };

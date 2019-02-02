@@ -1,4 +1,4 @@
-var SPAN = require('../../ribosome/elements').SPAN;
+import { SPAN } from '../../ribosome/elements';
 
 function ERL_ENTRY(text) {
   return SPAN(_entryConfig, text + newline);
@@ -62,11 +62,11 @@ var _promptConfig = {
   classes: { 'erl-prompt': true, 'erl-prompt': true }
 };
 
-module.exports = {
-  ERL_CURSOR : ERL_CURSOR,
-  ERL_ENTRY  : ERL_ENTRY,
-  ERL_INPUT  : ERL_INPUT,
-  ERL_POST   : ERL_POST,
-  ERL_PRE    : ERL_PRE,
-  ERL_PROMPT : ERL_PROMPT
+export {
+  ERL_CURSOR,
+  ERL_ENTRY,
+  ERL_INPUT,
+  ERL_POST,
+  ERL_PRE,
+  ERL_PROMPT
 };

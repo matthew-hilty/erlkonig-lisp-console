@@ -1,4 +1,4 @@
-var Viewport = require('../models/actions/viewport');
+import { Viewport } from '../models/actions/viewport';
 
 function getViewport(action, config) {
   var command = action.name;
@@ -17,4 +17,4 @@ function getViewport(action, config) {
   }
 }
 
-module.exports = getViewport;
+export { getViewport };

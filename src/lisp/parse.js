@@ -1,42 +1,42 @@
-var binaryGlyphTokens     = require('./keyTokens').binaryGlyphTokens;
-var comment               = require('./commentSignal');
-var createErlBoolean      = require('./type-utilities').createErlBoolean;
-var createErlIdentifier   = require('./type-utilities').createErlIdentifier;
-var createErlIgnore       = require('./type-utilities').createErlIgnore;
-var createErlIndex        = require('./type-utilities').createErlIndex;
-var createErlList         = require('./type-utilities').createErlList;
-var createErlNil          = require('./type-utilities').createErlNil;
-var createErlNumber       = require('./type-utilities').createErlNumber;
-var createErlString       = require('./type-utilities').createErlString;
-var createErlSymbol       = require('./type-utilities').createErlSymbol;
-var deref                 = require('./keyTokens').deref;
-var derefGlyph            = require('./keyTokens').derefGlyph;
-var extractJsValue        = require('./type-utilities').extractJsValue;
-var _false                = require('./keyTokens')._false;
-var glyphTokens           = require('./keyTokens').glyphTokens;
-var ignore                = require('./keyTokens').ignore;
-var ignoreBang            = require('./keyTokens').ignoreBang;
-var ignoreBangGlyph       = require('./keyTokens').ignoreBangGlyph;
-var ignoreIfTrue          = require('./keyTokens').ignoreIfTrue;
-var ignoreIfTrueGlyph     = require('./keyTokens').ignoreIfTrueGlyph;
-var ignoreUnlessTrue      = require('./keyTokens').ignoreUnlessTrue;
-var ignoreUnlessTrueGlyph = require('./keyTokens').ignoreUnlessTrueGlyph;
-var indexEnd              = require('./keyTokens').indexEnd;
-var indexStart            = require('./keyTokens').indexStart;
-var keyTokens             = require('./keyTokens').keyTokens;
-var listEnd               = require('./keyTokens').listEnd;
-var listStart             = require('./keyTokens').listStart;
-var nil                   = require('./keyTokens').nil;
-var quasiquote            = require('./keyTokens').quasiquote;
-var quote                 = require('./keyTokens').quote;
-var spliceUnquote         = require('./keyTokens').spliceUnquote;
-var unquote               = require('./keyTokens').unquote;
-var quasiquoteGlyph       = require('./keyTokens').quasiquoteGlyph;
-var quoteGlyph            = require('./keyTokens').quoteGlyph;
-var spliceUnquoteGlyph    = require('./keyTokens').spliceUnquoteGlyph;
-var unquoteGlyph          = require('./keyTokens').unquoteGlyph;
-var reverse               = require('./linked-list').reverse;
-var _true                 = require('./keyTokens')._true;
+import { binaryGlyphTokens } from './keyTokens';
+import { commentSignal } from './commentSignal';
+import { createErlBoolean } from './type-utilities';
+import { createErlIdentifier } from './type-utilities';
+import { createErlIgnore } from './type-utilities';
+import { createErlIndex } from './type-utilities';
+import { createErlList } from './type-utilities';
+import { createErlNil } from './type-utilities';
+import { createErlNumber } from './type-utilities';
+import { createErlString } from './type-utilities';
+import { createErlSymbol } from './type-utilities';
+import { deref } from './keyTokens';
+import { derefGlyph } from './keyTokens';
+import { extractJsValue } from './type-utilities';
+import { _false } from './keyTokens';
+import { glyphTokens } from './keyTokens';
+import { ignore } from './keyTokens';
+import { ignoreBang } from './keyTokens';
+import { ignoreBangGlyph } from './keyTokens';
+import { ignoreIfTrue } from './keyTokens';
+import { ignoreIfTrueGlyph } from './keyTokens';
+import { ignoreUnlessTrue } from './keyTokens';
+import { ignoreUnlessTrueGlyph } from './keyTokens';
+import { indexEnd } from './keyTokens';
+import { indexStart } from './keyTokens';
+import { keyTokens } from './keyTokens';
+import { listEnd } from './keyTokens';
+import { listStart } from './keyTokens';
+import { nil } from './keyTokens';
+import { quasiquote } from './keyTokens';
+import { quote } from './keyTokens';
+import { spliceUnquote } from './keyTokens';
+import { unquote } from './keyTokens';
+import { quasiquoteGlyph } from './keyTokens';
+import { quoteGlyph } from './keyTokens';
+import { spliceUnquoteGlyph } from './keyTokens';
+import { unquoteGlyph } from './keyTokens';
+import { reverse } from './linked-list';
+import { _true } from './keyTokens';
 
 var  __indexOf = [].indexOf || function(item) {
   for (var i = 0, l = this.length; i < l; i++) {
@@ -124,8 +124,8 @@ var _parse = function(token, tokens) {
 };
 
 var parse = function(tokens) {
-  if (tokens === comment) {
-    return comment;
+  if (tokens === commentSignal) {
+    return commentSignal;
   }
   return _parse(tokens.shift(), tokens);
 };
@@ -210,4 +210,4 @@ var isString = startsWith('"');
 
 var isIdentifier = startsWith(':');
 
-module.exports = parse;
+export { parse };

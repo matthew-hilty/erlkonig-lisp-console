@@ -1,5 +1,5 @@
-var createErlIndex = require('./type-utilities').createErlIndex;
-var isJsString     = require('./js-utilities').isJsString;
+import { createErlIndex } from './type-utilities';
+import { isJsString } from './js-utilities';
 
 var __slice   = [].slice;
 var __hasProp = {}.hasOwnProperty;
@@ -48,7 +48,7 @@ var fromJsObjects = function() {
   return createErlIndex(copy);
 };
 
-module.exports = {
-  fromJsObjects: fromJsObjects,
-  fromErlIndex: fromErlIndex
+export {
+  fromJsObjects,
+  fromErlIndex
 };

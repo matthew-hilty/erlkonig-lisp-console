@@ -1,22 +1,22 @@
-var commentSignal              = require('./commentSignal');
-var extractJsValue             = require('./type-utilities').extractJsValue;
-var indexEnd                   = require('./keyTokens').indexEnd;
-var indexStart                 = require('./keyTokens').indexStart;
-var isErlAtom                  = require('./type-utilities').isErlAtom;
-var isErlCoreEffectfulFunction = require('./type-utilities').isErlCoreEffectfulFunction;
-var isErlCorePureFunction      = require('./type-utilities').isErlCorePureFunction;
-var isErlIdentifier            = require('./type-utilities').isErlIdentifier;
-var isErlIgnore                = require('./type-utilities').isErlIgnore;
-var isErlIndex                 = require('./type-utilities').isErlIndex;
-var isErlKeyword               = require('./type-utilities').isErlKeyword;
-var isErlList                  = require('./type-utilities').isErlList;
-var isErlMacro                 = require('./type-utilities').isErlMacro;
-var isErlNil                   = require('./type-utilities').isErlNil;
-var isErlString                = require('./type-utilities').isErlString;
-var isErlUserPureFunction      = require('./type-utilities').isErlUserPureFunction;
-var listEnd                    = require('./keyTokens').listEnd;
-var listStart                  = require('./keyTokens').listStart;
-var reduce                     = require('./linked-list').reduce;
+import { commentSignal } from './commentSignal';
+import { extractJsValue } from './type-utilities';
+import { indexEnd } from './keyTokens';
+import { indexStart } from './keyTokens';
+import { isErlAtom } from './type-utilities';
+import { isErlCoreEffectfulFunction } from './type-utilities';
+import { isErlCorePureFunction } from './type-utilities';
+import { isErlIdentifier } from './type-utilities';
+import { isErlIgnore } from './type-utilities';
+import { isErlIndex } from './type-utilities';
+import { isErlKeyword } from './type-utilities';
+import { isErlList } from './type-utilities';
+import { isErlMacro } from './type-utilities';
+import { isErlNil } from './type-utilities';
+import { isErlString } from './type-utilities';
+import { isErlUserPureFunction } from './type-utilities';
+import { listEnd } from './keyTokens';
+import { listStart } from './keyTokens';
+import { reduce } from './linked-list';
 
 var __hasProp = {}.hasOwnProperty;
 
@@ -147,4 +147,4 @@ var macroLabel                 = '<macro>';
 var nilLabel                   = 'nil';
 var userPureFunctionLabel      = '<function>';
 
-module.exports = serialize;
+export { serialize };

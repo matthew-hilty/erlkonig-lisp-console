@@ -1,4 +1,4 @@
-var erlTypes = require('./types').erlTypes;
+import { erlTypes } from './types';
 
 var erlListType = erlTypes[6];
 
@@ -230,27 +230,27 @@ var _EOL = {};
 
 var EOL = createNode(_EOL, _EOL);
 
-module.exports = {
-  areEqual: areEqual,
-  car: car,
-  cdr: cdr,
-  concat: concat,
-  cons: cons,
-  copy: copy,
-  createErlList: createErlList,
-  drop: drop,
-  isEmpty: isEmpty,
-  filter: filter,
-  forEach: forEach,
-  fromArray: fromArray,
-  last: last,
-  map: map,
-  next: next,
-  recurse: recurse,
-  reduce: reduce,
-  reduceBy2: reduceBy2,
-  reverse: reverse,
-  take: take,
-  toArray: toArray,
-  toPartialArray: toPartialArray
+export {
+  areEqual,
+  car,
+  cdr,
+  concat,
+  cons,
+  copy,
+  createErlList,
+  drop,
+  isEmpty,
+  filter,
+  forEach,
+  fromArray,
+  last,
+  map,
+  next,
+  recurse,
+  reduce,
+  reduceBy2,
+  reverse,
+  take,
+  toArray,
+  toPartialArray
 };
