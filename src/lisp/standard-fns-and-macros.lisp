@@ -9,15 +9,23 @@
       let* (cache {}) (
         (fn* (x cache) (
           f
-            (fn* (z) (if (contains? cache z)
-              (get cache z)
-              (let* (result ((fn* (y) ((x x cache) y)) z)) (do (set! cache z result) result))))
+            (fn* (z) (
+              if (contains? cache z)
+                (get cache z)
+                (let* (result ((fn* (y) ((x x cache) y)) z)) (
+                  do
+                    (set! cache z result)
+                    result))))
             cache))
         (fn* (x cache) (
           f
-            (fn* (z) (if (contains? cache z)
-              (get cache z)
-              (let* (result ((fn* (y) ((x x cache) y)) z)) (do (set! cache z result) result))))
+            (fn* (z) (
+              if (contains? cache z)
+                (get cache z)
+                (let* (result ((fn* (y) ((x x cache) y)) z)) (
+                  do
+                    (set! cache z result)
+                    result))))
             cache))
         cache))))
 

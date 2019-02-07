@@ -106,9 +106,9 @@ var evalQuasiquotedExpr = function(expr, envs, addResult) {
     return expr;
   }
   var manageItem = function(memo, item) {
-    if (unquotedExpr(item)) {
+    if (isUnquotedExpr(item)) {
         return createErlList(_evaluate(next(item), envs, addResult), memo);
-    } else if (spliceUnquotedExpr(item)) {
+    } else if (isSpliceUnquotedExpr(item)) {
         var _manageItem = function(_memo, _item) {
           return createErlList(_item, _memo);
         };
@@ -197,7 +197,7 @@ var _evaluate = function(erlExpr, envs, addResult) {
         case quasiquote:
           return evalQuasiquotedExpr(car(tailList), envs, addResult);
         case expandMacro:
-          return expandMacro(car(arg1), cdr(arg1), envs, addResult);
+          return _expandMacro(car(arg1), cdr(arg1), envs, addResult);
         case tryStar:
           try {
             return _evaluate(arg1, envs, addResult);
@@ -229,7 +229,7 @@ var _evaluate = function(erlExpr, envs, addResult) {
           if (isErlKeyword(erlInvokable)) {
             erlExpr = createErlList(erlInvokable, tailList);
           } else if (isErlMacro(erlInvokable)) {
-            erlExpr = expandMacro(head, tailList, envs, addResult);
+            erlExpr = _expandMacro(head, tailList, envs, addResult);
           } else if (isErlCorePureFunction(erlInvokable)) {
             var fn = extractJsValue(erlInvokable);
             var erlArgs = map(evaluate(envs, addResult), erlExpr);
@@ -267,7 +267,7 @@ var evaluate = function(envs, addResult) {
   };
 };
 
-var expandMacro = function(erlMacroSymbol, erlArgs, envs, addResult) {
+var _expandMacro = function(erlMacroSymbol, erlArgs, envs, addResult) {
   var erlMacro = _evaluate(erlMacroSymbol, envs, addResult);
   var jsValue = extractJsValue(erlMacro);
   var localEnvs = jsValue.localEnvs;
@@ -334,12 +334,12 @@ var reduceLetrec = function(envs, list, addResult) {
   return newEnv;
 };
 
-var spliceUnquote = function(erlValue) {
-  return spliceUnquote === (extractJsValue(erlValue));
+var isSpliceUnquote = function(erlValue) {
+  return (extractJsValue(erlValue)) === spliceUnquote;
 };
 
-var spliceUnquotedExpr = function(erlValue) {
-  return isErlList(erlValue) && (spliceUnquote(car(erlValue)));
+var isSpliceUnquotedExpr = function(erlValue) {
+  return isErlList(erlValue) && isSpliceUnquote(car(erlValue));
 };
 
 var undefineValue = function(erlList, envs) {
@@ -347,12 +347,12 @@ var undefineValue = function(erlList, envs) {
   return unsetMainEnv(envs, jsKey);
 };
 
-var unquote = function(erlValue) {
-  return unquote === (extractJsValue(erlValue));
+var isUnquote = function(erlValue) {
+  return extractJsValue(erlValue) === unquote;
 };
 
-var unquotedExpr = function(erlValue) {
-  return isErlList(erlValue) && (unquote(car(erlValue)));
+var isUnquotedExpr = function(erlValue) {
+  return isErlList(erlValue) && isUnquote(car(erlValue));
 };
 
 export { evaluate };
