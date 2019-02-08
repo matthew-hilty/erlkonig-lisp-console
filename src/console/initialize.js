@@ -8,28 +8,28 @@ import { scroll }              from './view/scroll';
 import { subscribe }           from './subscribe';
 
 function initialize(config) {
-  var root = document.getElementById(config.nodeId);
-  var initialModel = getInitialModel();
-  var promptLabel = config.promptLabel;
-  var labels = { promptLabel: promptLabel };
-  var viewModel = ERLKING(labels, initialModel);
+  const root = document.getElementById(config.nodeId);
+  const initialModel = getInitialModel();
+  const promptLabel = config.promptLabel;
+  const labels = { promptLabel: promptLabel };
+  const viewModel = ERLKING(labels, initialModel);
 
   initializeView(root, viewModel);
 
-  var rootChild = root.childNodes[0];
+  const rootChild = root.childNodes[0];
 
-  var controlConfig = {
+  const controlConfig = {
     getCandidates: config.getCandidates,
     promptLabel: promptLabel,
     transform: config.transform,
     viewport: initialModel
   };
 
-  var cssScrollbarDetected = detectCssScrollbar();
+  const cssScrollbarDetected = detectCssScrollbar();
 
   setScrollbarVisibility(cssScrollbarDetected);
 
-  var _scroll = scroll(cssScrollbarDetected);
+  const _scroll = scroll(cssScrollbarDetected);
 
   initializeControl(
     subscribe,
@@ -39,7 +39,7 @@ function initialize(config) {
 
 function setScrollbarVisibility(cssScrollbarDetected) {
   if (!cssScrollbarDetected) {
-    var viewport = document.getElementsByClassName('erl-viewport')[0]
+    const viewport = document.getElementsByClassName('erl-viewport')[0]
     viewport.style.overflow = 'hidden';
   }
 }

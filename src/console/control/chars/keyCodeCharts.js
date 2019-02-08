@@ -1,4 +1,4 @@
-var keyCodeCharts = {
+const keyCodeCharts = {
   withShift: {
     8  : 'Backspace',
     9  : 'Tab',

@@ -1,21 +1,21 @@
 import { commentSignal } from './commentSignal';
 
-var createTokenRegex = function() {
+const createTokenRegex = function() {
   return /[\s,]*(~@|\#\+|\#\-|\#\!|[\[\](){}'`~@^]|"(?:\\.|[^\\"])*"|;.*|[^\s\[\](){}'"`,;]*)/g;
 };
 
-var isComment = function(match) {
+const isComment = function(match) {
   return match[0] === ';';
 };
 
-var isMeaningful = function(match) {
+const isMeaningful = function(match) {
   return match !== '';
 };
 
-var tokenize = function(sourceCode) {
-  var match;
-  var tokenRegex = createTokenRegex();
-  var result = [];
+const tokenize = function(sourceCode) {
+  let match;
+  const tokenRegex = createTokenRegex();
+  const result = [];
   while (isMeaningful(match = tokenRegex.exec(sourceCode)[1])) {
     if (isComment(match)) {
       continue;

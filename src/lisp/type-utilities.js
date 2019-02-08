@@ -2,14 +2,14 @@ import { createErlList } from './linked-list';
 import { erlAtomType } from './types';
 import { erlTypes } from './types';
 
-var createErlAtom = function(erlValue) {
+const createErlAtom = function(erlValue) {
   return {
     erlValue: erlValue,
     type: erlAtomType
   };
 };
 
-var createErlBoolean = function(jsBoolean) {
+const createErlBoolean = function(jsBoolean) {
   if (jsBoolean) {
     return erlTrue;
   } else {
@@ -17,89 +17,89 @@ var createErlBoolean = function(jsBoolean) {
   }
 };
 
-var createErlIgnore = function() {
+const createErlIgnore = function() {
   return erlIgnore;
 };
 
-var createErlNil = function() {
+const createErlNil = function() {
   return erlNil;
 };
 
-var createErlValue = function(jsValue, erlType) {
+const createErlValue = function(jsValue, erlType) {
   return {
     jsValue: jsValue,
     type: erlType
   };
 };
 
-var createFactoryAndPredicate = function(erlType) {
-  var factory = function(jsValue) {
+const createFactoryAndPredicate = function(erlType) {
+  const factory = function(jsValue) {
     return createErlValue(jsValue, erlType);
   };
-  var predicate = function(erlValue) {
+  const predicate = function(erlValue) {
     return erlValue.type === erlType;
   };
   return [factory, predicate];
 };
 
-var createPredicate = function(constant) {
+const createPredicate = function(constant) {
   return function(value) {
     return value === constant;
   };
 };
 
-var extractJsValue = function(erlValue) {
+const extractJsValue = function(erlValue) {
   return erlValue.jsValue;
 };
 
-var _erlTypes = erlTypes.map(createFactoryAndPredicate);
+const _erlTypes = erlTypes.map(createFactoryAndPredicate);
 
-var _createErlBoolean              = _erlTypes[0][0];
-var isErlBoolean                   = _erlTypes[0][1];
-var createErlCoreEffectfulFunction = _erlTypes[1][0];
-var isErlCoreEffectfulFunction     = _erlTypes[1][1];
-var createErlCorePureFunction      = _erlTypes[2][0];
-var isErlCorePureFunction          = _erlTypes[2][1];
-var createErlIdentifier            = _erlTypes[3][0];
-var isErlIdentifier                = _erlTypes[3][1];
-var createErlIndex                 = _erlTypes[4][0];
-var isErlIndex                     = _erlTypes[4][1];
-var createErlKeyword               = _erlTypes[5][0];
-var isErlKeyword                   = _erlTypes[5][1];
-var _createErlList                 = _erlTypes[6][0];
-var isErlList                      = _erlTypes[6][1];
-var createErlMacro                 = _erlTypes[7][0];
-var isErlMacro                     = _erlTypes[7][1];
-var createErlNumber                = _erlTypes[8][0];
-var isErlNumber                    = _erlTypes[8][1];
-var createErlSpecialForm           = _erlTypes[9][0];
-var isErlSpecialForm               = _erlTypes[9][1];
-var createErlString                = _erlTypes[10][0];
-var isErlString                    = _erlTypes[10][1];
-var createErlSymbol                = _erlTypes[11][0];
-var isErlSymbol                    = _erlTypes[11][1];
-var _createErlUnit                 = _erlTypes[12][0];
-var _isErlUnit                     = _erlTypes[12][1];
-var createErlUserPureFunction      = _erlTypes[13][0];
-var isErlUserPureFunction          = _erlTypes[13][1];
-var _createErlAtom                 = _erlTypes[14][0];
-var isErlAtom                      = _erlTypes[14][1];
+const _createErlBoolean              = _erlTypes[0][0];
+const isErlBoolean                   = _erlTypes[0][1];
+const createErlCoreEffectfulFunction = _erlTypes[1][0];
+const isErlCoreEffectfulFunction     = _erlTypes[1][1];
+const createErlCorePureFunction      = _erlTypes[2][0];
+const isErlCorePureFunction          = _erlTypes[2][1];
+const createErlIdentifier            = _erlTypes[3][0];
+const isErlIdentifier                = _erlTypes[3][1];
+const createErlIndex                 = _erlTypes[4][0];
+const isErlIndex                     = _erlTypes[4][1];
+const createErlKeyword               = _erlTypes[5][0];
+const isErlKeyword                   = _erlTypes[5][1];
+const _createErlList                 = _erlTypes[6][0];
+const isErlList                      = _erlTypes[6][1];
+const createErlMacro                 = _erlTypes[7][0];
+const isErlMacro                     = _erlTypes[7][1];
+const createErlNumber                = _erlTypes[8][0];
+const isErlNumber                    = _erlTypes[8][1];
+const createErlSpecialForm           = _erlTypes[9][0];
+const isErlSpecialForm               = _erlTypes[9][1];
+const createErlString                = _erlTypes[10][0];
+const isErlString                    = _erlTypes[10][1];
+const createErlSymbol                = _erlTypes[11][0];
+const isErlSymbol                    = _erlTypes[11][1];
+const _createErlUnit                 = _erlTypes[12][0];
+const _isErlUnit                     = _erlTypes[12][1];
+const createErlUserPureFunction      = _erlTypes[13][0];
+const isErlUserPureFunction          = _erlTypes[13][1];
+const _createErlAtom                 = _erlTypes[14][0];
+const isErlAtom                      = _erlTypes[14][1];
 
-var erlIgnore = _createErlUnit(null);
+const erlIgnore = _createErlUnit(null);
 
-var erlNil = _createErlUnit(null);
+const erlNil = _createErlUnit(null);
 
-var erlBooleans = [false, true].map(_createErlBoolean);
+const erlBooleans = [false, true].map(_createErlBoolean);
 
-var erlFalse = erlBooleans[0];
-var erlTrue  = erlBooleans[1];
+const erlFalse = erlBooleans[0];
+const erlTrue  = erlBooleans[1];
 
-var predicates = [erlFalse, erlIgnore, erlNil, erlTrue].map(createPredicate);
+const predicates = [erlFalse, erlIgnore, erlNil, erlTrue].map(createPredicate);
 
-var isErlFalse  = predicates[0];
-var isErlIgnore = predicates[1];
-var isErlNil    = predicates[2];
-var isErlTrue   = predicates[3];
+const isErlFalse  = predicates[0];
+const isErlIgnore = predicates[1];
+const isErlNil    = predicates[2];
+const isErlTrue   = predicates[3];
 
 export {
   createErlAtom,

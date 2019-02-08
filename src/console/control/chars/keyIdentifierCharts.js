@@ -1,4 +1,4 @@
-var keyIdentifierCharts = {
+const keyIdentifierCharts = {
   withoutShift: {
     'U+0041': 'a',
     'U+0042': 'b',

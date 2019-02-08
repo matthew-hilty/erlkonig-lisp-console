@@ -61,9 +61,9 @@ import { tryStar } from './keyTokens';
 import { undefBang } from './keyTokens';
 import { unsetMainEnv } from './env-utilities';
 
-var __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-var createFn = function(erlList, envs) {
+const createFn = function(erlList, envs) {
   return createErlUserPureFunction({
     localEnvs: envs.slice(0),
     erlExpression: next(erlList),
@@ -71,10 +71,10 @@ var createFn = function(erlList, envs) {
   });
 };
 
-var createLocalEnv = function(erlParams, erlArgs) {
-  var env = {};
+const createLocalEnv = function(erlParams, erlArgs) {
+  const env = {};
   while (!isEmpty(erlParams)) {
-    var jsParam = extractJsValue(car(erlParams));
+    const jsParam = extractJsValue(car(erlParams));
     if (jsParam === splat) {
       env[extractJsValue(next(erlParams))] = erlArgs;
       return env;
@@ -87,7 +87,7 @@ var createLocalEnv = function(erlParams, erlArgs) {
   return env;
 };
 
-var createMacro = function(erlList, envs) {
+const createMacro = function(erlList, envs) {
   return createErlMacro({
     localEnvs: envs.slice(0),
     erlExpression: next(erlList),
@@ -95,21 +95,21 @@ var createMacro = function(erlList, envs) {
   });
 };
 
-var defineNewValue = function(erlList, envs, addResult) {
-  var jsKey = extractJsValue(car(erlList));
-  var erlValue = _evaluate(next(erlList), envs, addResult);
+const defineNewValue = function(erlList, envs, addResult) {
+  const jsKey = extractJsValue(car(erlList));
+  const erlValue = _evaluate(next(erlList), envs, addResult);
   return setMainEnv(envs, jsKey, erlValue);
 };
 
-var evalQuasiquotedExpr = function(expr, envs, addResult) {
+const evalQuasiquotedExpr = function(expr, envs, addResult) {
   if (!isErlList(expr)) {
     return expr;
   }
-  var manageItem = function(memo, item) {
+  const manageItem = function(memo, item) {
     if (isUnquotedExpr(item)) {
         return createErlList(_evaluate(next(item), envs, addResult), memo);
     } else if (isSpliceUnquotedExpr(item)) {
-        var _manageItem = function(_memo, _item) {
+        const _manageItem = function(_memo, _item) {
           return createErlList(_item, _memo);
         };
         return reduce(memo, _manageItem, _evaluate(next(item), envs, addResult));
@@ -122,19 +122,19 @@ var evalQuasiquotedExpr = function(expr, envs, addResult) {
   return reverse(reduce(createErlList(), manageItem, expr));
 };
 
-var _evaluate = function(erlExpr, envs, addResult) {
+const _evaluate = function(erlExpr, envs, addResult) {
   while (true) {
     if (isErlSymbol(erlExpr)) {
-      var jsString = extractJsValue(erlExpr);
+      const jsString = extractJsValue(erlExpr);
       if (isKeyword(jsString)) {
         return createErlKeyword(jsString);
       } else {
         return lookup(envs, jsString);
       }
     } else if (isErlIndex(erlExpr)) {
-      var index = extractJsValue(erlExpr);
-      var newIndex = {};
-      for (var key in index) {
+      const index = extractJsValue(erlExpr);
+      const newIndex = {};
+      for (let key in index) {
         if (!__hasProp.call(index, key)) continue;
         newIndex[key] = _evaluate(index[key], envs, addResult);
       }
@@ -145,11 +145,11 @@ var _evaluate = function(erlExpr, envs, addResult) {
       erlExpr = filter((function(x) {
         return !(ignorable(x, envs, addResult));
       }), erlExpr);
-      var erlExprArray = toPartialArray(2, erlExpr);
-      var head = erlExprArray[0];
-      var arg1 = erlExprArray[1];
-      var remainingArgs = erlExprArray[2];
-      var tailList = cdr(erlExpr);
+      const erlExprArray = toPartialArray(2, erlExpr);
+      const head = erlExprArray[0];
+      const arg1 = erlExprArray[1];
+      const remainingArgs = erlExprArray[2];
+      const tailList = cdr(erlExpr);
       switch (extractJsValue(head)) {
         case defBang:
           return defineNewValue(tailList, envs, addResult);
@@ -181,7 +181,7 @@ var _evaluate = function(erlExpr, envs, addResult) {
             erlExpr = car(remainingArgs);
             break;
           }
-          var otherwise = next(remainingArgs);
+          const otherwise = next(remainingArgs);
           if (isEmpty(otherwise)) {
             erlExpr = erlNil;
           } else {
@@ -202,51 +202,51 @@ var _evaluate = function(erlExpr, envs, addResult) {
           try {
             return _evaluate(arg1, envs, addResult);
           } catch (_error) {
-            var ex = _error;
+            let ex = _error;
             if (isEmpty(remainingArgs)) {
               throw ex;
             } else {
-              var remainingArgsArray = toPartialArray(3, car(remainingArgs));
-              var _catch = remainingArgsArray[0];
-              var _ex = remainingArgsArray[1];
-              var catchExpr = remainingArgsArray[2];
+              const remainingArgsArray = toPartialArray(3, car(remainingArgs));
+              const _catch = remainingArgsArray[0];
+              const _ex = remainingArgsArray[1];
+              const catchExpr = remainingArgsArray[2];
               if ((extractJsValue(_catch)) !== "catch*") {
                 throw ex;
               }
               if (ex instanceof Error) {
                 ex = createErlString(circumpendQuotes(ex.message));
               }
-              var newEnv = {};
+              const newEnv = {};
               newEnv[extractJsValue(_ex)] = ex;
               return _evaluate(catchExpr, addEnv(envs, newEnv), addResult);
             }
           }
           break;
         default:
-          var erlSymbol = head;
+          const erlSymbol = head;
           erlExpr = tailList;
-          var erlInvokable = _evaluate(erlSymbol, envs, addResult);
+          const erlInvokable = _evaluate(erlSymbol, envs, addResult);
           if (isErlKeyword(erlInvokable)) {
             erlExpr = createErlList(erlInvokable, tailList);
           } else if (isErlMacro(erlInvokable)) {
             erlExpr = _expandMacro(head, tailList, envs, addResult);
           } else if (isErlCorePureFunction(erlInvokable)) {
-            var fn = extractJsValue(erlInvokable);
-            var erlArgs = map(evaluate(envs, addResult), erlExpr);
+            const fn = extractJsValue(erlInvokable);
+            const erlArgs = map(evaluate(envs, addResult), erlExpr);
             return fn(erlArgs);
           } else if (isErlCoreEffectfulFunction(erlInvokable)) {
-            var fn = extractJsValue(erlInvokable);
-            var erlArgs = map(evaluate(envs, addResult), erlExpr);
+            const fn = extractJsValue(erlInvokable);
+            const erlArgs = map(evaluate(envs, addResult), erlExpr);
             addResult(fn(erlArgs));
             return erlNil;
           } else if (isErlUserPureFunction(erlInvokable)) {
-            var jsValue = extractJsValue(erlInvokable);
-            var localEnvs = jsValue.localEnvs;
-            var erlExpression = jsValue.erlExpression;
-            var erlParameters = jsValue.erlParameters;
-            var erlArgs = map(evaluate(envs, addResult), erlExpr);
+            const jsValue = extractJsValue(erlInvokable);
+            const localEnvs = jsValue.localEnvs;
+            const erlExpression = jsValue.erlExpression;
+            const erlParameters = jsValue.erlParameters;
+            const erlArgs = map(evaluate(envs, addResult), erlExpr);
             erlExpr = erlExpression;
-            var newEnv = createLocalEnv(erlParameters, erlArgs);
+            const newEnv = createLocalEnv(erlParameters, erlArgs);
             envs = addEnv(localEnvs, newEnv);
           } else {
             throw ""
@@ -258,7 +258,7 @@ var _evaluate = function(erlExpr, envs, addResult) {
   }
 };
 
-var evaluate = function(envs, addResult) {
+const evaluate = function(envs, addResult) {
   return function(erlExpr) {
     if (erlExpr === commentSignal) {
       return commentSignal;
@@ -267,29 +267,29 @@ var evaluate = function(envs, addResult) {
   };
 };
 
-var _expandMacro = function(erlMacroSymbol, erlArgs, envs, addResult) {
-  var erlMacro = _evaluate(erlMacroSymbol, envs, addResult);
-  var jsValue = extractJsValue(erlMacro);
-  var localEnvs = jsValue.localEnvs;
-  var erlExpression = jsValue.erlExpression;
-  var erlParameters = jsValue.erlParameters;
-  var newEnv = createLocalEnv(erlParameters, erlArgs);
-  var newEnvStack = addEnv(localEnvs, newEnv);
+const _expandMacro = function(erlMacroSymbol, erlArgs, envs, addResult) {
+  const erlMacro = _evaluate(erlMacroSymbol, envs, addResult);
+  const jsValue = extractJsValue(erlMacro);
+  const localEnvs = jsValue.localEnvs;
+  const erlExpression = jsValue.erlExpression;
+  const erlParameters = jsValue.erlParameters;
+  const newEnv = createLocalEnv(erlParameters, erlArgs);
+  const newEnvStack = addEnv(localEnvs, newEnv);
   return _evaluate(erlExpression, newEnvStack, addResult);
 };
 
-var ignorable = function(erlVal, envs, addResult) {
+const ignorable = function(erlVal, envs, addResult) {
   if (isErlIgnore(erlVal)) {
     return true;
   }
   if (!isErlList(erlVal)) {
     return false;
   }
-  var symbol = car(erlVal);
+  const symbol = car(erlVal);
   if (!isErlSymbol(symbol)) {
     return false;
   }
-  var jsString = extractJsValue(symbol);
+  const jsString = extractJsValue(symbol);
   if (jsString === 'ignore') {
     return true;
   }
@@ -302,56 +302,56 @@ var ignorable = function(erlVal, envs, addResult) {
   return false;
 };
 
-var reduceLet = function(envs, list, addResult) {
-  var newEnv = {};
-  var _envs = addEnv(envs, newEnv);
+const reduceLet = function(envs, list, addResult) {
+  const newEnv = {};
+  const _envs = addEnv(envs, newEnv);
   while (!isEmpty(list)) {
-    var jsKey = extractJsValue(list.value);
+    const jsKey = extractJsValue(list.value);
     list = recurse(list);
-    var envValue = _evaluate(list.value, _envs, addResult);
+    const envValue = _evaluate(list.value, _envs, addResult);
     newEnv[jsKey] = envValue;
     list = recurse(list);
   }
   return newEnv;
 };
 
-var reduceLetrec = function(envs, list, addResult) {
-  var newEnv = {};
-  var _envs = addEnv(envs, newEnv);
+const reduceLetrec = function(envs, list, addResult) {
+  const newEnv = {};
+  const _envs = addEnv(envs, newEnv);
   while (!isEmpty(list)) {
-    var jsKey = extractJsValue(list.value);
+    const jsKey = extractJsValue(list.value);
     list = recurse(list);
-    var _erlExpr = fromArray(
+    const _erlExpr = fromArray(
       [  createErlSymbol("fix*"),
          fromArray([createErlSymbol("fn*"),
          fromArray([jsKey]),
          list.value])
       ]);
-    var envValue = _evaluate(_erlExpr, _envs, addResult);
+    const envValue = _evaluate(_erlExpr, _envs, addResult);
     newEnv[jsKey] = envValue;
     list = recurse(list);
   }
   return newEnv;
 };
 
-var isSpliceUnquote = function(erlValue) {
+const isSpliceUnquote = function(erlValue) {
   return (extractJsValue(erlValue)) === spliceUnquote;
 };
 
-var isSpliceUnquotedExpr = function(erlValue) {
+const isSpliceUnquotedExpr = function(erlValue) {
   return isErlList(erlValue) && isSpliceUnquote(car(erlValue));
 };
 
-var undefineValue = function(erlList, envs) {
-  var jsKey = extractJsValue(car(erlList));
+const undefineValue = function(erlList, envs) {
+  const jsKey = extractJsValue(car(erlList));
   return unsetMainEnv(envs, jsKey);
 };
 
-var isUnquote = function(erlValue) {
+const isUnquote = function(erlValue) {
   return extractJsValue(erlValue) === unquote;
 };
 
-var isUnquotedExpr = function(erlValue) {
+const isUnquotedExpr = function(erlValue) {
   return isErlList(erlValue) && isUnquote(car(erlValue));
 };
 

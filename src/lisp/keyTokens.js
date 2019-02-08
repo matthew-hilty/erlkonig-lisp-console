@@ -1,46 +1,46 @@
-var deref                 = 'deref';
-var derefGlyph            = '@';
-var catchStar             = 'catch*';
-var defBang               = 'def!';
-var _do                   = 'do';
-var _eval                 = 'eval';
-var _evalWithEnv          = 'eval-with-env';
-var expandMacro           = 'expand-macro';
-var _false                = 'false';
-var fnStar                = 'fn*';
-var _getCurrentEnv        = '-get-current-env-';
-var _getDefaultEnv        = '-get-default-env-';
-var _if                   = 'if';
-var ignoreBang            = 'ignore!';
-var ignoreBangGlyph       = '#!';
-var ignoreIfTrue          = 'ignoreIfTrue';
-var ignoreIfTrueGlyph     = '#-';
-var ignoreUnlessTrue      = 'ignoreUnlessTrue';
-var ignoreUnlessTrueGlyph = '#+';
-var ignore                = 'ignore';
-var indexEnd              = '}';
-var indexStart            = '{';
-var letStar               = 'let*';
-var letrecStar            = 'letrec*';
-var listEnd               = ')';
-var listStart             = '(';
-var macroStar             = 'macro*';
-var nil                   = 'nil';
-var _process              = '-process-';
-var quasiquote            = 'quasiquote';
-var quasiquoteGlyph       = '`';
-var quote                 = 'quote';
-var quoteGlyph            = '\'';
-var splat                 = '&';
-var spliceUnquote         = 'splice-unquote';
-var spliceUnquoteGlyph    = '~@';
-var _true                 = 'true';
-var tryStar               = 'try*';
-var undefBang             = 'undef!';
-var unquote               = 'unquote';
-var unquoteGlyph          = '~'
+const deref                 = 'deref';
+const derefGlyph            = '@';
+const catchStar             = 'catch*';
+const defBang               = 'def!';
+const _do                   = 'do';
+const _eval                 = 'eval';
+const _evalWithEnv          = 'eval-with-env';
+const expandMacro           = 'expand-macro';
+const _false                = 'false';
+const fnStar                = 'fn*';
+const _getCurrentEnv        = '-get-current-env-';
+const _getDefaultEnv        = '-get-default-env-';
+const _if                   = 'if';
+const ignoreBang            = 'ignore!';
+const ignoreBangGlyph       = '#!';
+const ignoreIfTrue          = 'ignoreIfTrue';
+const ignoreIfTrueGlyph     = '#-';
+const ignoreUnlessTrue      = 'ignoreUnlessTrue';
+const ignoreUnlessTrueGlyph = '#+';
+const ignore                = 'ignore';
+const indexEnd              = '}';
+const indexStart            = '{';
+const letStar               = 'let*';
+const letrecStar            = 'letrec*';
+const listEnd               = ')';
+const listStart             = '(';
+const macroStar             = 'macro*';
+const nil                   = 'nil';
+const _process              = '-process-';
+const quasiquote            = 'quasiquote';
+const quasiquoteGlyph       = '`';
+const quote                 = 'quote';
+const quoteGlyph            = '\'';
+const splat                 = '&';
+const spliceUnquote         = 'splice-unquote';
+const spliceUnquoteGlyph    = '~@';
+const _true                 = 'true';
+const tryStar               = 'try*';
+const undefBang             = 'undef!';
+const unquote               = 'unquote';
+const unquoteGlyph          = '~'
 
-var keyTokens = [
+const keyTokens = [
   deref,
   derefGlyph,
   catchStar,
@@ -84,7 +84,7 @@ var keyTokens = [
   unquoteGlyph
 ];
 
-var keywords = [
+const keywords = [
   catchStar,
   defBang,
   _do,
@@ -111,9 +111,9 @@ var keywords = [
   unquote
 ];
 
-var macroTokens = [quasiquote, quote, spliceUnquote, unquote];
+const macroTokens = [quasiquote, quote, spliceUnquote, unquote];
 
-var glyphTokens = [
+const glyphTokens = [
   derefGlyph,
   ignoreBangGlyph,
   quasiquoteGlyph,
@@ -122,15 +122,15 @@ var glyphTokens = [
   unquoteGlyph
 ];
 
-var binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
+const binaryGlyphTokens = [ignoreIfTrueGlyph, ignoreUnlessTrueGlyph];
 
-var __indexOf = [].indexOf || function(item) {
-  for (var i = 0, l = this.length; i < l; i++) {
+const __indexOf = [].indexOf || function(item) {
+  for (let i = 0, l = this.length; i < l; i++) {
     if (i in this && this[i] === item) return i;
   } return -1;
 };
 
-var isKeyword = function(jsString) {
+const isKeyword = function(jsString) {
   return __indexOf.call(keywords, jsString) >= 0;
 };
 

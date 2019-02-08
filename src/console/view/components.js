@@ -25,39 +25,39 @@ function ERL_PROMPT(text) {
   return SPAN(_promptConfig, text);
 }
 
-var emptyString = '';
-var newline = '\n';
-var space = ' ';
-var underscore = '_';
+const emptyString = '';
+const newline = '\n';
+const space = ' ';
+const underscore = '_';
 
-var ERL_CURSOR = SPAN(
+const ERL_CURSOR = SPAN(
   {
     id: 'erl-cursor',
     classes: { 'erl-cursor': true, 'erl-cursor': true },
   },
   underscore);
 
-var _entryConfig = {
+const _entryConfig = {
   classes: { 'erl-entry': true, 'erl-line': true },
 };
 
-var _inputConfig = {
+const _inputConfig = {
   id: 'erl-input',
   classes: { 'erl-input': true, 'erl-line': true }
 };
 
-var _postConfig = {
+const _postConfig = {
   id: 'erl-post',
   classes: { 'erl-post': true },
   style: { 'position': 'relative' }
 };
 
-var _preConfig = {
+const _preConfig = {
    id: 'erl-pre',
    classes: { 'erl-pre': true }
 };
 
-var _promptConfig = {
+const _promptConfig = {
   id: 'erl-prompt',
   classes: { 'erl-prompt': true, 'erl-prompt': true }
 };

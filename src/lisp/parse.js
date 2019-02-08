@@ -38,14 +38,14 @@ import { unquoteGlyph } from './keyTokens';
 import { reverse } from './linked-list';
 import { _true } from './keyTokens';
 
-var  __indexOf = [].indexOf || function(item) {
-  for (var i = 0, l = this.length; i < l; i++) {
+const  __indexOf = [].indexOf || function(item) {
+  for (let i = 0, l = this.length; i < l; i++) {
     if (i in this && this[i] === item) return i;
   } return -1;
 };
 
-var atomize = function(token) {
-  var createErlValue = (function() {
+const atomize = function(token) {
+  const createErlValue = (function() {
     if (isNil(token)) {
       return createErlNil;
     } else if (isIgnore(token)) {
@@ -73,43 +73,43 @@ var atomize = function(token) {
   return createErlValue(token);
 };
 
-var isBoolean = function(token) {
+const isBoolean = function(token) {
   return token === _false || token === _true;
 };
 
-var isFloat = function(token) {
+const isFloat = function(token) {
   return /^(-|\+)?[0-9](_|\d)*\.(\d|(\d(_|\d)*\d))$/.test(token);
 };
 
-var isBinaryGlyph = function(token) {
+const isBinaryGlyph = function(token) {
   return __indexOf.call(binaryGlyphTokens, token) >= 0;
 };
 
-var isGlyph = function(token) {
+const isGlyph = function(token) {
   return __indexOf.call(glyphTokens, token) >= 0;
 };
 
-var isIgnore = function(token) {
+const isIgnore = function(token) {
   return token === ignore;
 };
 
-var isIndexStart = function(token) {
+const isIndexStart = function(token) {
   return token === indexStart;
 };
 
-var isInteger = function(token) {
+const isInteger = function(token) {
   return /^(0(?!\.)|((-|\+)?[1-9](_|\d)*$))/.test(token);
 };
 
-var isListStart = function(token) {
+const isListStart = function(token) {
   return token === listStart;
 };
 
-var isNil = function(token) {
+const isNil = function(token) {
   return token === nil;
 };
 
-var _parse = function(token, tokens) {
+const _parse = function(token, tokens) {
   if (isListStart(token)) {
     return parseList(tokens);
   } else if (isIndexStart(token)) {
@@ -123,14 +123,14 @@ var _parse = function(token, tokens) {
   }
 };
 
-var parse = function(tokens) {
+const parse = function(tokens) {
   if (tokens === commentSignal) {
     return commentSignal;
   }
   return _parse(tokens.shift(), tokens);
 };
 
-var parseBinaryGlyph = function(keyword, tokens) {
+const parseBinaryGlyph = function(keyword, tokens) {
   return createErlList(
     createErlSymbol(keyword),
     createErlList(
@@ -138,25 +138,25 @@ var parseBinaryGlyph = function(keyword, tokens) {
       createErlList(parse(tokens))));
 };
 
-var parseBoolean = function(token) {
+const parseBoolean = function(token) {
   return token === _true;
 };
 
-var parseFloat10 = function(token) {
+const parseFloat10 = function(token) {
   return parseFloat(stripUnderscores(token), 10);
 };
 
-var parseGlyph = function(keyword, tokens) {
+const parseGlyph = function(keyword, tokens) {
   return createErlList(
     createErlSymbol(keyword),
     createErlList(parse(tokens)));
 };
 
-var parseIndex = function(tokens) {
-  var token;
-  var jsIndex = {};
-  var key = null;
-  var isKeyStep = true;
+const parseIndex = function(tokens) {
+  let token;
+  const jsIndex = {};
+  let key = null;
+  let isKeyStep = true;
   while ((token = tokens.shift()) !== indexEnd) {
     if (isKeyStep) {
       key = _parse(token, tokens);
@@ -169,30 +169,30 @@ var parseIndex = function(tokens) {
   return createErlIndex(jsIndex);
 };
 
-var parseInt10 = function(token) {
+const parseInt10 = function(token) {
   return parseInt(stripUnderscores(token), 10);
 };
 
-var parseList = function(tokens) {
-  var token;
-  var erlList = createErlList();
+const parseList = function(tokens) {
+  let token;
+  let erlList = createErlList();
   while ((token = tokens.shift()) !== listEnd) {
     erlList = createErlList(_parse(token, tokens), erlList);
   }
   return reverse(erlList);
 };
 
-var startsWith = function(char) {
+const startsWith = function(char) {
   return function(token) {
     return token[0] === char;
   };
 };
 
-var stripUnderscores = function(token) {
+const stripUnderscores = function(token) {
   return token.replace(/_/g, '');
 };
 
-var glyphIndex = {};
+const glyphIndex = {};
 
 glyphIndex[derefGlyph]         = deref;
 glyphIndex[ignoreBangGlyph]    = ignoreBang;
@@ -201,13 +201,13 @@ glyphIndex[quoteGlyph]         = quote;
 glyphIndex[spliceUnquoteGlyph] = spliceUnquote;
 glyphIndex[unquoteGlyph]       = unquote;
 
-var binaryGlyphIndex = {};
+const binaryGlyphIndex = {};
 
 binaryGlyphIndex[ignoreIfTrueGlyph]     = ignoreIfTrue;
 binaryGlyphIndex[ignoreUnlessTrueGlyph] = ignoreUnlessTrue;
 
-var isString = startsWith('"');
+const isString = startsWith('"');
 
-var isIdentifier = startsWith(':');
+const isIdentifier = startsWith(':');
 
 export { parse };

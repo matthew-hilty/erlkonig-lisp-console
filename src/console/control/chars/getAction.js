@@ -1,29 +1,29 @@
-var a = 'a';
-var e = 'e';
-var h = 'h';
-var l = 'l';
-var u = 'u';
-var w = 'w';
+const a = 'a';
+const e = 'e';
+const h = 'h';
+const l = 'l';
+const u = 'u';
+const w = 'w';
 
-var A = 'A';
-var E = 'E';
-var H = 'H';
-var L = 'L';
-var U = 'U';
-var W = 'W';
+const A = 'A';
+const E = 'E';
+const H = 'H';
+const L = 'L';
+const U = 'U';
+const W = 'W';
 
-var backspace = 'Backspace';
-var _delete   = 'Delete';
-var down      = 'ArrowDown';
-var enter     = 'Enter';
-var left      = 'ArrowLeft';
-var right     = 'ArrowRight';
-var space     = ' ';
-var spacebar  = 'Spacebar';
-var tab       = 'Tab';
-var up        = 'ArrowUp';
+const backspace = 'Backspace';
+const _delete   = 'Delete';
+const down      = 'ArrowDown';
+const enter     = 'Enter';
+const left      = 'ArrowLeft';
+const right     = 'ArrowRight';
+const space     = ' ';
+const spacebar  = 'Spacebar';
+const tab       = 'Tab';
+const up        = 'ArrowUp';
 
-var characters = [
+const characters = [
   space,
   '`', '1', '2',  '3', '4',  '5', '6', '7', '8', '9', '0', '-', '=',
   '~', '!', '@',  '#', '$',  '%', '^', '&', '*', '(', ')', '_', '+',
@@ -36,7 +36,7 @@ var characters = [
 ];
 
 function getAction(keyChord) {
-  var value = keyChord.value;
+  const value = keyChord.value;
 
   if (keyChord.ctrlKey) {
     switch (value) {

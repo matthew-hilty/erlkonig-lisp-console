@@ -1,38 +1,37 @@
 import { createErlCoreEffectfulFunction } from './type-utilities';
+import { createErlList }                  from './type-utilities';
+import { createErlString }                from './type-utilities';
+import { serialize }                      from './serialize';
+import { toArray }                        from './linked-list';
 
-var createErlList   = require('./type-utilities').createErlList;
-var createErlString = require('./type-utilities').createErlString;
-var serialize       = require('./serialize');
-var toArray         = require('./linked-list').toArray;
+const __hasProp = {}.hasOwnProperty;
 
-var __hasProp = {}.hasOwnProperty;
-
-var getEnvironment = function(config) {
-  var display = config.display;
-  var environment = config.environment;
+const getEnvironment = function(config) {
+  const display = config.display;
+  const environment = config.environment;
   setCoreEffectfulFnsOnErlValues(display)(environment, displayEffectsOnErlValues);
   return environment;
 };
 
-var hasProcess = function() {
+const hasProcess = function() {
   return typeof process !== 'undefined';
 }
 
-var hasProcessWebpackShim = function() {
+const hasProcessWebpackShim = function() {
   return(process.title === 'browser' && process.browser);
 }
 
-var isNode = function() {
+const isNode = function() {
   return hasProcess() && !hasProcessWebpackShim();
 }
 
-var _prStr = function(erlArgs, shouldBeReadable) {
+const _prStr = function(erlArgs, shouldBeReadable) {
   return ((toArray(erlArgs)).map(function(erlArg) {
     return serialize(erlArg, shouldBeReadable);
   })).join('');
 };
 
-var _quit_ = function() {
+const _quit_ = function() {
   if (isNode()) {
     return process.exit(0);
   } else {
@@ -44,22 +43,22 @@ var _quit_ = function() {
   }
 };
 
-var setCoreEffectfulFnsOnErlValues = function(represent) {
+const setCoreEffectfulFnsOnErlValues = function(represent) {
   return function(env, fns) {
-    var _results = [];
-    for (var fnName in fns) {
+    const _results = [];
+    for (let fnName in fns) {
       if (!__hasProp.call(fns, fnName)) continue;
-      var fn = fns[fnName];
-      _results.push(env[fnName] =
-        createErlCoreEffectfulFunction(function(erlArgs) {
-          return represent(fn(erlArgs));
-        }));
+      const fn = fns[fnName];
+      env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
+        return represent(fn(erlArgs));
+      });
+      _results.push(env[fnName]);
     }
     return _results;
   };
 };
 
-var displayEffectsOnErlValues = {
+const displayEffectsOnErlValues = {
   'print': function(erlArgs) {
     return _prStr(erlArgs, false);
   },

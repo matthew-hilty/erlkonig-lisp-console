@@ -1,20 +1,20 @@
-var erlBooleanType               = 'erlBooleanType';
-var erlCoreEffectfulFunctionType = 'erlCoreEffectfulFunctionType';
-var erlCorePureFunctionType      = 'erlCorePureFunctionType';
-var erlIdentifierType            = 'erlIdentifierType';
-var erlIndexType                 = 'erlIndexType';
-var erlKeywordType               = 'erlKeywordType';
-var erlListType                  = 'erlListType';
-var erlMacroType                 = 'erlMacroType';
-var erlNumberType                = 'erlNumberType';
-var erlSpecialFormType           = 'erlSpecialFormType';
-var erlStringType                = 'erlStringType';
-var erlSymbolType                = 'erlSymbolType';
-var erlUnitType                  = 'erlUnitType';
-var erlUserPureFunctionType      = 'erlUserPureFunctionType';
-var erlAtomType                  = 'erlAtomType';
+const erlBooleanType               = 'erlBooleanType';
+const erlCoreEffectfulFunctionType = 'erlCoreEffectfulFunctionType';
+const erlCorePureFunctionType      = 'erlCorePureFunctionType';
+const erlIdentifierType            = 'erlIdentifierType';
+const erlIndexType                 = 'erlIndexType';
+const erlKeywordType               = 'erlKeywordType';
+const erlListType                  = 'erlListType';
+const erlMacroType                 = 'erlMacroType';
+const erlNumberType                = 'erlNumberType';
+const erlSpecialFormType           = 'erlSpecialFormType';
+const erlStringType                = 'erlStringType';
+const erlSymbolType                = 'erlSymbolType';
+const erlUnitType                  = 'erlUnitType';
+const erlUserPureFunctionType      = 'erlUserPureFunctionType';
+const erlAtomType                  = 'erlAtomType';
 
-var erlTypes = [
+const erlTypes = [
   erlBooleanType,
   erlCoreEffectfulFunctionType,
   erlCorePureFunctionType,

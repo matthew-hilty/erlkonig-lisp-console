@@ -11,10 +11,10 @@ function addChar(viewport, char) {
 }
 
 function completeWord(viewport, getCandidates) {
-  var frame = viewport.frame;
-  var newTerminal =
+  const frame = viewport.frame;
+  const newTerminal =
     Terminal.completeWord(refreshTerminal(viewport), getCandidates);
-  var diff = newTerminal.entries.length - viewport.terminal.entries.length;
+  const diff = newTerminal.entries.length - viewport.terminal.entries.length;
   return createViewport(
     newTerminal,
     createFrame(
@@ -24,7 +24,7 @@ function completeWord(viewport, getCandidates) {
 }
 
 function clear(viewport) {
-  var terminal = viewport.terminal;
+  const terminal = viewport.terminal;
   return createViewport(
     terminal,
     Frame.clear(viewport.frame, terminal));
@@ -45,21 +45,21 @@ function modifyTerminal(fnName) {
 }
 
 function refreshTerminal(viewport) {
-  var terminal = viewport.terminal;
+  const terminal = viewport.terminal;
   return createTerminal(terminal.entries, terminal.prompts, viewport.prompt);
 }
 
 function rewind(viewport) {
-  var terminal = viewport.terminal;
+  const terminal = viewport.terminal;
   return createViewport(
     terminal,
     Frame.rewind(viewport.frame, terminal));
 }
 
 function submit(viewport, transform) {
-  var frame = viewport.frame;
-  var newTerminal = Terminal.submit(refreshTerminal(viewport), transform);
-  var diff = newTerminal.entries.length - viewport.terminal.entries.length;
+  const frame = viewport.frame;
+  const newTerminal = Terminal.submit(refreshTerminal(viewport), transform);
+  const diff = newTerminal.entries.length - viewport.terminal.entries.length;
   return createViewport(
     newTerminal,
     createFrame(

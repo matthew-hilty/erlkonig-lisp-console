@@ -1,5 +1,5 @@
 function getCursorOffset(cursor, node) {
-  var margin = 5;
+  const margin = 5;
   return cursor.offsetLeft + cursor.offsetWidth + margin - node.offsetWidth;
 }
 
@@ -27,22 +27,22 @@ function _scroll(node, cursor) {
 function scroll(cssScrollbarDetected) {
   if (cssScrollbarDetected) {
     return function () {
-      var cursor = getElement('erl-cursor');
+      const cursor = getElement('erl-cursor');
       _scroll(getViewport(), cursor);
     };
   }
 
   return function () {
-    var viewport = getViewport();
-    var cursor = getElement('erl-cursor');
-    var xTrack = getElement('erl-x-scroll-track');
-    var xThumb = getElement('erl-x-scroll-thumb');
-    var yTrack = getElement('erl-y-scroll-track');
-    var yThumb = getElement('erl-y-scroll-thumb');
-    var prompt = getElement('erl-prompt');
+    const viewport = getViewport();
+    const cursor = getElement('erl-cursor');
+    const xTrack = getElement('erl-x-scroll-track');
+    const xThumb = getElement('erl-x-scroll-thumb');
+    const yTrack = getElement('erl-y-scroll-track');
+    const yThumb = getElement('erl-y-scroll-thumb');
+    const prompt = getElement('erl-prompt');
 
-    var viewportWidth = viewport.offsetWidth;
-    var viewportHeight = viewport.offsetHeight;
+    const viewportWidth = viewport.offsetWidth;
+    const viewportHeight = viewport.offsetHeight;
 
     setXThumbVisibility(viewport, viewportWidth, xTrack, xThumb, cursor, prompt);
     setYThumbVisibility(viewport, viewportHeight, yTrack, yThumb, cursor);
@@ -70,14 +70,14 @@ function scrollContentVertically(viewport, topRatio) {
 }
 
 function scrollVertically(viewport, viewportHeight, yTrack, yThumb) {
-  var yThumbHeight = yThumb.offsetHeight;
-  var yTrackHeight = yTrack.offsetHeight;
-  var ullage = yTrackHeight - yThumbHeight;
+  const yThumbHeight = yThumb.offsetHeight;
+  const yTrackHeight = yTrack.offsetHeight;
+  const ullage = yTrackHeight - yThumbHeight;
 
   function mouseMove_vertical(event) {
-    var _top = event.clientY - yTrack.getBoundingClientRect().top;
-    var top = _top < 0 ? 0 : _top > ullage ? ullage : _top;
-    var topRatio = top / yTrackHeight;
+    const _top = event.clientY - yTrack.getBoundingClientRect().top;
+    const top = _top < 0 ? 0 : _top > ullage ? ullage : _top;
+    const topRatio = top / yTrackHeight;
     scrollBarVertically(yThumb, topRatio);
     scrollContentVertically(viewport, topRatio);
   };
@@ -99,14 +99,14 @@ function scrollVertically(viewport, viewportHeight, yTrack, yThumb) {
 }
 
 function scrollHorizontally(viewport, viewportWidth, xTrack, xThumb) {
-  var xThumbWidth = xThumb.offsetWidth;
-  var xTrackWidth = xTrack.offsetWidth;
-  var ullage = xTrackWidth - xThumbWidth;
+  const xThumbWidth = xThumb.offsetWidth;
+  const xTrackWidth = xTrack.offsetWidth;
+  const ullage = xTrackWidth - xThumbWidth;
 
   function mouseMove_horizontal(event) {
-    var _left = event.clientX - xTrack.getBoundingClientRect().left;
-    var left = _left < 0 ? 0 : _left > ullage ? ullage : _left;
-    var leftRatio = left / xTrackWidth;
+    const _left = event.clientX - xTrack.getBoundingClientRect().left;
+    const left = _left < 0 ? 0 : _left > ullage ? ullage : _left;
+    const leftRatio = left / xTrackWidth;
     scrollBarHorizontally(xThumb, leftRatio);
     scrollContentHorizontally(viewport, leftRatio);
   };
@@ -128,20 +128,20 @@ function scrollHorizontally(viewport, viewportWidth, xTrack, xThumb) {
 }
 
 function setXThumbVisibility(viewport, viewportWidth, xTrack, xThumb, cursor, prompt) {
-  var xTrackWidth = xTrack.offsetWidth;
-  var terminalWidth = viewport.scrollWidth;
-  var xThumbStyle = xThumb.style;
+  const xTrackWidth = xTrack.offsetWidth;
+  const terminalWidth = viewport.scrollWidth;
+  const xThumbStyle = xThumb.style;
 
   if (viewportWidth < terminalWidth) {
-    var fullPromptOffsetWidth = prompt.offsetLeft + prompt.offsetWidth;
-    var start = fullPromptOffsetWidth;
-    var viewportRatio = viewportWidth / terminalWidth;
-    var xThumbWidth = viewportRatio * xTrackWidth;
-    var viewportPercentage = getPercentage(viewportRatio);
-    var ullage = xTrackWidth - xThumbWidth;
-    var xPosition = cursor.offsetLeft + cursor.offsetWidth - start;
-    var cursorRatio = (xPosition / terminalWidth) * (ullage / xTrackWidth);
-    var cursorPercentage = getPercentage(cursorRatio);
+    const fullPromptOffsetWidth = prompt.offsetLeft + prompt.offsetWidth;
+    const start = fullPromptOffsetWidth;
+    const viewportRatio = viewportWidth / terminalWidth;
+    const xThumbWidth = viewportRatio * xTrackWidth;
+    const viewportPercentage = getPercentage(viewportRatio);
+    const ullage = xTrackWidth - xThumbWidth;
+    const xPosition = cursor.offsetLeft + cursor.offsetWidth - start;
+    const cursorRatio = (xPosition / terminalWidth) * (ullage / xTrackWidth);
+    const cursorPercentage = getPercentage(cursorRatio);
 
     xThumbStyle.left = cursorPercentage;
     xThumbStyle.width = viewportPercentage;
@@ -154,19 +154,19 @@ function setXThumbVisibility(viewport, viewportWidth, xTrack, xThumb, cursor, pr
 }
 
 function setYThumbVisibility(viewport, viewportHeight, yTrack, yThumb, cursor) {
-  var yTrackHeight = yTrack.offsetHeight;
-  var terminalHeight = viewport.scrollHeight;
-  var yThumbStyle = yThumb.style;
+  const yTrackHeight = yTrack.offsetHeight;
+  const terminalHeight = viewport.scrollHeight;
+  const yThumbStyle = yThumb.style;
 
   if (viewportHeight < terminalHeight) {
-    var start = viewport.offsetTop;
-    var viewportRatio = viewportHeight / terminalHeight;
-    var yThumbHeight = viewportRatio * yTrackHeight;
-    var viewportPercentage = getPercentage(viewportRatio);
-    var ullage = yTrackHeight - yThumbHeight;
-    var yPosition = cursor.offsetTop + cursor.offsetHeight - start;
-    var cursorRatio = (yPosition / terminalHeight) * (ullage / yTrackHeight);
-    var cursorPercentage = getPercentage(cursorRatio);
+    const start = viewport.offsetTop;
+    const viewportRatio = viewportHeight / terminalHeight;
+    const yThumbHeight = viewportRatio * yTrackHeight;
+    const viewportPercentage = getPercentage(viewportRatio);
+    const ullage = yTrackHeight - yThumbHeight;
+    const yPosition = cursor.offsetTop + cursor.offsetHeight - start;
+    const cursorRatio = (yPosition / terminalHeight) * (ullage / yTrackHeight);
+    const cursorPercentage = getPercentage(cursorRatio);
 
     yThumbStyle.top = cursorPercentage;
     yThumbStyle.height = viewportPercentage;
