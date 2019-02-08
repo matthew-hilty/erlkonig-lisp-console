@@ -90,10 +90,10 @@
     macro* (& xs) (
       if (empty? xs)
         nil
-        (let* (x (car xs) xs (cdr xs)) (
+        (let* (x (car xs), xs (cdr xs)) (
           if (empty? xs)
             x
-            (let* (form (car xs) forms (cdr xs)) (
+            (let* (form (car xs), forms (cdr xs)) (
               if (empty? forms)
                 (if (list? form)
                   (if (= (symbol "fn*") (car form))
@@ -106,10 +106,10 @@
     macro* (& xs) (
       if (empty? xs)
         nil
-        (let* (x (car xs) xs (cdr xs)) (
+        (let* (x (car xs), xs (cdr xs)) (
           if (empty? xs)
             x
-            (let* (form (car xs) forms (cdr xs)) (
+            (let* (form (car xs), forms (cdr xs)) (
               if (empty? forms)
                 (if (list? form)
                   (if (= (symbol "fn*") (car form))
@@ -118,9 +118,13 @@
                   (list form x))
                 `(->> (->> ~x ~form) ~@forms))))))))
 
-  (def! ->* (macro* (& xs) `(fn* (-x-) (-> -x- ~@xs))))
+  (def! ->* (macro* (& xs) (
+    let* (x (gensym))
+      `(fn* (~x) (-> ~x ~@xs)))))
 
-  (def! ->>* (macro* (& xs) `(fn* (-x-) (->> -x- ~@xs))))
+  (def! ->>* (macro* (& xs) (
+    let* (x (gensym))
+      `(fn* (~x) (->> ~x ~@xs)))))
 
   (def! not (fn* (x) (if x false true)))
 
@@ -138,7 +142,7 @@
 
   (def! step-into-list (
     fn* (xs fn0 fn1) (
-      let* (x (car xs) -xs- (cdr xs)) (
+      let* (x (car xs), -xs- (cdr xs)) (
         if (empty? -xs-)
           (fn1 x)
           (fn0 x -xs-)))))
@@ -196,7 +200,7 @@
       letrec* (
         -skip-
         (fn* (ys) (
-          let* (nbr (car ys) xs (_1 ys)) (
+          let* (nbr (car ys), xs (_1 ys)) (
             cond
               (= 0 nbr) xs
               (= 1 nbr) (cdr xs)
@@ -216,7 +220,7 @@
       letrec* (
         -..-
         (fn* (xs) (
-          let* (lo (_0 xs) hi (_1 xs) -list- (_2 xs)) (
+          let* (lo (_0 xs), hi (_1 xs), -list- (_2 xs)) (
             if (= lo hi)
               (cons hi -list-)
               (-..- (list lo (decr hi) (cons hi -list-))))))) (
