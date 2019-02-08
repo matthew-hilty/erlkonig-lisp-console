@@ -1,15 +1,15 @@
 import { commentSignal } from './commentSignal';
 import { evaluate } from './evaluate';
 
-var _process = function(transform) {
+const _process = function(transform) {
   return function(envs) {
     return function(sourceCode) {
-      var results = [];
-      var addResult = function(result) {
+      const results = [];
+      const addResult = function(result) {
         return results.push(result);
       };
-      var value = evaluate(envs, addResult)(transform(sourceCode));
-      var result = (value === commentSignal)
+      const value = evaluate(envs, addResult)(transform(sourceCode));
+      const result = (value === commentSignal)
         ? { effect: { type: 'comment' } }
         : { effect: false, value: value };
       addResult(result);

@@ -3,13 +3,13 @@ function diffArray(value1, value0, index) {
     return { tree: index, commands: [['replace', value1]], index: index + 1 };
   }
 
-  var count = 0;
-  var length1 = value1.length;
-  var length0 = value0.length;
-  var minLength = Math.min(length1, length0);
+  let count = 0;
+  const length1 = value1.length;
+  const length0 = value0.length;
+  const minLength = Math.min(length1, length0);
 
   if (minLength > 1) {
-    for (var j = 0; j < minLength; j++) {
+    for (let j = 0; j < minLength; j++) {
       if (value1[j] !== value0[j]) {
         count++;
       }
@@ -20,13 +20,12 @@ function diffArray(value1, value0, index) {
     }
   }
 
-  var i = 0;
-  var tree = [];
-  var commands = [];
+  const tree = [];
+  let commands = [];
 
-  for (; i < minLength; i++) {
+  for (let i = 0; i < minLength; i++) {
     if (value1[i] !== value0[i]) {
-      var _patch = _diff(value1[i], value0[i], index);
+      const _patch = _diff(value1[i], value0[i], index);
       if (_patch.commands.length > 0) {
         tree.push({ index: i, value: _patch.tree });
         commands = commands.concat(_patch.commands);
@@ -35,23 +34,21 @@ function diffArray(value1, value0, index) {
     }
   }
 
-  for (; i < length1; i++) {
+  for (let i = 0; i < length1; i++) {
     tree.push({ index: i, value: index });
     commands.push(['insertAtEnd', value1[i]]);
     index++;
   }
 
-  var removals = [];
+  const removals = [];
 
-  for (; i < length0; i++) {
+  for (let i = 0; i < length0; i++) {
     removals.unshift({ index: i, value: index });
     commands.push(['remove']);
     index++;
   }
 
-  tree = tree.concat(removals);
-
-  return { tree: tree, commands: commands, index: index };
+  return { tree: tree.concat(removals), commands: commands, index: index };
 }
 
 function diffObject(value1, value0, index) {
@@ -63,10 +60,10 @@ function diffObject(value1, value0, index) {
     };
   }
 
-  var keyCount = 0;
-  var diffCount = 0;
+  let keyCount = 0;
+  let diffCount = 0;
 
-  for (var key in value0) {
+  for (let key in value0) {
     if (!value0.hasOwnProperty(key)) continue;
     keyCount++;
     if (!value1.hasOwnProperty(key) || value1[key] !== value0[key]) {
@@ -78,14 +75,14 @@ function diffObject(value1, value0, index) {
     return { tree: index, commands: [['replace', value1]], index: index + 1 };
   }
 
-  var tree = [];
-  var commands = [];
+  const tree = [];
+  let commands = [];
 
-  for (var key in value1) {
+  for (let key in value1) {
     if (!value1.hasOwnProperty(key)) continue;
     if (value0.hasOwnProperty(key)) {
       if (value1[key] !== value0[key]) {
-        var _patch = _diff(value1[key], value0[key], index);
+        const _patch = _diff(value1[key], value0[key], index);
         if (_patch.commands.length > 0) {
           tree.push({ index: key, value: _patch.tree });
           commands = commands.concat(_patch.commands);
@@ -99,7 +96,7 @@ function diffObject(value1, value0, index) {
     }
   }
 
-  for (var key in value0) {
+  for (let key in value0) {
     if (!value1.hasOwnProperty(key)) {
       tree.push({ index: key, value: index });
       commands.push(['delete']);
@@ -126,8 +123,8 @@ function _diff(value1, value0, index) {
   return { tree: index, commands: [['replace', value1]], index: index + 1 };
 }
 
-var diff = function(value1, value0) {
-  var patch = _diff(value1, value0, 0);
+const diff = function(value1, value0) {
+  const patch = _diff(value1, value0, 0);
   return { value: patch.tree, commands: patch.commands };
 };
 

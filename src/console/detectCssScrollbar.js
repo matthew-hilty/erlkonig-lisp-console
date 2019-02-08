@@ -1,25 +1,25 @@
-var _nodeId     = '#erl-css-scrollbar-test-div';
-var _prefixes   = ['-webkit-', '-moz-', '-o-', '-ms-'];
-var _pseudo     = '::';
-var _scrollbar  = 'scrollbar';
-var _width10px  = '{width:10px;}';
+const _nodeId     = '#erl-css-scrollbar-test-div';
+const _prefixes   = ['-webkit-', '-moz-', '-o-', '-ms-'];
+const _pseudo     = '::';
+const _scrollbar  = 'scrollbar';
+const _width10px  = '{width:10px;}';
 
 function createRule(prefix) {
   return _nodeId + _pseudo + prefix + _scrollbar + _width10px;
 }
 
 function _detectCssScrollbar(styleRule) {
-  var body = getBody();
-  var docElement = document.documentElement;
-  var div = document.createElement('div');
-  var node = document.createElement('div');
+  const body = getBody();
+  const docElement = document.documentElement;
+  const div = document.createElement('div');
+  const node = document.createElement('div');
   node.id = 'erl-css-scrollbar-test-div';
   div.appendChild(node);
-  var style = document.createElement('style');
+  const style = document.createElement('style');
   style.type = 'text/css';
   style.id = 'erl-css-scrollbar-test-style';
-  var nonceNode = document.getElementById('scrollbar-nonce');
-  var nonce = nonceNode.dataset['scrollbarNonce'];
+  const nonceNode = document.getElementById('scrollbar-nonce');
+  const nonce = nonceNode.dataset['scrollbarNonce'];
   style.setAttribute('nonce', nonce);
 
   (body.fake ? body : div).appendChild(style);
@@ -37,12 +37,12 @@ function _detectCssScrollbar(styleRule) {
   if (body.fake) {
     body.style.background = '';
     body.style.overflow = 'hidden';
-    var docOverflow = docElement.style.overflow;
+    const docOverflow = docElement.style.overflow;
     docElement.style.overflow = 'hidden';
     docElement.appendChild(body);
   }
 
-  var result = hasCssScrollbar(node, 30);
+  const result = hasCssScrollbar(node, 30);
 
   if (body.fake) {
     body.parentNode.removeChild(body);
@@ -56,7 +56,7 @@ function _detectCssScrollbar(styleRule) {
 }
 
 function detectCssScrollbar() {
-  var cssScrollbar =
+  const cssScrollbar =
     _nodeId + '{overflow:scroll;width:40px;height:40px;}' +
     _prefixes.map(createRule).join('') +
     createRule('');
@@ -65,10 +65,10 @@ function detectCssScrollbar() {
 }
 
 function getBody() {
-  var _body = document.body;
+  let _body = document.body;
 
   if (!_body) {
-    var isSvg = document.documentElement.nodeName.toLowerCase() === 'svg';
+    const isSvg = document.documentElement.nodeName.toLowerCase() === 'svg';
     _body = document.createElement(isSvg ? 'svg' : 'body');
     _body.fake = true;
   }

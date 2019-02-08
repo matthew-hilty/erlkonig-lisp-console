@@ -1,17 +1,17 @@
 import { createErlIndex } from './type-utilities';
 import { isJsString } from './js-utilities';
 
-var __slice   = [].slice;
-var __hasProp = {}.hasOwnProperty;
+const __slice   = [].slice;
+const __hasProp = {}.hasOwnProperty;
 
-var fromErlIndex = function(erlIndex) {
-  var result = {};
-  var jsValue = erlIndex.jsValue;
-  for (var key in jsValue) {
+const fromErlIndex = function(erlIndex) {
+  const result = {};
+  const jsValue = erlIndex.jsValue;
+  for (let key in jsValue) {
     if (!__hasProp.call(jsValue, key)) continue;
-    var value = jsValue[key];
+    const value = jsValue[key];
     if (isJsString(key)) {
-      var newKey = (function() {
+      const newKey = (function() {
         switch (key[0]) {
           case ':':
             return key.slice(1);
@@ -29,15 +29,15 @@ var fromErlIndex = function(erlIndex) {
   return result;
 };
 
-var fromJsObjects = function() {
-  var jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-  var copy = {};
-  var len = jsObjects.length;
-  for (var i = 0;  i < len; i++) {
-    var jsObject = jsObjects[i];
-    for (var key in jsObject) {
+const fromJsObjects = function() {
+  const jsObjects = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+  const copy = {};
+  const len = jsObjects.length;
+  for (let i = 0;  i < len; i++) {
+    const jsObject = jsObjects[i];
+    for (let key in jsObject) {
       if (!__hasProp.call(jsObject, key)) continue;
-      var val = jsObject[key];
+      const val = jsObject[key];
       if (isJsString(key)) {
         copy[':' + key] = val;
       } else {

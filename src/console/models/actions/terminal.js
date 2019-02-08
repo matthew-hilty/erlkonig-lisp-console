@@ -11,23 +11,24 @@ function addChar(terminal, char) {
 }
 
 function completeWord(terminal, getCandidates) {
-  if (getCandidates == null) {
-    getCandidates = function (value) {
-      var results;
-      return (results = [{ effect: false, value: value }]); // coupling to lisp implementation
-    };
-  }
+  const _getCandidates = (getCandidates == null)
+    ? function (value) {
+        // coupling to lisp implementation
+        return [{ effect: false, value: value }];
+      }
+    : getCandidates;
 
-  var commandText = terminal.prompt.preCursor;
-  var splitCommand = getPrefix(commandText);
-  var candidates = getCandidates(splitCommand[1]);
-  var length = candidates.length;
+  const commandText = terminal.prompt.preCursor;
+  const splitCommand = getPrefix(commandText);
+  const candidates = _getCandidates(splitCommand[1]);
+  const length = candidates.length;
 
   if (length === 0) {
     return terminal;
   }
 
-  var entries, prompt;
+  let entries;
+  let prompt;
 
   if (length === 1) {
     entries = terminal.entries;
@@ -70,7 +71,7 @@ function deleteRightChar(terminal) {
 }
 
 function deleteWord(terminal) {
-  var preCursor = terminal.prompt.preCursor;
+  const preCursor = terminal.prompt.preCursor;
   return createTerminal(
     terminal.entries, 
     terminal.prompts, 
@@ -84,20 +85,20 @@ function extractCommand(prompt) {
 }
 
 function getPrefix(command) {
-  var regex = /^(.*[\s\(\)\[\]])([^\(\)\[\]]*)/;
-  var match = regex.exec(command);
+  const regex = /^(.*[\s\(\)\[\]])([^\(\)\[\]]*)/;
+  const match = regex.exec(command);
   return match == null
     ? ['', command]
     : [match[1], match[2]];
 }
 
 function moveCursorLeft(terminal) {
-  var preCursor = terminal.prompt.preCursor;
-  var preCursorLength = preCursor.length;
+  const preCursor = terminal.prompt.preCursor;
+  const preCursorLength = preCursor.length;
   if (preCursorLength === 0) {
     return terminal;
   } else {
-    var postCursor = terminal.prompt.postCursor;
+    const postCursor = terminal.prompt.postCursor;
     return createTerminal(
       terminal.entries,
       terminal.prompts,
@@ -108,11 +109,11 @@ function moveCursorLeft(terminal) {
 }
 
 function moveCursorRight(terminal) {
-  var postCursor = terminal.prompt.postCursor;
+  const postCursor = terminal.prompt.postCursor;
   if (postCursor.length === 0) {
     return terminal;
   } else {
-    var preCursor = terminal.prompt.preCursor;
+    const preCursor = terminal.prompt.preCursor;
     return createTerminal(
       terminal.entries,
       terminal.prompts,
@@ -123,7 +124,7 @@ function moveCursorRight(terminal) {
 }
 
 function moveCursorToEnd(terminal) {
-  var prompt = terminal.prompt;
+  const prompt = terminal.prompt;
   return createTerminal(
     terminal.entries,
     terminal.prompts,
@@ -131,7 +132,7 @@ function moveCursorToEnd(terminal) {
 }
 
 function moveCursorToStart(terminal) {
-  var prompt = terminal.prompt;
+  const prompt = terminal.prompt;
   return createTerminal(
     terminal.entries,
     terminal.prompts,
@@ -143,29 +144,30 @@ function normalizePrompt(prompt) {
 }
 
 function submit(terminal, transform) {
-  var newCachedPromptMaybe, newFuture;
+  let newCachedPromptMaybe;
+  let newFuture;
 
-  if (transform == null) {
-    transform = function (value) {
-      var results;
-      return (results = [{ effect: false, value: value }]); // coupling to lisp implementation
-    };
-  }
+  const _transform = (transform == null)
+    ? function (value) {
+        // coupling to lisp implementation
+        return [{ effect: false, value: value }];
+      }
+    : transform;
 
-  var commandText = extractCommand(terminal.prompt);
-  var results = transform(commandText);
-  var displayEntries = results
+  const commandText = extractCommand(terminal.prompt);
+  const results = _transform(commandText);
+  const displayEntries = results
     .slice(0, -1)
     .filter(function (result) { return result.effect.type === 'display'; })
     .map(function (display) { return { type: 'display', value: display.value }});
 
-  var lastResult = results[results.length - 1];
-  var response = lastResult.value != null
+  const lastResult = results[results.length - 1];
+  const response = lastResult.value != null
     ? [{ type: 'response', value: lastResult.value }]
     : [];
 
-  var command = { type: 'command', value: commandText };
-  var prompt = normalizePrompt(terminal.prompt);
+  const command = { type: 'command', value: commandText };
+  const prompt = normalizePrompt(terminal.prompt);
 
   return createTerminal(
     terminal.entries.concat([command], displayEntries, response),

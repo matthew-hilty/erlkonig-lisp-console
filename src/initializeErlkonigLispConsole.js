@@ -2,14 +2,14 @@ import { initialize } from './console/initialize';
 import { interpret }  from './lisp/interpret';
 import { keyTokens }  from './lisp/keyTokens';
 
-var _keyTokens =  keyTokens.map(function (keyToken) {
+const _keyTokens =  keyTokens.map(function (keyToken) {
   return ':' + keyToken;
 });
 
-var promptLabel = 'Lisp> ';
+const promptLabel = 'Lisp> ';
 
 function getCandidates(prefix) {
-  var envKeys = interpret("(keys (-get-current-env-))")[0]
+  const envKeys = interpret("(keys (-get-current-env-))")[0]
       .value
       .slice(1, -1)
       .split(' ');
@@ -20,10 +20,10 @@ function getMatches(prefix, words) {
   if (!/^[-a-zA-Z0-9]+$/.test(prefix)) {
     return [];
   }
-  var regex = RegExp('(^|\W):' + prefix);
-  var matches = [];
-  for (var index in words) {
-    var word = words[index];
+  const regex = RegExp('(^|\W):' + prefix);
+  const matches = [];
+  for (let index in words) {
+    const word = words[index];
     if (regex.test(word)) {
       matches.push(word.slice(1));
     }

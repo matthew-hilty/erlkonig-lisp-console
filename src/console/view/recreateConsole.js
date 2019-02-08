@@ -15,7 +15,7 @@ import {
   SPAN
 } from '../../ribosome/elements';
 
-var ERL_HEADER = SECTION(
+const ERL_HEADER = SECTION(
     {
       id: 'erl-header',
       classes: { 'head': true }
@@ -23,19 +23,19 @@ var ERL_HEADER = SECTION(
     H1(null, 'Erlkönig Lisp Console\n'),
     H4(null, 'A terminal emulator and lisp interpreter\n'));
 
-var emptyString = '';
+const emptyString = '';
 
 function ERLKING(prefixes, viewport) {
-  var promptLabel = prefixes.promptLabel;
-  var prompt = viewport.prompt;
-  var frame = viewport.frame;
+  const promptLabel = prefixes.promptLabel;
+  const prompt = viewport.prompt;
+  const frame = viewport.frame;
 
-  var entries = viewport.terminal.entries
+  const entries = viewport.terminal.entries
     .slice(frame.start, frame.start + frame.offset)
     .map(specifyEntry.bind(null, prefixes));
 
-  var preCursor = prompt.preCursor != null ? prompt.preCursor : emptyString;
-  var postCursor = prompt.postCursor != null ? prompt.postCursor : emptyString;
+  const preCursor = prompt.preCursor != null ? prompt.preCursor : emptyString;
+  const postCursor = prompt.postCursor != null ? prompt.postCursor : emptyString;
 
   return DIV(
     _erlkonigConfig,
@@ -52,7 +52,7 @@ function ERLKING(prefixes, viewport) {
           ERL_INPUT(promptLabel, prompt.preCursor, prompt.postCursor)))));
 }
 
-var X_SCROLLBAR = DIV(
+const X_SCROLLBAR = DIV(
   {
     id: 'erl-x-scroll-track',
     classes: {
@@ -68,7 +68,7 @@ var X_SCROLLBAR = DIV(
     }
   }));
 
-var Y_SCROLLBAR = DIV(
+const Y_SCROLLBAR = DIV(
   {
     id: 'erl-y-scroll-track',
     classes: {
@@ -84,26 +84,20 @@ var Y_SCROLLBAR = DIV(
     }
   }));
 
-var defaultCompletionLabel = '  ';
-var defaultDisplayLabel = '';
-var defaultErrorLabel = '...> ';
-var defaultPromptLabel = '> ';
-var defaultResponseLabel = '==> ';
-
-var defaultCompletionLabel = '  ';
-var defaultDisplayLabel = '';
-var defaultErrorLabel = '...> ';
-var defaultPromptLabel = '> ';
-var defaultResponseLabel = '==> ';
+const defaultCompletionLabel = '  ';
+const defaultDisplayLabel = '';
+const defaultErrorLabel = '...> ';
+const defaultPromptLabel = '> ';
+const defaultResponseLabel = '==> ';
 
 function specifyEntry(prefixes, component) {
-  var completionLabel = prefixes.completionLabel || defaultCompletionLabel;
-  var displayLabel = prefixes.displayLabel || defaultDisplayLabel;
-  var errorLabel = prefixes.errorLabel || defaultErrorLabel;
-  var promptLabel = prefixes.promptLabel || defaultPromptLabel;
-  var responseLabel = prefixes.responseLabel || defaultResponseLabel;
+  const completionLabel = prefixes.completionLabel || defaultCompletionLabel;
+  const displayLabel = prefixes.displayLabel || defaultDisplayLabel;
+  const errorLabel = prefixes.errorLabel || defaultErrorLabel;
+  const promptLabel = prefixes.promptLabel || defaultPromptLabel;
+  const responseLabel = prefixes.responseLabel || defaultResponseLabel;
 
-  var entry;
+  let entry;
   switch (component.type) {
     case 'command':
       entry = promptLabel + component.value;
@@ -126,12 +120,12 @@ function specifyEntry(prefixes, component) {
   return ERL_ENTRY(entry);
 }
 
-var _erlkonigConfig = {
+const _erlkonigConfig = {
   id: 'erlkonig',
   classes: { 'erlkonig': true, 'container': true }
 };
-var _consoleConfig = { id: 'erl-console' };
-var _terminalConfig = { classes: { 'terminal': true }};
-var _erlViewportConfig = { classes: { 'erl-viewport': true }};
+const _consoleConfig = { id: 'erl-console' };
+const _terminalConfig = { classes: { 'terminal': true }};
+const _erlViewportConfig = { classes: { 'erl-viewport': true }};
 
 export { ERLKING };

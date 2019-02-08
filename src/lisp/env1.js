@@ -43,26 +43,26 @@ import { take } from './linked-list';
 import { toArray } from './linked-list';
 import { toPartialArray } from './linked-list';
 
-var __slice   = [].slice;
-var __hasProp = {}.hasOwnProperty;
+const __slice   = [].slice;
+const __hasProp = {}.hasOwnProperty;
 
-var append = function(erlArgs) {
-  var erlArgsArray = toArray(erlArgs);
-  var erlList = erlArgsArray[0];
-  var erlValues = 2 <= erlArgsArray.length ? __slice.call(erlArgsArray, 1) : [];
+const append = function(erlArgs) {
+  const erlArgsArray = toArray(erlArgs);
+  const erlList = erlArgsArray[0];
+  const erlValues = 2 <= erlArgsArray.length ? __slice.call(erlArgsArray, 1) : [];
   return concat(erlList, fromArray(erlValues));
 };
 
-var _areEqual = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlValue0 = partialArray[0];
-  var erlValue1 = partialArray[1];
-  var __areEqual = function(erlValue0, erlValue1) {
+const _areEqual = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlValue0 = partialArray[0];
+  const erlValue1 = partialArray[1];
+  const __areEqual = function(erlValue0, erlValue1) {
     if (isErlList(erlValue0) && isErlList(erlValue1)) {
       return areEqual(erlValue0, erlValue1, __areEqual);
     } else if (isErlIndex(erlValue0) && isErlIndex(erlValue1)) {
-      var jsIndex0 = erlValue0.jsValue;
-      var jsIndex1 = erlValue1.jsValue;
+      const jsIndex0 = erlValue0.jsValue;
+      const jsIndex1 = erlValue1.jsValue;
       return (__areEqual(keys(jsIndex0), keys(jsIndex1)))
         && (__areEqual(vals(jsIndex0), vals(jsIndex1)));
     } else {
@@ -72,33 +72,33 @@ var _areEqual = function(erlArgs) {
   return createErlBoolean(__areEqual(erlValue0, erlValue1));
 };
 
-var assoc = function(erlArgs) {
-  var args;
-  var jsIndex = extractJsValue(car(erlArgs));
+const assoc = function(erlArgs) {
+  let args;
+  const jsIndex = extractJsValue(car(erlArgs));
   args = cdr(erlArgs);
-  var copy = {};
-  for (var key in jsIndex) {
+  const copy = {};
+  for (let key in jsIndex) {
     if (!__hasProp.call(jsIndex, key)) {
       continue;
     }
-    var value = jsIndex[key];
+    const value = jsIndex[key];
     copy[key] = value;
   }
   while (!isEmpty(args)) {
-    var k = car(args);
-    var v = next(args);
+    const k = car(args);
+    const v = next(args);
     args = recurse(recurse(args));
     copy[extractJsValue(k)] = v;
   }
   return createErlIndex(copy);
 };
 
-var atom = function(erlArgs) {
+const atom = function(erlArgs) {
   return createErlAtom(car(erlArgs));
 };
 
-var _car = function(erlArgs) {
-  var arg = car(erlArgs);
+const _car = function(erlArgs) {
+  const arg = car(erlArgs);
   if (isErlList(arg)) {
     return car(arg);
   } else {
@@ -106,8 +106,8 @@ var _car = function(erlArgs) {
   }
 };
 
-var _cdr = function(erlArgs) {
-  var arg = car(erlArgs);
+const _cdr = function(erlArgs) {
+  const arg = car(erlArgs);
   if (isErlList(arg)) {
     return cdr(arg);
   } else {
@@ -115,70 +115,70 @@ var _cdr = function(erlArgs) {
   }
 };
 
-var _concat = function(erlArgs) {
-  var erlLists = toArray(erlArgs);
+const _concat = function(erlArgs) {
+  const erlLists = toArray(erlArgs);
   return concat.apply(null, erlLists);
 };
 
-var cons = function(erlArgs) {
+const cons = function(erlArgs) {
   return createErlList(car(erlArgs), next(erlArgs));
 };
 
-var count = function(erlArgs) {
-  var erlList = car(erlArgs);
+const count = function(erlArgs) {
+  const erlList = car(erlArgs);
   if (!isErlList(erlList)) {
     return erlNil;
   }
-  var _reduce = function(sum, value) {
+  const _reduce = function(sum, value) {
     return sum + 1;
   };
   return createErlNumber(reduce(0, _reduce, car(erlArgs)));
 };
 
-var createPredicate = function(pred) {
+const createPredicate = function(pred) {
   return function(jsList) {
-    var erlValue = jsList.value;
+    const erlValue = jsList.value;
     return createErlBoolean(pred(erlValue));
   };
 };
 
-var deref = function(erlArgs) {
+const deref = function(erlArgs) {
   return (car(erlArgs)).erlValue;
 };
 
-var _drop = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlNumber = partialArray[0];
-  var erlList = partialArray[1];
+const _drop = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlNumber = partialArray[0];
+  const erlList = partialArray[1];
   return drop(extractJsValue(erlNumber), erlList);
 };
 
-var first = function(erlArgs) {
+const first = function(erlArgs) {
   return car(car(erlArgs));
 };
 
-var getEnvironment = function(config) {
-  var environment = config.environment;
+const getEnvironment = function(config) {
+  const environment = config.environment;
   setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
 
-var hasProcess = function() {
+const hasProcess = function() {
   return typeof process !== 'undefined';
 }
 
-var hasProcessWebpackShim = function() {
+const hasProcessWebpackShim = function() {
   return(process.title === 'browser' && process.browser);
 }
 
-var ignore = function(erlArgs) {
+const ignore = function(erlArgs) {
   return erlIgnore;
 };
 
-var ignoreIfTrue = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlBool = partialArray[0];
-  var erlValue = partialArray[1];
+const ignoreIfTrue = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlBool = partialArray[0];
+  const erlValue = partialArray[1];
   if (extractJsValue(erlBool)) {
     return erlIgnore;
   } else {
@@ -186,10 +186,10 @@ var ignoreIfTrue = function(erlArgs) {
   }
 };
 
-var ignoreUnlessTrue = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlBool = partialArray[0];
-  var erlValue = partialArray[1];
+const ignoreUnlessTrue = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlBool = partialArray[0];
+  const erlValue = partialArray[1];
   if (extractJsValue(erlBool)) {
     return erlValue;
   } else {
@@ -197,11 +197,11 @@ var ignoreUnlessTrue = function(erlArgs) {
   }
 };
 
-var _interpret = function(erlArgs) {
+const _interpret = function(erlArgs) {
   return interpret(stripQuotes(extractJsValue(car(erlArgs))));
 };
 
-var _isEmpty = function(erlArgs) {
+const _isEmpty = function(erlArgs) {
   if (isEmpty(erlArgs)) {
     return erlFalse;
   } else {
@@ -213,18 +213,18 @@ var _isEmpty = function(erlArgs) {
   }
 };
 
-var isFunction = function(jsList) {
-  var erlValue = jsList.value;
+const isFunction = function(jsList) {
+  const erlValue = jsList.value;
   return createErlBoolean(isErlCorePureFunction(erlValue)
     || isErlUserPureFunction(erlValue));
 };
 
-var isNode = function() {
+const isNode = function() {
   return hasProcess() && !hasProcessWebpackShim();
 }
 
-var _last = function(erlArgs) {
-  var arg = car(erlArgs);
+const _last = function(erlArgs) {
+  const arg = car(erlArgs);
   if (isErlList(arg)) {
     return last(arg);
   } else {
@@ -232,12 +232,12 @@ var _last = function(erlArgs) {
   }
 };
 
-var list = function(erlArgs) {
+const list = function(erlArgs) {
   return erlArgs;
 };
 
-var meta = function(erlArgs) {
-  var erlMeta = (car(erlArgs)).meta;
+const meta = function(erlArgs) {
+  const erlMeta = (car(erlArgs)).meta;
   if (erlMeta != null) {
     return erlMeta;
   } else {
@@ -245,8 +245,8 @@ var meta = function(erlArgs) {
   }
 };
 
-var _not = function(erlArgs) {
-  var erlVal = car(erlArgs);
+const _not = function(erlArgs) {
+  const erlVal = car(erlArgs);
   if (isErlNil(erlVal) || isErlFalse(erlVal)) {
     return erlTrue;
   } else {
@@ -254,47 +254,47 @@ var _not = function(erlArgs) {
   }
 };
 
-var nth = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlNumber = partialArray[0];
-  var erlList = partialArray[1];
-  var target = extractJsValue(erlNumber);
+const nth = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlNumber = partialArray[0];
+  let erlList = partialArray[1];
+  const target = extractJsValue(erlNumber);
   if (target >= 0) {
-    for (var i = 0; i < target; i++) {
+    for (let i = 0; i < target; i++) {
       erlList = cdr(erlList);
     }
   } else {
-    for (var i = 0; i > target; i--) {
+    for (let i = 0; i > target; i--) {
       erlList = cdr(erlList);
     }
   }
   return car(erlList);
 };
 
-var prepend = function(erlArgs) {
-  var erlArgsArray = toArray(erlArgs);
-  var erlList = erlArgsArray[0];
-  var erlValues = 2 <= erlArgsArray.length ? __slice.call(erlArgsArray, 1) : [];
-  var _reduce = function(list, val) {
+const prepend = function(erlArgs) {
+  const erlArgsArray = toArray(erlArgs);
+  const erlList = erlArgsArray[0];
+  const erlValues = 2 <= erlArgsArray.length ? __slice.call(erlArgsArray, 1) : [];
+  const _reduce = function(list, val) {
     return createErlList(val, list);
   };
   return erlValues.reduce(_reduce, erlList);
 };
 
-var _prStr = function(erlArgs, printReadably) {
+const _prStr = function(erlArgs, printReadably) {
   return ((toArray(erlArgs)).map(function(erlArg) {
     return serialize(erlArg, printReadably);
   })).join('');
 };
 
-var prettyString = function(erlArgs) {
+const prettyString = function(erlArgs) {
   return createErlString(circumpendQuotes(_prStr(erlArgs, true)));
 };
 
-var read = function(jsList) {
+const read = function(jsList) {
   if (isNode()) {
-    var _read = function(_jsList) {
-      var jsFileName = stripQuotes(extractJsValue(car(_jsList)));
+    const _read = function(_jsList) {
+      const jsFileName = stripQuotes(extractJsValue(car(_jsList)));
       //return require('fs').readFileSync(jsFileName).toString();
       return null;
     };
@@ -304,16 +304,16 @@ var read = function(jsList) {
   }
 };
 
-var reset = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var atom = partialArray[0];
-  var value = partialArray[1];
+const reset = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const atom = partialArray[0];
+  const value = partialArray[1];
   atom.erlValue = value;
   return atom;
 };
 
-var rest = function(erlArgs) {
-  var arg = car(erlArgs);
+const rest = function(erlArgs) {
+  const arg = car(erlArgs);
   if (isErlList(arg)) {
     return cdr(arg);
   } else {
@@ -321,8 +321,8 @@ var rest = function(erlArgs) {
   }
 };
 
-var _reverse = function(erlArgs) {
-  var arg = car(erlArgs);
+const _reverse = function(erlArgs) {
+  const arg = car(erlArgs);
   if (isErlList(arg)) {
     return reverse(arg);
   } else {
@@ -330,29 +330,29 @@ var _reverse = function(erlArgs) {
   }
 };
 
-var set = function(erlArgs) {
-  var partialArray = toPartialArray(3, erlArgs);
-  var index = partialArray[0];
-  var key = partialArray[1];
-  var val = partialArray[2];
+const set = function(erlArgs) {
+  const partialArray = toPartialArray(3, erlArgs);
+  const index = partialArray[0];
+  const key = partialArray[1];
+  const val = partialArray[2];
   (extractJsValue(index))[extractJsValue(key)] = val;
   return index;
 };
 
-var setCoreFnsOnErlValues = function(env, fns) {
-  var _results = [];
-  for (var fnName in fns) {
+const setCoreFnsOnErlValues = function(env, fns) {
+  const _results = [];
+  for (let fnName in fns) {
     if (!__hasProp.call(fns, fnName)) continue;
-    var fn = fns[fnName];
+    const fn = fns[fnName];
     _results.push(env[fnName] = createErlCorePureFunction(fn));
   }
   return _results;
 };
 
-var slurp = function(erlArgs) {
+const slurp = function(erlArgs) {
   if (isNode()) {
-    var jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
-    //var _fs_ = require('fs');
+    const jsFileName = stripQuotes(extractJsValue(car(erlArgs)));
+    //const _fs_ = require('fs');
     //return createErlString(circumpendQuotes(_fs_.readFileSync(jsFileName).toString()));
     return null;
   } else {
@@ -360,59 +360,59 @@ var slurp = function(erlArgs) {
   }
 };
 
-var string = function(erlArgs) {
+const string = function(erlArgs) {
   return createErlString(circumpendQuotes(_prStr(erlArgs, false)));
 };
 
-var stripQuotes = function(jsString) {
+const stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 
-var symbol = function(erlArgs) {
-  var erlValue = car(erlArgs);
+const symbol = function(erlArgs) {
+  const erlValue = car(erlArgs);
   if (isErlString(erlValue)) {
-    var jsStr = extractJsValue(erlValue);
+    const jsStr = extractJsValue(erlValue);
     return createErlSymbol(jsStr.slice(1, -1));
   } else {
     return erlNil;
   }
 };
 
-var _take = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlNumber = partialArray[0];
-  var erlList = partialArray[1];
+const _take = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlNumber = partialArray[0];
+  const erlList = partialArray[1];
   return take(extractJsValue(erlNumber), erlList);
 };
 
-var typeOf = function(erlArgs) {
-  var erlValue = car(erlArgs);
+const typeOf = function(erlArgs) {
+  const erlValue = car(erlArgs);
   return createErlString(circumpendQuotes(erlValue.type));
 };
 
-var _throw = function(erlArgs) {
+const _throw = function(erlArgs) {
   throw car(erlArgs);
 };
 
-var timeMs = function() {
+const timeMs = function() {
   return createErlNumber(new Date().getTime());
 };
 
-var withMeta = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlVal = partialArray[0];
-  var erlMeta = partialArray[1];
+const withMeta = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlVal = partialArray[0];
+  const erlMeta = partialArray[1];
   if (isErlAtom(erlVal)) {
-    var erlValue = erlVal.erlValue;
-    var type = erlVal.type;
+    const erlValue = erlVal.erlValue;
+    const type = erlVal.type;
     return {
       erlValue: erlValue,
       type: type,
       meta: erlMeta
     };
   } else {
-    var jsValue = erlVal.jsValue;
-    var type = erlVal.type;
+    const jsValue = erlVal.jsValue;
+    const type = erlVal.type;
     return {
       jsValue: jsValue,
       type: type,
@@ -421,11 +421,11 @@ var withMeta = function(erlArgs) {
   }
 };
 
-var write = function(erlArgs) {
+const write = function(erlArgs) {
   return createErlString(serialize(car(erlArgs)));
 };
 
-var predicates = [
+const predicates = [
   isErlAtom,
   isErlBoolean,
   isErlCorePureFunction,
@@ -440,20 +440,20 @@ var predicates = [
   isErlTrue
 ].map(createPredicate);
 
-var isAtom    = predicates[0];
-var isBoolean = predicates[1];
-var isCoreFn  = predicates[2];
-var isFalse   = predicates[3];
-var isList    = predicates[4];
-var isMacro   = predicates[5];
-var isNil     = predicates[6];
-var isNumber  = predicates[7];
-var isSymbol  = predicates[8];
-var isString  = predicates[9];
-var isUserFn  = predicates[10];
-var isTrue    = predicates[11];
+const isAtom    = predicates[0];
+const isBoolean = predicates[1];
+const isCoreFn  = predicates[2];
+const isFalse   = predicates[3];
+const isList    = predicates[4];
+const isMacro   = predicates[5];
+const isNil     = predicates[6];
+const isNumber  = predicates[7];
+const isSymbol  = predicates[8];
+const isString  = predicates[9];
+const isUserFn  = predicates[10];
+const isTrue    = predicates[11];
 
-var functionsOnErlValues = {
+const functionsOnErlValues = {
   '=': _areEqual,
   'append': append,
   'assoc': assoc,

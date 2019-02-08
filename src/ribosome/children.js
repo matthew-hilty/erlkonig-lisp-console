@@ -8,8 +8,8 @@ function childByIndex(index) {
 
 function identifyChild(mode) {
   return function(specifier, index) {
-    index = index == undefined ? 0 : index;
-    var child = { mode: mode, key: { index: index }};
+    const _index = index == undefined ? 0 : index;
+    const child = { mode: mode, key: { index: _index }};
     child.key[mode] = specifier;
     return child;
   };
@@ -17,7 +17,7 @@ function identifyChild(mode) {
 
 function identifyChildren(mode) {
   return function(specifier) {
-    var child = { mode: mode, key: {}};
+    const child = { mode: mode, key: {}};
     child.key[mode] = specifier;
     return child;
   };

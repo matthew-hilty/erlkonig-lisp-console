@@ -1,3 +1,3 @@
-var commentSignal = {};
+const commentSignal = {};
 
 export { commentSignal };

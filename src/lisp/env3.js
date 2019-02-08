@@ -11,35 +11,35 @@ import { toArray } from './linked-list';
 import { tokenizeAndParse } from './tokenizeAndParse';
 import { toPartialArray } from './linked-list';
 
-var __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-var getEnvironment = function(config) {
-  var environment = config.environment;
-  var parse = function(erlArgs) {
+const getEnvironment = function(config) {
+  const environment = config.environment;
+  const parse = function(erlArgs) {
     return tokenizeAndParse(stripQuotes(extractJsValue(car(erlArgs))));
   };
-  var functionsOnErlValues = { parse: parse };
+  const functionsOnErlValues = { parse: parse };
   setCoreFnsOnErlValues(environment, functionsOnErlValues);
   return environment;
 };
 
-var _process_ = _process(function(erlVal) {
+const _process_ = _process(function(erlVal) {
   return erlVal;
 });
 
-var setCoreFnsOnErlValues = function(env, fns) {
-  var _results = [];
-  for (var fnName in fns) {
+const setCoreFnsOnErlValues = function(env, fns) {
+  const _results = [];
+  for (let fnName in fns) {
     if (!__hasProp.call(fns, fnName)) {
       continue;
     }
-    var fn = fns[fnName];
+    const fn = fns[fnName];
     _results.push(env[fnName] = createErlCorePureFunction(fn));
   }
   return _results;
 };
 
-var stripQuotes = function(jsString) {
+const stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 

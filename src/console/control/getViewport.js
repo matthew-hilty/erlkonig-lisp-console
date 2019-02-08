@@ -1,8 +1,8 @@
 import { Viewport } from '../models/actions/viewport';
 
 function getViewport(action, config) {
-  var command = action.name;
-  var viewport = config.viewport;
+  const command = action.name;
+  const viewport = config.viewport;
   switch (command) {
     case 'addChar':
       return Viewport.addChar(viewport, action.char);

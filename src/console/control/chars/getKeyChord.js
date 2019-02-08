@@ -15,8 +15,8 @@ function identity(event) {
 }
 
 function getKeyChord(event) {
-  var normalize;
-  var property;
+  let normalize;
+  let property;
 
   if (event.key != null) {
     property = 'key';
@@ -44,7 +44,7 @@ function _getKeyChord(conversionCharts) {
 }
 
 function getKeyChordValue(conversionCharts, value, shiftKey) {
-  var key = shiftKey ? 'withShift' : 'withoutShift';
+  const key = shiftKey ? 'withShift' : 'withoutShift';
   return conversionCharts[key][value];
 }
 

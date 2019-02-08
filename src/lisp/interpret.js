@@ -7,13 +7,13 @@ import { serialize }          from './serialize';
 import standardFnsAndMacros   from './standard-fns-and-macros.lisp';
 import { tokenizeAndParse }   from './tokenizeAndParse';
 
-var __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-var _createErlString = function(jsString) {
+const _createErlString = function(jsString) {
   return createErlString(circumpendQuotes(jsString));
 };
 
-var encapsulate = function(type) {
+const encapsulate = function(type) {
   return function(erlValue) {
     return {
       effect: {
@@ -24,20 +24,20 @@ var encapsulate = function(type) {
   };
 };
 
-var error = function(errorMessage) {
+const error = function(errorMessage) {
   return [encapsulate('error')("repl error: (" + errorMessage + ")")];
 };
 
-var flattenIfNecessary = function(effects) {
-  var value;
-  var result = effects;
+const flattenIfNecessary = function(effects) {
+  let value;
+  let result = effects;
   while (result.length === 1 && Array.isArray(value = result[0].value)) {
     result = flattenIfNecessary(value);
   }
   return result;
 };
 
-var _interpret = function(envs, jsString) {
+const _interpret = function(envs, jsString) {
   try {
     return _serialize(
       flattenIfNecessary(
@@ -47,9 +47,9 @@ var _interpret = function(envs, jsString) {
   }
 };
 
-var interpret = function(jsString, userJsArray) {
+const interpret = function(jsString, userJsArray) {
   if (userJsArray != null) {
-    var userEnv = {
+    const userEnv = {
       '*ARGV*': fromArray(userJsArray.map(_createErlString))
     };
     return _interpret([userEnv, environment], jsString);
@@ -58,12 +58,12 @@ var interpret = function(jsString, userJsArray) {
   }
 };
 
-var _serialize = function(results) {
+const _serialize = function(results) {
   return results.map(function(result) {
-    var _result = {};
-    for (var key in result) {
+    const _result = {};
+    for (let key in result) {
       if (!__hasProp.call(result, key)) continue;
-      var value = result[key];
+      const value = result[key];
       if (key === 'effect') {
         _result[key] = value;
       } else {
@@ -74,7 +74,7 @@ var _serialize = function(results) {
   });
 };
 
-var environment = getLispEnvironment({
+const environment = getLispEnvironment({
   display: encapsulate('display')
 });
 

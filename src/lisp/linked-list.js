@@ -1,10 +1,10 @@
 import { erlTypes } from './types';
 
-var erlListType = erlTypes[6];
+const erlListType = erlTypes[6];
 
-var __slice = [].slice;
+const __slice = [].slice;
 
-var car = function(erlList) {
+const car = function(erlList) {
   if (isEmpty(erlList)) {
     return EOL;
   } else {
@@ -12,7 +12,7 @@ var car = function(erlList) {
   }
 };
 
-var cdr = function(erlList) {
+const cdr = function(erlList) {
   if (isEmpty(erlList)) {
     return EOL;
   } else {
@@ -20,7 +20,7 @@ var cdr = function(erlList) {
   }
 };
 
-var areEqual = function(list0, list1, _areEqual) {
+const areEqual = function(list0, list1, _areEqual) {
   while (!(isEmpty(list0) || isEmpty(list1))) {
     if (!_areEqual(list0.value, list1.value)) {
       return false;
@@ -31,18 +31,18 @@ var areEqual = function(list0, list1, _areEqual) {
   return isEmpty(list0) && isEmpty(list1);
 };
 
-var concat = function() {
-  var erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+const concat = function() {
+  const erlLists = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   if (erlLists.length === 0) {
     return EOL;
   }
-  var result = copy(erlLists[0]);
-  var tail = lastTail(result);
-  var remaining = erlLists.slice(1);
-  var len = remaining.length;
-  for (var i = 0; i < len; i++) {
-    var erlList = remaining[i];
-    var _copy = copy(erlList);
+  let result = copy(erlLists[0]);
+  let tail = lastTail(result);
+  const remaining = erlLists.slice(1);
+  const len = remaining.length;
+  for (let i = 0; i < len; i++) {
+    const erlList = remaining[i];
+    const _copy = copy(erlList);
     if (isEmpty(tail)) {
       result = _copy;
       tail = lastTail(result);
@@ -56,24 +56,24 @@ var concat = function() {
   return result;
 };
 
-var cons = function(erlArgs) {
+const cons = function(erlArgs) {
   return createErlList(car(erlArgs), next(erlArgs));
 };
 
-var copy = function(erlList) {
+const copy = function(erlList) {
   return map((function(x) {
     return x;
   }), erlList);
 };
 
-var createErlList = function(value, nextNode) {
+const createErlList = function(value, nextNode) {
   if (value == null) {
     return EOL;
   }
   return createNode(value, nextNode != null ? nextNode : EOL);
 };
 
-var createNode = function(value, nextNode) {
+const createNode = function(value, nextNode) {
   return {
     type: erlListType,
     value: value,
@@ -81,7 +81,7 @@ var createNode = function(value, nextNode) {
   };
 };
 
-var drop = function(nbr, erlList) {
+const drop = function(nbr, erlList) {
   while (nbr !== 0) {
     erlList = cdr(erlList);
     nbr = nbr - 1;
@@ -89,12 +89,12 @@ var drop = function(nbr, erlList) {
   return erlList;
 };
 
-var isEmpty = function(value) {
+const isEmpty = function(value) {
   return value === EOL;
 };
 
-var filter = function(predicate, list) {
-  var _reduce = function(list, value) {
+const filter = function(predicate, list) {
+  const _reduce = function(list, value) {
     if (predicate(value)) {
       return createErlList(value, list);
     } else {
@@ -104,8 +104,8 @@ var filter = function(predicate, list) {
   return reverse(reduce(EOL, _reduce, list));
 };
 
-var forEach = function(fn, list) {
-  var result = list;
+const forEach = function(fn, list) {
+  let result = list;
   while (!isEmpty(list)) {
     result = fn(list.value);
     list = recurse(list);
@@ -113,23 +113,23 @@ var forEach = function(fn, list) {
   return result;
 };
 
-var fromArray = function(array) {
-  var _reduce = function(list, value) {
+const fromArray = function(array) {
+  const _reduce = function(list, value) {
     return createErlList(value, list);
   };
   return array.reverse().reduce(_reduce, createErlList());
 };
 
-var last = function(erlList) {
+const last = function(erlList) {
   return car(lastTail(erlList));
 };
 
-var lastTail = function(erlList) {
+const lastTail = function(erlList) {
   if (isEmpty(erlList)) {
     return erlList;
   }
-  var prior = erlList;
-  var current = cdr(erlList);
+  let prior = erlList;
+  let current = cdr(erlList);
   while (!isEmpty(current)) {
     prior = cdr(prior);
     current = cdr(current);
@@ -137,18 +137,18 @@ var lastTail = function(erlList) {
   return prior;
 };
 
-var map = function(fn, list) {
-  var _reduce = function(list, value) {
+const map = function(fn, list) {
+  const _reduce = function(list, value) {
     return createErlList(fn(value), list);
   };
   return reverse(reduce(EOL, _reduce, list));
 };
 
-var next = function(erlList) {
+const next = function(erlList) {
   return car(cdr(erlList));
 };
 
-var recurse = function(list) {
+const recurse = function(list) {
   if (isEmpty(list)) {
     return list;
   } else {
@@ -156,7 +156,7 @@ var recurse = function(list) {
   }
 };
 
-var reduce = function(seed, fn, list) {
+const reduce = function(seed, fn, list) {
   while (!isEmpty(list)) {
     seed = fn(seed, list.value);
     list = recurse(list);
@@ -164,19 +164,19 @@ var reduce = function(seed, fn, list) {
   return seed;
 };
 
-var reduceBy2 = function(seed, fn, list) {
+const reduceBy2 = function(seed, fn, list) {
   while (!isEmpty(list)) {
-    var value0 = list.value;
+    const value0 = list.value;
     list = recurse(list);
-    var value1 = list.value;
+    const value1 = list.value;
     seed = fn(seed, value0, value1);
     list = recurse(list);
   }
   return seed;
 };
 
-var reverse = function(list) {
-  var result = EOL;
+const reverse = function(list) {
+  let result = EOL;
   while (!isEmpty(list)) {
     result = createErlList(list.value, result);
     list = list.next;
@@ -184,10 +184,10 @@ var reverse = function(list) {
   return result;
 };
 
-var take = function(nbr, erlList) {
-  var result = createErlList();
+const take = function(nbr, erlList) {
+  let result = createErlList();
   while (nbr !== 0) {
-    var node = car(erlList);
+    const node = car(erlList);
     erlList = cdr(erlList);
     result = createErlList(node, result);
     nbr = nbr - 1;
@@ -195,18 +195,18 @@ var take = function(nbr, erlList) {
   return reverse(result);
 };
 
-var toArray = function(list) {
-  var _reduce = function(jsArray, value) {
+const toArray = function(list) {
+  const _reduce = function(jsArray, value) {
     jsArray.push(value);
     return jsArray;
   };
   return reduce([], _reduce, list);
 };
 
-var toPartialArray = function(nbr, list) {
-  var result = [];
+const toPartialArray = function(nbr, list) {
+  const result = [];
   while (nbr !== 0) {
-    var node = car(list);
+    const node = car(list);
     list = cdr(list);
     result.push(node);
     nbr = nbr - 1;
@@ -215,20 +215,20 @@ var toPartialArray = function(nbr, list) {
   return result;
 };
 
-var zip = function(seed, fn, list0, list1) {
+const zip = function(seed, fn, list0, list1) {
   while (!(isEmpty(list0) || isEmpty(list1))) {
-    var value0 = car(list0);
+    const value0 = car(list0);
     list0 = cdr(list0);
-    var value1 = car(list1);
+    const value1 = car(list1);
     list1 = cdr(list1);
     seed = fn(seed, value0, value1);
   }
   return seed;
 };
 
-var _EOL = {};
+const _EOL = {};
 
-var EOL = createNode(_EOL, _EOL);
+const EOL = createNode(_EOL, _EOL);
 
 export {
   areEqual,

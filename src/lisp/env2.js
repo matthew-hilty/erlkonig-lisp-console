@@ -4,34 +4,34 @@ import { createErlString }                from './type-utilities';
 import { serialize }                      from './serialize';
 import { toArray }                        from './linked-list';
 
-let __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-let getEnvironment = function(config) {
-  let display = config.display;
-  let environment = config.environment;
+const getEnvironment = function(config) {
+  const display = config.display;
+  const environment = config.environment;
   setCoreEffectfulFnsOnErlValues(display)(environment, displayEffectsOnErlValues);
   return environment;
 };
 
-let hasProcess = function() {
+const hasProcess = function() {
   return typeof process !== 'undefined';
 }
 
-let hasProcessWebpackShim = function() {
+const hasProcessWebpackShim = function() {
   return(process.title === 'browser' && process.browser);
 }
 
-let isNode = function() {
+const isNode = function() {
   return hasProcess() && !hasProcessWebpackShim();
 }
 
-let _prStr = function(erlArgs, shouldBeReadable) {
+const _prStr = function(erlArgs, shouldBeReadable) {
   return ((toArray(erlArgs)).map(function(erlArg) {
     return serialize(erlArg, shouldBeReadable);
   })).join('');
 };
 
-let _quit_ = function() {
+const _quit_ = function() {
   if (isNode()) {
     return process.exit(0);
   } else {
@@ -43,12 +43,12 @@ let _quit_ = function() {
   }
 };
 
-let setCoreEffectfulFnsOnErlValues = function(represent) {
+const setCoreEffectfulFnsOnErlValues = function(represent) {
   return function(env, fns) {
-    let _results = [];
+    const _results = [];
     for (let fnName in fns) {
       if (!__hasProp.call(fns, fnName)) continue;
-      let fn = fns[fnName];
+      const fn = fns[fnName];
       env[fnName] = createErlCoreEffectfulFunction(function(erlArgs) {
         return represent(fn(erlArgs));
       });
@@ -58,7 +58,7 @@ let setCoreEffectfulFnsOnErlValues = function(represent) {
   };
 };
 
-let displayEffectsOnErlValues = {
+const displayEffectsOnErlValues = {
   'print': function(erlArgs) {
     return _prStr(erlArgs, false);
   },

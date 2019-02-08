@@ -18,11 +18,11 @@ import { listEnd } from './keyTokens';
 import { listStart } from './keyTokens';
 import { reduce } from './linked-list';
 
-var __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-var adjoinErlValue = function(shouldBeReadable) {
+const adjoinErlValue = function(shouldBeReadable) {
   return function(memo, erlValue) {
-    var serialized = serialize(erlValue, shouldBeReadable);
+    const serialized = serialize(erlValue, shouldBeReadable);
     if (memo.length === 0) {
       return serialized;
     } else {
@@ -31,11 +31,11 @@ var adjoinErlValue = function(shouldBeReadable) {
   };
 };
 
-var serialize = function(erlExpr, shouldBeReadable) {
+const serialize = function(erlExpr, shouldBeReadable) {
   if (erlExpr === commentSignal) {
     return commentSignal;
   }
-  var _serialize = (function() {
+  const _serialize = (function() {
     if (isErlList(erlExpr)) {
       return serializeList;
     } else if (isErlIgnore(erlExpr)) {
@@ -85,20 +85,20 @@ var serialize = function(erlExpr, shouldBeReadable) {
   return _serialize(erlExpr, shouldBeReadable);
 };
 
-var serializeAtom = function(erlAtom, shouldBeReadable) {
+const serializeAtom = function(erlAtom, shouldBeReadable) {
   return "(atom " + (serialize(erlAtom.erlValue, shouldBeReadable)) + ")";
 };
 
-var serializeIdentifier = function(erlString, shouldBeReadable) {
+const serializeIdentifier = function(erlString, shouldBeReadable) {
   return extractJsValue(erlString);
 };
 
-var serializeIndex = function(erlIndex, shouldBeReadable) {
-  var jsIndex = erlIndex.jsValue;
-  var memo = '';
-  for (var key in jsIndex) {
+const serializeIndex = function(erlIndex, shouldBeReadable) {
+  const jsIndex = erlIndex.jsValue;
+  let memo = '';
+  for (let key in jsIndex) {
     if (!__hasProp.call(jsIndex, key)) continue;
-    var erlValue = jsIndex[key];
+    const erlValue = jsIndex[key];
     if (memo === '') {
       memo = ""
         + key
@@ -116,16 +116,16 @@ var serializeIndex = function(erlIndex, shouldBeReadable) {
   return indexStart + memo + indexEnd;
 };
 
-var serializeList = function(erlList, shouldBeReadable) {
-  var serializedList = reduce(
+const serializeList = function(erlList, shouldBeReadable) {
+  const serializedList = reduce(
     "",
     adjoinErlValue(shouldBeReadable),
     erlList);
   return listStart + serializedList + listEnd;
 };
 
-var serializeString = function(erlString, shouldBeReadable) {
-  var jsString = stripQuotes(extractJsValue(erlString));
+const serializeString = function(erlString, shouldBeReadable) {
+  const jsString = stripQuotes(extractJsValue(erlString));
   if (!shouldBeReadable) {
     return jsString;
   }
@@ -135,16 +135,16 @@ var serializeString = function(erlString, shouldBeReadable) {
     .replace(/\n/g, '\\n');
 };
 
-var stripQuotes = function(jsString) {
+const stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 
-var coreEffectfulFunctionLabel = '<effectful core function>';
-var corePureFunctionLabel      = '<core function>';
-var ignoreLabel                = '<ignore>';
-var keywordLabel               = '<keyword>';
-var macroLabel                 = '<macro>';
-var nilLabel                   = 'nil';
-var userPureFunctionLabel      = '<function>';
+const coreEffectfulFunctionLabel = '<effectful core function>';
+const corePureFunctionLabel      = '<core function>';
+const ignoreLabel                = '<ignore>';
+const keywordLabel               = '<keyword>';
+const macroLabel                 = '<macro>';
+const nilLabel                   = 'nil';
+const userPureFunctionLabel      = '<function>';
 
 export { serialize };

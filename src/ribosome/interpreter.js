@@ -26,7 +26,7 @@ function createAndSubstituteElement(parent, config, oldElementIndex) {
 }
 
 function createAndAttachElements(node, elements) {
-  for (var i = 0; i < elements.length; i++) {
+  for (let i = 0; i < elements.length; i++) {
     createAndAttachElement(node, elements[i]);
   }
 }
@@ -35,24 +35,24 @@ function createElement(config) {
   if (isString(config)) {
     return config;
   }
-  var node = document.createElement(config.tag);
+  const node = document.createElement(config.tag);
   if (config.id != null) {
     node.id = config.id;
   }
   if (config.classes != null) {
-    for (var klass in config.classes) {
+    for (let klass in config.classes) {
       node.classList.add(klass);
     }
   }
   if (config.attribs != null) {
-    for (var attribKey in config.attribs) {
+    for (let attribKey in config.attribs) {
       if (attribKey !== 'style') {
         node.setAttribute(attribKey, config.attribs[attribKey]);
       }
     }
   }
   if (config.style != null) {
-    for (var styleKey in config.style) {
+    for (let styleKey in config.style) {
       node.style[styleKey] = config.style[styleKey];
     }
   }
@@ -86,7 +86,7 @@ function findChild(parent, config) {
 }
 
 function findChildren(parent, config) {
-  var htmlCollection;
+  let htmlCollection;
   switch (config.mode) {
     case 'class':
       htmlCollection = parent.getElementsByClassName(config.key.class);
@@ -120,13 +120,13 @@ function modifyElement(node, patch) {
 }
 
 function _modifyElement(node, tree, commands) {
-  for (var i = 0; i < tree.length; i++) {
-    var key = tree[i].index;
-    var continuation = tree[i].value;
+  for (let i = 0; i < tree.length; i++) {
+    const key = tree[i].index;
+    const continuation = tree[i].value;
 
     switch (key) {
       case 'id':
-        var command = commands[continuation];
+        const command = commands[continuation];
         switch (command[0]) {
           case 'delete':
             node.removeAttribute('id');
@@ -142,9 +142,9 @@ function _modifyElement(node, tree, commands) {
         break;
 
       case 'style':
-        for (var styleIndex = 0; styleIndex < continuation.length; styleIndex++) {
-          var style = continuation[styleIndex].index;
-          var command = commands[continuation[styleIndex].value];
+        for (let styleIndex = 0; styleIndex < continuation.length; styleIndex++) {
+          const style = continuation[styleIndex].index;
+          const command = commands[continuation[styleIndex].value];
           switch (command[0]) {
             case 'delete':
               node.style.removeProperty(style);
@@ -158,9 +158,9 @@ function _modifyElement(node, tree, commands) {
         break;
 
       case 'attribs':
-        for (var attribIndex = 0; attribIndex < continuation.length; attribIndex++) {
-          var attrib = continuation[attribIndex].index;
-          var command = commands[continuation[attribIndex].value];
+        for (let attribIndex = 0; attribIndex < continuation.length; attribIndex++) {
+          const attrib = continuation[attribIndex].index;
+          const command = commands[continuation[attribIndex].value];
           switch (command[0]) {
             case 'delete':
               node.attributes.removeNamedItem(attrib);
@@ -175,23 +175,23 @@ function _modifyElement(node, tree, commands) {
 
       case 'classes':
         if (isCommandIndex(continuation)) {
-          var command = commands[0];
+          const command = commands[0];
           switch (command[0]) {
             case 'delete':
-              for (var _class in command[1]) {
+              for (let _class in command[1]) {
                 node.classList.remove(_class);
               }
               break;
             case 'setAtKey':
-              for (var _class in command[1]) {
+              for (let _class in command[1]) {
                 node.classList.add(_class);
               }
               break;
           }
         } else {
-          for (var classIndex = 0; classIndex < continuation.length; classIndex++) {
-            var _class = continuation[classIndex].index;
-            var command = commands[continuation[classIndex].value];
+          for (let classIndex = 0; classIndex < continuation.length; classIndex++) {
+            const _class = continuation[classIndex].index;
+            const command = commands[continuation[classIndex].value];
             switch (command[0]) {
               case 'delete':
                 node.classList.remove(_class);
@@ -206,7 +206,7 @@ function _modifyElement(node, tree, commands) {
 
       case 'children':
         if (isCommandIndex(continuation)) {
-          var command = commands[continuation]
+          const command = commands[continuation]
           switch (command[0]) {
             case 'remove':
               removeChildren(node);
@@ -228,11 +228,11 @@ function _modifyElement(node, tree, commands) {
               break;
           }
         } else {
-          for (var childIndex = 0; childIndex < continuation.length; childIndex++) {
-            var child = continuation[childIndex].index;
-            var childContinuation = continuation[childIndex].value;
+          for (let childIndex = 0; childIndex < continuation.length; childIndex++) {
+            const child = continuation[childIndex].index;
+            const childContinuation = continuation[childIndex].value;
             if (isCommandIndex(childContinuation)) {
-              var command = commands[childContinuation]
+              const command = commands[childContinuation]
               switch (command[0]) {
                 case 'remove':
                   removeChild(node, child);
@@ -259,8 +259,8 @@ function removeChild(node, childIndex) {
 }
 
 function removeChildren(node) {
-  var childCount = node.childNodes.length;
-  for (var i = childCount - 1; i >= 0; i--) {
+  const childCount = node.childNodes.length;
+  for (let i = childCount - 1; i >= 0; i--) {
     node.removeChild(node.childNodes[i]);
   }
 }

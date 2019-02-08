@@ -5,11 +5,11 @@ import { fromErlIndex } from './index-utilities';
 import { _process } from './_process';
 import { toPartialArray } from './linked-list';
 
-var __hasProp = {}.hasOwnProperty;
+const __hasProp = {}.hasOwnProperty;
 
-var getEnvironment = function(config) {
-  var environment = config.environment;
-  var functionsOnErlValues = {
+const getEnvironment = function(config) {
+  const environment = config.environment;
+  const functionsOnErlValues = {
     'load': load,
     'load-with-env': loadWithEnv,
     'load-with-bare-env': loadWithBareEnv
@@ -18,27 +18,27 @@ var getEnvironment = function(config) {
   return environment;
 };
 
-var get_jsFileName_and_localEnv = function(erlArgs) {
-  var partialArray = toPartialArray(2, erlArgs);
-  var erlFileName = partialArray[0];
-  var localEnv = partialArray[1];
-  var jsFileName = stripQuotes(extractJsValue(erlFileName));
+const get_jsFileName_and_localEnv = function(erlArgs) {
+  const partialArray = toPartialArray(2, erlArgs);
+  const erlFileName = partialArray[0];
+  const localEnv = partialArray[1];
+  const jsFileName = stripQuotes(extractJsValue(erlFileName));
   return [jsFileName, localEnv];
 };
 
-var hasProcess = function() {
+const hasProcess = function() {
   return typeof process !== 'undefined';
 }
 
-var hasProcessWebpackShim = function() {
+const hasProcessWebpackShim = function() {
   return(process.title === 'browser' && process.browser);
 }
 
-var isNode = function() {
+const isNode = function() {
   return hasProcess() && !hasProcessWebpackShim();
 }
 
-var load = function(erlArgs) {
+const load = function(erlArgs) {
   if (isNode()) {
     return _process_(_read(erlArgs));
   } else {
@@ -46,11 +46,11 @@ var load = function(erlArgs) {
   }
 };
 
-var loadWithBareEnv = function(erlArgs) {
+const loadWithBareEnv = function(erlArgs) {
   if (isNode()) {
-    var temp = get_jsFileName_and_localEnv(erlArgs);
-    var jsFileName = temp[0];
-    var localEnv = temp[1];
+    const temp = get_jsFileName_and_localEnv(erlArgs);
+    const jsFileName = temp[0];
+    const localEnv = temp[1];
     return _processFileAndEnv(
       readFile(jsFileName),
       [fromErlIndex(localEnv)]);
@@ -59,11 +59,11 @@ var loadWithBareEnv = function(erlArgs) {
   }
 };
 
-var loadWithEnv = function(erlArgs) {
+const loadWithEnv = function(erlArgs) {
   if (isNode()) {
-    var temp = get_jsFileName_and_localEnv(erlArgs);
-    var jsFileName = temp[0];
-    var localEnv = temp[1];
+    const temp = get_jsFileName_and_localEnv(erlArgs);
+    const jsFileName = temp[0];
+    const localEnv = temp[1];
     return _processFileAndEnv(
       readFile(jsFileName),
       [fromErlIndex(localEnv), environment]);
@@ -72,35 +72,35 @@ var loadWithEnv = function(erlArgs) {
   }
 };
 
-var _process_ = function(jsString) {
+const _process_ = function(jsString) {
   return _process([environment])(jsString);
 };
 
-var _processFileAndEnv = function(file, envStack) {
+const _processFileAndEnv = function(file, envStack) {
   return _process(envStack)(file);
 };
 
-var _read = function(erlArgs) {
-  var jsFileName = get_jsFileName_and_localEnv(erlArgs)[0];
+const _read = function(erlArgs) {
+  const jsFileName = get_jsFileName_and_localEnv(erlArgs)[0];
   return readFile(jsFileName);
 };
 
-var readFile = function(jsFileName) {
+const readFile = function(jsFileName) {
   //return require('fs').readFileSync(jsFileName).toString();
   return null;
 };
 
-var setCoreFnsOnErlValues = function(env, fns) {
-  var _results = [];
-  for (var fnName in fns) {
+const setCoreFnsOnErlValues = function(env, fns) {
+  const _results = [];
+  for (let fnName in fns) {
     if (!__hasProp.call(fns, fnName)) continue;
-    var fn = fns[fnName];
+    const fn = fns[fnName];
     _results.push(env[fnName] = createErlCorePureFunction(fn));
   }
   return _results;
 };
 
-var stripQuotes = function(jsString) {
+const stripQuotes = function(jsString) {
   return jsString.slice(1, -1);
 };
 
