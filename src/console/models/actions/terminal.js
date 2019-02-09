@@ -84,6 +84,10 @@ function extractCommand(prompt) {
   return (prompt.preCursor + prompt.postCursor).trim();
 }
 
+function flattenArray(array) {
+  return Array.prototype.concat.apply([], array);
+}
+
 function getPrefix(command) {
   const regex = /^(.*[\s\(\)\[\]])([^\(\)\[\]]*)/;
   const match = regex.exec(command);
@@ -156,13 +160,18 @@ function submit(terminal, transform) {
 
   const commandText = extractCommand(terminal.prompt);
   const results = _transform(commandText);
-  const displayEntries = results
+  const _displayEntries = results
     .slice(0, -1)
     .filter(function (result) { return result.effect.type === 'display'; })
-    .map(function (display) { return { type: 'display', value: display.value }});
+    .map(function (display) {
+      return display.value.split("\\\\n").map(function (line) {
+         return { type: 'display', value: line };
+      });
+    });
+  const displayEntries = flattenArray(_displayEntries);
 
   const lastResult = results[results.length - 1];
-  const response = lastResult.value != null
+  const response = (lastResult.value != null)
     ? [{ type: 'response', value: lastResult.value }]
     : [];
 
