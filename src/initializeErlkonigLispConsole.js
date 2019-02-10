@@ -1,6 +1,7 @@
 import { initialize } from './console/initialize';
 import { interpret }  from './lisp/interpret';
 import { keyTokens }  from './lisp/keyTokens';
+import introduction   from './introduction.lisp';
 
 const _keyTokens =  keyTokens.map(function (keyToken) {
   return ':' + keyToken;
@@ -31,9 +32,12 @@ function getMatches(prefix, words) {
   return matches;
 }
 
+interpret(introduction);
+
 initialize({
+  getCandidates: getCandidates,
+  initialModelData: '(help) ; Press enter for help.',
   nodeId: 'viewport',
   promptLabel: promptLabel,
   transform: interpret,
-  getCandidates: getCandidates
 });

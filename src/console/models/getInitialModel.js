@@ -3,9 +3,9 @@ import { createPrompt } from './types/createPrompt';
 import { createTerminal } from './types/createTerminal';
 import { createViewport } from './types/createViewport';
 
-function getInitialModel() {
+function getInitialModel(initialPrompt) {
   return createViewport(
-    createTerminal([], [], createPrompt('', '')),
+    createTerminal([], [], createPrompt(initialPrompt, '')),
     createFrame(0, 0, 0));
 }
 

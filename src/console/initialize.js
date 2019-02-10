@@ -9,7 +9,7 @@ import { subscribe }           from './subscribe';
 
 function initialize(config) {
   const root = document.getElementById(config.nodeId);
-  const initialModel = getInitialModel();
+  const initialModel = getInitialModel(config.initialModelData);
   const promptLabel = config.promptLabel;
   const labels = { promptLabel: promptLabel };
   const viewModel = ERLKING(labels, initialModel);

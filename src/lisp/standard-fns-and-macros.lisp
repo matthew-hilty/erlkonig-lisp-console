@@ -47,7 +47,10 @@
   (def! *gensym-counter* (atom 0))
 
   (def! gensym (
-      fn* () (symbol (string "G__" (swap! *gensym-counter* incr)))))
+      fn* () (symbol (
+        string
+          "G__"
+          (swap! *gensym-counter* (fn* (n) (+ n 1)))))))
 
   (def! or (
     macro* (& xs) (
@@ -127,12 +130,6 @@
       `(fn* (~x) (->> ~x ~@xs)))))
 
   (def! not (fn* (x) (if x false true)))
-
-  (def! incr (->* (+ 1)))
-
-  (def! decr (->* (- 1)))
-
-  (def! zero? (->* (= 0)))
 
   (def! identity (fn* (x) x))
 
@@ -261,4 +258,20 @@
   (def! apply (macro* (f xs) `(eval (cons ~f ~xs))))
 
   (def! eval-string (fn* (erlString) (eval (parse erlString))))
+
+  (def! incr (->* (+ 1)))
+
+  (def! decr (->* (- 1)))
+
+  (def! zero? (->* (= 0)))
+
+  (def! defined? (fn* (id) (contains? (-get-current-env-) id)))
+
+  (def! \ (macro* (& xs) (
+    if (empty? xs)
+      nil
+      (let* (x (car xs), xs (cdr xs)) (
+        if (empty? xs)
+          x
+          `(fn* (~x) (\ ~@xs)))))))
 )

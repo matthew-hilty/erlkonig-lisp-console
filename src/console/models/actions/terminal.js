@@ -165,7 +165,12 @@ function submit(terminal, transform) {
     .filter(function (result) { return result.effect.type === 'display'; })
     .map(function (display) {
       return display.value.split("\\\\n").map(function (line) {
-         return { type: 'display', value: line };
+         return {
+           type: 'display',
+           value: line
+             .replace(/\\"/g, '"')
+             .replace(/\\\\/g, '\\')
+         };
       });
     });
   const displayEntries = flattenArray(_displayEntries);
