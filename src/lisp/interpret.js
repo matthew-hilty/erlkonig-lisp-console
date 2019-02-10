@@ -30,11 +30,11 @@ const error = function(errorMessage) {
 
 const flattenIfNecessary = function(effects) {
   let value;
-  let result = effects;
-  while (result.length === 1 && Array.isArray(value = result[0].value)) {
-    result = flattenIfNecessary(value);
+  let results = effects;
+  while (results.length === 1 && Array.isArray(value = results[0].value)) {
+    results = flattenIfNecessary(value);
   }
-  return result;
+  return results;
 };
 
 const _interpret = function(envs, jsString) {
