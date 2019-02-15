@@ -15,6 +15,11 @@ function getViewport() {
   return document.getElementsByClassName('erl-viewport')[0];
 }
 
+function hideFirefoxScrollbars(viewport) {
+  viewport.style.overflowX = 'hidden';
+  viewport.style.overflowY = 'hidden';
+}
+
 function onEvent(eventName, callback) {
   document.addEventListener(eventName, callback);
 }
@@ -32,6 +37,7 @@ function scroll(cssScrollbarDetected) {
     };
   }
 
+
   return function () {
     const viewport = getViewport();
     const cursor = getElement('erl-cursor');
@@ -44,6 +50,7 @@ function scroll(cssScrollbarDetected) {
     const viewportWidth = viewport.offsetWidth;
     const viewportHeight = viewport.offsetHeight;
 
+    hideFirefoxScrollbars(viewport);
     setXThumbVisibility(viewport, viewportWidth, xTrack, xThumb, cursor, prompt);
     setYThumbVisibility(viewport, viewportHeight, yTrack, yThumb, cursor);
     scrollHorizontally(viewport, viewportWidth, xTrack, xThumb);
