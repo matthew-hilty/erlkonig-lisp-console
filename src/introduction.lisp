@@ -5,7 +5,7 @@
     "\n"
     "\n  Press arrow keys to move the cursor."
     "\n  Press <tab> for completion of keywords and defined identifers."
-    "\n  Press <Ctrl-a> to move the cursor to the begining of the line."
+    "\n  Press <Ctrl-a> to move the cursor to the beginning of the line."
     "\n  Press <Ctrl-e> to move the cursor to the end of the line."
     "\n  Press <Ctrl-h> to delete the character preceding the cursor."
     "\n  Press <Ctrl-l> to clear the console."
